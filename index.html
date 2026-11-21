@@ -388,7 +388,7 @@ table th { background: #e0f4ff; font-weight: 600; }
 </div>
 
 <!-- ========== 수업설계 모드 ========== -->
-<div class="mode-section" id="mode-lesson">
+<div class="mode-section" id="mode-lesson"><div class="card"><h3>기본 수업설계</h3><label for="plan-subject">교과</label><textarea id="plan-subject" maxlength="1500"></textarea><label for="plan-grade">학년·차시</label><textarea id="plan-grade" maxlength="1500"></textarea><label for="plan-level">학생 수준과 사전 지식</label><textarea id="plan-level" maxlength="1500"></textarea><label for="plan-intro">도입 활동과 시간</label><textarea id="plan-intro" maxlength="1500"></textarea><label for="plan-main">전개 활동과 시간</label><textarea id="plan-main" maxlength="1500"></textarea><label for="plan-closing">정리 활동과 시간</label><textarea id="plan-closing" maxlength="1500"></textarea><label for="plan-materials">준비 자료</label><textarea id="plan-materials" maxlength="1500"></textarea><button type="button" class="btn btn-primary" id="plan-guide">수업안·교사용 가이드 내려받기</button><p id="plan-status" role="status"></p></div>
   <div class="step-indicator">
     <div class="step-dot active" data-step="1">1</div>
     <div class="step-dot" data-step="2">2</div>
@@ -1212,6 +1212,42 @@ function showFeedback(id, message, type) {
 // ==================== 이벤트 바인딩 ====================
 function init() {
   loadState();
+
+const planKeys = ['subject','grade','level','intro','main','closing','materials'];
+let lessonContext = {};
+try { lessonContext = JSON.parse(localStorage.getItem('teachersCanvasPlan') || '{}') || {}; } catch {}
+planKeys.forEach(key => {
+  const field = document.getElementById('plan-' + key);
+  field.value = lessonContext[key] || '';
+  field.addEventListener('input', () => {
+    lessonContext[key] = field.value;
+    try { localStorage.setItem('teachersCanvasPlan', JSON.stringify(lessonContext)); }
+    catch { document.getElementById('plan-status').textContent = '저장 공간을 확인하고 가이드를 내려받아 보관해 주세요.'; }
+  });
+});
+document.getElementById('plan-guide').addEventListener('click', () => {
+  const form = state.lessonForm;
+  const draft = form.step1.title.trim() ? {
+    title: form.step1.title, goal: form.step1.goal, content: form.step2.content,
+    eval: form.step4.evalCriteria, reflect: form.step3.reflectQuestion
+  } : state.lessons.at(-1);
+  if (!draft) {
+    document.getElementById('plan-status').textContent = '차시 제목을 입력하거나 수업안을 저장해 주세요.';
+    return;
+  }
+  const labels = ['교과','학년·차시','학생 수준과 사전 지식','도입 활동과 시간','전개 활동과 시간','정리 활동과 시간','준비 자료'];
+  const lines = ['교사용 수업 가이드', draft.title, '',
+    ...planKeys.map((key,i) => labels[i] + '\n' + (lessonContext[key] || '교사가 작성할 항목')),
+    '학습 목표\n' + (draft.goal || ''), '학습 내용\n' + (draft.content || ''),
+    '평가 기준\n' + (draft.eval || ''), '성찰 질문\n' + (draft.reflect || ''),
+    '수업 후 기록\n목표 달성 근거와 학생 반응을 확인하고 다음 수업의 수정 사항을 기록합니다.'];
+  const link = document.createElement('a');
+  link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(lines.join('\n\n'));
+  link.download = '교사용-수업가이드.txt';
+  link.click();
+  document.getElementById('plan-status').textContent = '현재 수업안을 반영한 가이드를 생성했습니다.';
+});
+
 
   document.querySelectorAll('.nav-tabs button').forEach(btn => {
     btn.addEventListener('click', () => {
