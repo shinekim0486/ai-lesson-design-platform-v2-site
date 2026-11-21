@@ -263,17 +263,6 @@ table th { background: #e0f4ff; font-weight: 600; }
 .research-links a { color: #175981; }
 @media print { .research-card { display: none; } }
 
-.network-controls, .network-results {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 12px;
-}
-.network-results { margin-top: 14px; }
-.network-results div { padding: 10px; background: #f0f8ff; border-radius: 8px; }
-.network-results dt { color: #385873; }
-.network-results dd { margin: 4px 0 0; font-weight: 700; }
-.network-table { overflow-x: auto; margin-top: 12px; }
-.network-table table { min-width: 520px; }
 </style>
 </head>
 <body>
@@ -291,7 +280,6 @@ table th { background: #e0f4ff; font-weight: 600; }
   <button class="active" data-mode="teacher"><span class="mode-icon">🍎</span> 선생님</button>
   <button data-mode="student"><span class="mode-icon">📚</span> 학생</button>
   <button data-mode="lesson"><span class="mode-icon">✏️</span> 수업설계</button>
-  <button type="button" data-mode="network"><span class="mode-icon">🌐</span> 네트워크 실습</button>
   <button data-mode="dashboard"><span class="mode-icon">📊</span> 대시보드</button>
   <button data-mode="relation"><span class="mode-icon">🔗</span> 관계분석</button>
 </div>
@@ -438,33 +426,6 @@ table th { background: #e0f4ff; font-weight: 600; }
   </div>
   <div class="btn-row" id="lesson-action-row" style="display:none;margin-top:16px;">
     <button class="btn btn-success" id="lesson-print">🖨️ PDF 출력 (인쇄)</button>
-  </div>
-</div>
-
-<div class="mode-section" id="mode-network">
-  <div class="card">
-    <h3>네트워크 지연·재전송 시뮬레이션</h3>
-    <p>패킷 100개를 가상으로 보내고, 유실된 패킷은 한 번 다시 보냅니다. 한 가지 조건을 바꿔 이전 결과와 비교해 보세요.</p>
-    <form id="network-form">
-      <div class="network-controls">
-        <div><label for="network-delay">편도 지연 (ms)</label>
-          <input id="network-delay" type="number" min="1" max="1000" value="40" required></div>
-        <div><label for="network-loss">시도당 패킷 유실률 (%)</label>
-          <input id="network-loss" type="number" min="0" max="100" value="10" required></div>
-        <div><label for="network-timeout">재전송 대기 (ms)</label>
-          <input id="network-timeout" type="number" min="1" max="5000" value="120" required></div>
-      </div>
-      <div class="btn-row"><button type="submit" class="btn btn-primary">시뮬레이션 실행</button></div>
-    </form>
-    <div id="network-result" role="status" aria-live="polite"></div>
-    <div id="network-history" class="network-table" hidden>
-      <table>
-        <caption>최근 실행 비교</caption>
-        <thead><tr><th scope="col">편도 지연</th><th scope="col">유실 설정</th><th scope="col">재전송 대기</th><th scope="col">평균 RTT</th><th scope="col">재전송</th><th scope="col">최종 유실</th><th scope="col">평균 완료 시간</th></tr></thead>
-        <tbody id="network-runs"></tbody>
-      </table>
-    </div>
-    <div class="research-links"><a href="https://shinekim0486.github.io/sangil-ai-edu/03_%EA%B5%90%EC%88%98%ED%95%99%EC%8A%B5%20%EC%9E%90%EB%A3%8C/subjects/04_%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/AUTO-NET-LAB_%EC%9B%B9%EB%8D%B0%EB%AA%A8/index.html" target="_blank" rel="noopener">AUTO-NET-LAB 원본 실습 ↗</a></div>
   </div>
 </div>
 
@@ -1295,59 +1256,6 @@ function init() {
       if (mode === 'teacher') renderResearchLog();
     });
   });
-
-  const networkForm = document.getElementById('network-form');
-  networkForm.addEventListener('submit', event => {
-    event.preventDefault();
-    const delay = document.getElementById('network-delay').valueAsNumber;
-    const loss = document.getElementById('network-loss').valueAsNumber;
-    const timeout = document.getElementById('network-timeout').valueAsNumber;
-    const rtt = 2 * delay;
-
-    if (timeout < rtt) {
-      document.getElementById('network-result').textContent =
-        '이 모델에서는 재전송 대기가 예상 RTT(' + rtt + ' ms) 이상이어야 합니다. 대기 시간을 늘려 주세요.';
-      return;
-    }
-
-    let retries = 0;
-    let lost = 0;
-    for (let packet = 0; packet < 100; packet++) {
-      // Fixed, evenly spaced samples keep repeated comparisons reproducible.
-      const firstSample = packet;
-      const retrySample = (packet * 37 + 19) % 100;
-      if (firstSample < loss) {
-        retries++;
-        if (retrySample < loss) lost++;
-      }
-    }
-
-    const delivered = 100 - lost;
-    const averageRtt = delivered ? rtt + ' ms' : '—';
-    const averageCompletion = delivered
-      ? (rtt + (retries - lost) * timeout / delivered).toFixed(1) + ' ms'
-      : '—';
-    document.getElementById('network-result').innerHTML = `
-      <dl class="network-results">
-        <div><dt>평균 RTT</dt><dd>${averageRtt}</dd></div>
-        <div><dt>재전송</dt><dd>${retries}회</dd></div>
-        <div><dt>최종 유실</dt><dd>${lost}/100개</dd></div>
-        <div><dt>평균 완료 시간<br>(재전송 대기 포함)</dt><dd>${averageCompletion}</dd></div>
-      </dl>`;
-
-    const runs = document.getElementById('network-runs');
-    const row = runs.insertRow(0);
-    [delay + ' ms', loss + '%', timeout + ' ms', averageRtt, retries + '회',
-      lost + '개', averageCompletion].forEach(value => {
-      row.insertCell().textContent = value;
-    });
-    if (runs.rows.length > 5) runs.deleteRow(-1);
-    document.getElementById('network-history').hidden = false;
-  });
-
-  if (location.hash === '#network') {
-    document.querySelector('[data-mode="network"]').click();
-  }
 
   document.getElementById('t-subject')?.addEventListener('input', () => {
     const subject = document.getElementById('t-subject').value.trim();
