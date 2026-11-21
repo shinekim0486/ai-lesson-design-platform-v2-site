@@ -6,161 +6,200 @@
 <title>티처스 캔버스</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
+/* ===== v5: 에듀넷 T-Clear 스타일 ===== */
+:root {
+  --primary: #2d6fa5;
+  --primary-dark: #1e5280;
+  --primary-light: #4a90c4;
+  --primary-bg: #eaf3fb;
+  --accent: #3498db;
+  --success: #27ae60;
+  --warning: #e67e22;
+  --danger: #e74c3c;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-500: #64748b;
+  --gray-700: #334155;
+  --text: #1e293b;
+  --radius: 8px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+}
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: #f0f8ff;
-  color: #1a1a2e;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+  background: var(--gray-100);
+  color: var(--text);
   min-height: 100vh;
 }
 .header {
-  background: linear-gradient(135deg, #87CEEB, #B0E0E6);
+  background: var(--primary);
   color: white;
-  padding: 16px 24px;
+  padding: 0 24px;
+  height: 56px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
 }
-.header h1 { font-size: 20px; font-weight: 600; }
+.header h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
 .header .xp-display {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255,255,255,0.25);
-  padding: 6px 14px;
+  background: rgba(255,255,255,0.18);
+  padding: 5px 14px;
   border-radius: 20px;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.3);
 }
-.header .xp-display .level-name { font-weight: 600; }
 .nav-tabs {
   display: flex;
-  gap: 4px;
-  padding: 12px 24px;
-  background: #fafdff;
-  border-bottom: 1px solid #b0e0e6;
+  gap: 0;
+  padding: 0 24px;
+  background: white;
+  border-bottom: 2px solid var(--gray-200);
   overflow-x: auto;
+  box-shadow: var(--shadow-sm);
 }
 .nav-tabs button {
-  padding: 10px 18px;
+  padding: 14px 18px;
   border: none;
-  background: #e0f4ff;
-  border-radius: 8px 8px 0 0;
+  background: transparent;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
+  color: var(--gray-500);
   display: flex;
   align-items: center;
   gap: 6px;
   transition: all 0.2s;
   white-space: nowrap;
 }
-.nav-tabs button:hover { background: #e0f4ff; }
-.nav-tabs button.active {
-  background: #87CEEB;
-  color: white;
-}
-.nav-tabs button .mode-icon { font-size: 18px; }
-.mode-section { display: none; padding: 24px; max-width: 800px; margin: 0 auto; }
+.nav-tabs button:hover { color: var(--primary); background: var(--primary-bg); }
+.nav-tabs button.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 700; }
+.mode-section { display: none; padding: 24px; max-width: 900px; margin: 0 auto; }
 .mode-section.active { display: block; }
 .card {
-  background: #fafdff;
-  border-radius: 12px;
+  background: white;
+  border-radius: var(--radius);
   padding: 20px;
   margin-bottom: 16px;
-  box-shadow: 0 1px 4px rgba(71,137,195,0.12);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--gray-200);
 }
-.card h3 { font-size: 16px; margin-bottom: 12px; color: #4682B4; }
-label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 14px; color: #4682B4; }
+.card h3 { font-size: 16px; margin-bottom: 14px; color: var(--primary-dark); font-weight: 700; display: flex; align-items: center; gap: 6px; }
+.card h3::before { content: ''; display: inline-block; width: 4px; height: 18px; background: var(--primary); border-radius: 2px; }
+label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 13px; color: var(--gray-700); }
 input, textarea, select {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #87CEEB;
-  border-radius: 8px;
+  padding: 9px 12px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius);
   font-size: 14px;
   margin-bottom: 12px;
   resize: vertical;
+  background: var(--gray-50);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  color: var(--text);
+}
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 3px rgba(45,111,165,0.12);
+  background: white;
 }
 textarea { min-height: 80px; }
 button.btn {
-  padding: 10px 20px;
+  padding: 9px 18px;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: all 0.18s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
-button.btn-primary { background: #87CEEB; color: white; }
-button.btn-primary:hover { opacity: 0.85; }
-button.btn-secondary { background: #6c757d; color: white; }
-button.btn-success { background: #28a745; color: white; }
-button.btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.btn-row { display: flex; gap: 8px; margin-top: 12px; }
+button.btn-primary { background: var(--primary); color: white; }
+button.btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 10px rgba(45,111,165,0.3); }
+button.btn-secondary { background: var(--gray-200); color: var(--gray-700); }
+button.btn-secondary:hover { background: var(--gray-300); }
+button.btn-success { background: var(--success); color: white; }
+button.btn-success:hover { background: #229954; }
+button.btn-warning { background: var(--warning); color: white; }
+button.btn-warning:hover { background: #ca6f1e; }
+button.btn-danger { background: var(--danger); color: white; }
+button.btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+.btn-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
 .empty-state {
   text-align: center;
-  padding: 30px;
-  color: #888;
-  background: #f9f9f9;
-  border-radius: 8px;
-  border: 1px dashed #87CEEB;
+  padding: 32px;
+  color: var(--gray-500);
+  background: var(--gray-50);
+  border-radius: var(--radius);
+  border: 2px dashed var(--gray-300);
+  font-size: 14px;
 }
 .list-item {
-  padding: 12px;
-  border: 1px solid #b0e0e6;
-  border-radius: 8px;
+  padding: 12px 16px;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
   margin-bottom: 8px;
-  background: #f0f8ff;
+  background: white;
+  transition: box-shadow 0.15s, border-color 0.15s;
+  cursor: pointer;
 }
-.list-item:last-child { margin-bottom: 0; }
-.list-item .item-title { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
-.list-item .item-meta { font-size: 12px; color: #888; }
+.list-item:hover { box-shadow: var(--shadow); border-color: var(--primary-light); }
+.list-item .item-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; color: var(--text); }
+.list-item .item-meta { font-size: 12px; color: var(--gray-500); }
 .xp-bar-container {
-  background: #e0f4ff;
+  background: var(--gray-200);
   border-radius: 10px;
-  height: 16px;
+  height: 14px;
   overflow: hidden;
   margin: 8px 0;
 }
 .xp-bar {
   height: 100%;
-  background: linear-gradient(90deg, #87CEEB, #B0E0E6);
+  background: linear-gradient(90deg, var(--primary), var(--accent));
   border-radius: 10px;
-  transition: width 0.4s ease;
+  transition: width 0.5s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 11px;
-  font-weight: 600;
-}
-.level-badge {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 16px;
-  font-size: 13px;
-  font-weight: 600;
-  margin-right: 6px;
+  font-size: 10px;
+  font-weight: 700;
 }
 .badge-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   gap: 10px;
   margin-top: 12px;
 }
 .badge-item {
   text-align: center;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #b0e0e6;
-  background: #f0f8ff;
+  padding: 14px 10px;
+  border-radius: var(--radius);
+  border: 1px solid var(--gray-200);
+  background: white;
+  transition: box-shadow 0.15s;
 }
-.badge-item.locked { opacity: 0.4; }
-.badge-item .badge-icon { font-size: 32px; margin-bottom: 4px; }
-.badge-item .badge-name { font-size: 13px; font-weight: 500; }
-.badge-item .badge-cond { font-size: 11px; color: #888; margin-top: 2px; }
+.badge-item:hover { box-shadow: var(--shadow); }
+.badge-item.locked { opacity: 0.35; filter: grayscale(0.6); }
+.badge-item .badge-icon { font-size: 30px; margin-bottom: 6px; }
+.badge-item .badge-name { font-size: 12px; font-weight: 600; color: var(--text); }
+.badge-item .badge-cond { font-size: 11px; color: var(--gray-500); margin-top: 3px; }
 .chat-box {
-  background: #f0f8ff;
-  border-radius: 8px;
+  background: var(--gray-50);
+  border-radius: var(--radius);
+  border: 1px solid var(--gray-200);
   padding: 12px;
   max-height: 300px;
   overflow-y: auto;
@@ -169,113 +208,509 @@ button.btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .chat-msg {
   margin-bottom: 8px;
   padding: 8px 12px;
-  border-radius: 8px;
-  max-width: 80%;
+  border-radius: 10px;
+  max-width: 85%;
+  font-size: 14px;
+  line-height: 1.5;
 }
-.chat-msg.user { background: #87CEEB; color: white; margin-left: auto; text-align: right; }
-.chat-msg.ai { background: #fafdff; border: 1px solid #87CEEB; margin-right: auto; }
-.chat-msg .msg-label { font-size: 11px; color: #888; margin-bottom: 2px; }
+.chat-msg.user { background: var(--primary); color: white; margin-left: auto; text-align: right; border-radius: 10px 10px 2px 10px; }
+.chat-msg.ai { background: white; border: 1px solid var(--gray-200); margin-right: auto; border-radius: 10px 10px 10px 2px; }
+.chat-msg .msg-label { font-size: 10px; color: rgba(255,255,255,0.75); margin-bottom: 3px; }
+.chat-msg.ai .msg-label { color: var(--gray-500); }
 .chat-input-row { display: flex; gap: 8px; }
-.chat-input-row input { flex: 1; }
+.chat-input-row input { flex: 1; margin-bottom: 0; }
 .diary-textarea { min-height: 120px; }
 .sociogram-canvas {
-  border: 1px solid #87CEEB;
-  border-radius: 8px;
-  background: #f0f8ff;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  background: var(--gray-50);
   margin-top: 12px;
+  max-width: 100%;
 }
 .modal-overlay {
   display: none;
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(71,137,195,0.3);
+  background: rgba(0,0,0,0.4);
   z-index: 100;
   justify-content: center;
   align-items: center;
+  backdrop-filter: blur(2px);
 }
 .modal-overlay.show { display: flex; }
 .modal {
-  background: #fafdff;
+  background: white;
   border-radius: 12px;
-  padding: 24px;
-  max-width: 500px;
+  padding: 28px;
+  max-width: 560px;
   width: 90%;
-  max-height: 80vh;
+  max-height: 85vh;
   overflow-y: auto;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
 }
-.step-indicator {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 16px;
-}
+.step-indicator { display: flex; gap: 6px; margin-bottom: 16px; align-items: center; }
 .step-dot {
   width: 32px; height: 32px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  font-weight: 600;
-  background: #e0f4ff;
-  color: #888;
-  border: 2px solid #ddd;
+  font-size: 13px;
+  font-weight: 700;
+  background: var(--gray-100);
+  color: var(--gray-500);
+  border: 2px solid var(--gray-300);
+  transition: all 0.2s;
 }
-.step-dot.active { background: #87CEEB; color: white; border-color: #4682B4; }
-.step-dot.done { background: #28a745; color: white; border-color: #28a745; }
+.step-dot.active { background: var(--primary); color: white; border-color: var(--primary-dark); }
+.step-dot.done { background: var(--success); color: white; border-color: var(--success); }
 .feedback-msg {
   padding: 10px 14px;
-  border-radius: 8px;
+  border-radius: var(--radius);
   margin-top: 8px;
-  font-size: 14px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
-.feedback-msg.success { background: #d4edda; color: #155724; }
-.feedback-msg.error { background: #f8d7da; color: #721c24; }
-.feedback-msg.info { background: #e0f4ff; color: #2c5f8a; }
-.bloom-select { margin-bottom: 12px; }
+.feedback-msg.success { background: #eafaf1; color: #1a7a45; border-left: 3px solid var(--success); }
+.feedback-msg.error { background: #fdf2f2; color: #922b21; border-left: 3px solid var(--danger); }
+.feedback-msg.info { background: var(--primary-bg); color: var(--primary-dark); border-left: 3px solid var(--primary); }
 table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
-table th, table td { padding: 8px 12px; border: 1px solid #b0e0e6; text-align: left; }
-table th { background: #e0f4ff; font-weight: 600; }
+table th, table td { padding: 9px 12px; border: 1px solid var(--gray-200); text-align: left; }
+table th { background: var(--gray-50); font-weight: 700; color: var(--gray-700); font-size: 13px; }
+table tr:hover td { background: var(--primary-bg); }
 .student-card {
   display: inline-block;
   width: 180px;
-  padding: 12px;
+  padding: 14px;
   margin: 4px;
-  background: #fafdff;
-  border-radius: 8px;
-  border: 1px solid #b0e0e6;
+  background: white;
+  border-radius: var(--radius);
+  border: 1px solid var(--gray-200);
   text-align: center;
   vertical-align: top;
+  transition: box-shadow 0.15s, border-color 0.15s;
+  cursor: pointer;
 }
-.student-card .name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
-.student-card .xp { font-size: 13px; color: #4682B4; font-weight: 500; }
+.student-card:hover { box-shadow: var(--shadow); border-color: var(--primary-light); }
+.student-card .name { font-weight: 700; font-size: 14px; margin-bottom: 4px; color: var(--text); }
+.student-card .xp { font-size: 13px; color: var(--primary); font-weight: 600; }
 .stats-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
 .stat-card {
-  flex: 1; min-width: 120px;
-  background: #fafdff; border-radius: 8px;
-  padding: 14px; text-align: center;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  flex: 1; min-width: 110px;
+  background: white; border-radius: var(--radius);
+  padding: 16px; text-align: center;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--gray-200);
+  border-top: 3px solid var(--primary);
 }
-.stat-card .stat-value { font-size: 28px; font-weight: 700; color: #4682B4; }
-.stat-card .stat-label { font-size: 12px; color: #888; margin-top: 2px; }
+.stat-card .stat-value { font-size: 28px; font-weight: 800; color: var(--primary); }
+.stat-card .stat-label { font-size: 12px; color: var(--gray-500); margin-top: 3px; }
+
+/* 역할별 대시보드 뱃지 */
+#dash-teacher .role-badge { background:#fff3e0;color:#e67e22;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700; }
+#dash-admin .role-badge { background:#f3e8ff;color:#7c3aed;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700; }
+#dash-student .role-badge { background:var(--primary-bg);color:var(--primary);padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700; }
+#da-user-table { width:100%;border-collapse:collapse; }
+#da-user-table th,#da-user-table td { padding:10px 12px;text-align:left;border-bottom:1px solid var(--gray-200); }
+#da-user-table th { background:var(--gray-50);font-size:12px;color:var(--gray-700); }
+#da-user-table tr:hover td { background:var(--gray-50); }
+
+/* ===== A. 설문 스타일 ===== */
+.survey-section { margin-bottom: 20px; }
+.survey-section h4 { font-size: 14px; color: var(--primary-dark); margin-bottom: 10px; border-left: 3px solid var(--primary); padding-left: 10px; font-weight: 700; }
+.survey-item { margin-bottom: 12px; padding: 14px; background: var(--gray-50); border-radius: var(--radius); border: 1px solid var(--gray-200); }
+.survey-item .q-text { font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
+.survey-item .q-kpi { font-size: 11px; color: var(--gray-500); margin-bottom: 6px; }
+.likert-row { display: flex; gap: 6px; align-items: center; }
+.likert-row label { font-weight: 400; font-size: 12px; color: var(--gray-700); display: flex; align-items: center; gap: 3px; cursor: pointer; margin-bottom: 0; }
+.likert-row input[type=radio] { width: auto; margin-bottom: 0; cursor: pointer; accent-color: var(--primary); }
+.likert-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--gray-500); margin-top: 4px; }
+.survey-textarea { min-height: 60px; font-size: 13px; }
+.survey-score-badge {
+  display: inline-block; padding: 2px 10px; border-radius: 12px;
+  font-size: 12px; font-weight: 700; background: var(--primary-bg); color: var(--primary);
+}
+
+/* ===== B. S단계 프롬프트 카드 ===== */
+.s-stage-cards { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.s-stage-card {
+  padding: 7px 14px; border-radius: var(--radius); cursor: pointer;
+  font-size: 12px; font-weight: 700; border: 2px solid transparent;
+  transition: all 0.2s;
+}
+.s-stage-card.s0 { background: #fef9e7; color: #7d6608; border-color: #f9ca24; }
+.s-stage-card.s1 { background: #eafaf1; color: #1e8449; border-color: #2ecc71; }
+.s-stage-card.s2 { background: #eaf3fb; color: var(--primary-dark); border-color: var(--primary-light); }
+.s-stage-card.s3 { background: #f4ecf7; color: #6c3483; border-color: #9b59b6; }
+.s-stage-card:hover { opacity: 0.85; transform: translateY(-1px); box-shadow: var(--shadow); }
+.s-level-indicator {
+  display: flex; gap: 4px; margin-bottom: 10px; align-items: center;
+}
+.s-dot {
+  width: 26px; height: 26px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+.s-dot.s0 { background: #f9ca24; color: #7d6608; }
+.s-dot.s1 { background: #2ecc71; }
+.s-dot.s2 { background: var(--primary); }
+.s-dot.s3 { background: #9b59b6; }
+.s-dot.inactive { background: var(--gray-200); color: var(--gray-500); box-shadow: none; }
+.xp-chip {
+  display: inline-block; padding: 2px 8px; border-radius: 10px;
+  font-size: 11px; font-weight: 700; background: #fef9e7; color: #7d6608;
+  margin-left: 6px; border: 1px solid #f9ca24;
+}
+
+/* ===== C. 성찰 일지 4문항 ===== */
+.reflect-step {
+  padding: 14px;
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+  border-left: 4px solid var(--primary);
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-left: 4px solid var(--primary);
+}
+.reflect-step.step-1 { border-left-color: var(--success); }
+.reflect-step.step-2 { border-left-color: var(--warning); }
+.reflect-step.step-3 { border-left-color: var(--accent); }
+.reflect-step.step-4 { border-left-color: #9b59b6; }
+.reflect-step .step-label {
+  font-size: 12px; font-weight: 700; margin-bottom: 5px;
+  display: flex; align-items: center; gap: 6px; color: var(--primary-dark);
+}
+.reflect-step .step-q { font-size: 13px; color: var(--text); margin-bottom: 8px; font-weight: 600; }
+.reflect-step textarea { min-height: 60px; font-size: 13px; margin-bottom: 0; }
+
+/* ===== D. 사전·사후 비교 대시보드 ===== */
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.compare-card {
+  padding: 16px; border-radius: var(--radius); border: 1px solid var(--gray-200); background: white; box-shadow: var(--shadow-sm);
+}
+.compare-card h5 { font-size: 13px; color: var(--primary); margin-bottom: 10px; font-weight: 700; }
+.compare-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 13px; }
+.compare-row .label { color: var(--gray-500); }
+.compare-row .val { font-weight: 700; color: var(--primary); }
+.compare-row .val.up { color: var(--success); }
+.compare-row .val.down { color: var(--danger); }
+.kpi-bar-wrap { margin-bottom: 10px; }
+.kpi-bar-wrap .kpi-label { font-size: 12px; color: var(--gray-500); margin-bottom: 3px; display: flex; justify-content: space-between; }
+.kpi-bar-bg { background: var(--gray-200); border-radius: 6px; height: 10px; overflow: hidden; }
+.kpi-bar-pre { background: var(--primary-light); height: 10px; border-radius: 6px; opacity: 0.6; }
+.kpi-bar-post { background: var(--success); height: 10px; border-radius: 6px; margin-top: 2px; }
+.type-chip {
+  display: inline-block; padding: 3px 10px; border-radius: 12px;
+  font-size: 12px; font-weight: 700; margin: 2px;
+}
+.type-leader { background: var(--primary-bg); color: var(--primary-dark); }
+.type-verifier { background: #eafaf1; color: #1a7a45; }
+.type-acceptor { background: #fef9e7; color: #7d6608; }
+.type-support { background: #fdf2f2; color: #922b21; }
+
+/* ===== E. 데이터 내보내기/가져오기 ===== */
+.data-io-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.data-io-row input[type=file] { width: auto; flex: 1; min-width: 160px; padding: 6px; font-size: 13px; }
+
+/* ===== G. 루브릭 자가평가 ===== */
+.rubric-self-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; }
+.rubric-self-table th { background: var(--gray-50); padding: 8px 10px; border: 1px solid var(--gray-200); font-weight: 700; color: var(--gray-700); }
+.rubric-self-table td { padding: 8px 10px; border: 1px solid var(--gray-200); vertical-align: middle; }
+.rubric-self-table select { width: auto; padding: 4px 8px; font-size: 12px; margin-bottom: 0; }
+.rubric-score-total { font-size: 20px; font-weight: 800; color: var(--primary); }
+
+/* ===== H. 초기화 확인 모달 ===== */
+.danger-btn { background: var(--danger); color: white; }
+.danger-btn:hover { background: #c0392b; }
+.confirm-modal-box { max-width: 400px; }
+.confirm-modal-box p { font-size: 14px; color: var(--gray-500); margin-bottom: 16px; line-height: 1.6; }
+
+/* ===== I. 활동 유형별 예시 ===== */
+.subject-example-card {
+  padding: 12px 16px; border-radius: var(--radius);
+  border: 1px solid var(--gray-200); background: white;
+  margin-bottom: 8px; cursor: pointer;
+  transition: all 0.18s;
+  box-shadow: var(--shadow-sm);
+}
+.subject-example-card:hover { box-shadow: var(--shadow); transform: translateY(-1px); background: var(--primary-bg); }
+.subject-example-card .ex-title { font-weight: 700; font-size: 14px; color: var(--primary-dark); margin-bottom: 6px; }
+.subject-example-card .ex-desc { font-size: 12px; color: var(--gray-500); line-height: 1.4; }
+
+/* ===== 페이지네이션 ===== */
+.pagination { display: flex; gap: 4px; justify-content: center; margin-top: 12px; }
+.pagination button {
+  padding: 6px 12px; border: 1px solid var(--gray-300);
+  background: white; border-radius: var(--radius);
+  font-size: 13px; cursor: pointer; color: var(--gray-700);
+  transition: all 0.15s;
+}
+.pagination button:hover { background: var(--primary-bg); border-color: var(--primary-light); color: var(--primary); }
+.pagination button.active { background: var(--primary); color: white; border-color: var(--primary); }
+.pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ===== 투어 가이드 ===== */
+#tour-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 999;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+#tour-overlay.hidden { opacity: 0; pointer-events: none; }
+#tour-highlight {
+  position: fixed;
+  border-radius: 10px;
+  box-shadow: 0 0 0 4px var(--primary), 0 0 0 9999px rgba(0,0,0,0.45);
+  z-index: 1000;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(.4,0,.2,1);
+}
+#tour-tooltip {
+  position: fixed;
+  z-index: 1001;
+  background: white;
+  border-radius: 14px;
+  padding: 20px 22px;
+  max-width: 320px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+  transition: all 0.4s cubic-bezier(.4,0,.2,1);
+}
+#tour-tooltip::before {
+  content: '';
+  position: absolute;
+  width: 14px; height: 14px;
+  background: white;
+  transform: rotate(45deg);
+}
+#tour-tooltip.arrow-top::before { top: -7px; left: 24px; }
+#tour-tooltip.arrow-bottom::before { bottom: -7px; left: 24px; }
+#tour-tooltip.arrow-left::before { left: -7px; top: 24px; }
+#tour-step-badge {
+  display: inline-block;
+  background: var(--primary-bg);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 10px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+#tour-tooltip h4 {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+#tour-tooltip p {
+  font-size: 13px;
+  color: var(--gray-500);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+#tour-action-hint {
+  font-size: 12px;
+  color: var(--primary);
+  font-weight: 600;
+  background: var(--primary-bg);
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-bottom: 14px;
+  display: none;
+}
+.tour-btn-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+.tour-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.tour-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--gray-300);
+  transition: background 0.2s;
+}
+.tour-dot.active { background: var(--primary); width: 18px; border-radius: 4px; }
+#tour-btn-next {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#tour-btn-next:hover { background: var(--primary-dark); }
+#tour-btn-skip {
+  background: none;
+  border: none;
+  color: var(--gray-500);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+#tour-btn-skip:hover { color: var(--text); }
+#tour-start-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 998;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(45,111,165,0.4);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  transition: all 0.2s;
+  animation: tour-pulse 2.5s infinite;
+}
+#tour-start-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,111,165,0.5); }
+@keyframes tour-pulse {
+  0%, 100% { box-shadow: 0 4px 16px rgba(45,111,165,0.4); }
+  50% { box-shadow: 0 4px 28px rgba(45,111,165,0.7); }
+}
+.tour-highlight-ring {
+  outline: 3px solid var(--primary) !important;
+  outline-offset: 3px !important;
+  border-radius: 8px !important;
+  transition: outline 0.3s;
+}
 </style>
 </head>
 <body>
 
+<!-- ===== 투어 가이드 UI ===== -->
+<div id="tour-overlay" class="hidden"></div>
+<div id="tour-highlight" style="display:none;"></div>
+<div id="tour-tooltip" style="display:none;">
+  <div id="tour-step-badge">STEP 1 / 7</div>
+  <h4 id="tour-title"></h4>
+  <p id="tour-desc"></p>
+  <div id="tour-action-hint"></div>
+  <div class="tour-btn-row">
+    <button id="tour-btn-skip" onclick="endTour()">건너뛰기</button>
+    <div class="tour-dots" id="tour-dots"></div>
+    <button id="tour-btn-next" onclick="tourNext()">다음 →</button>
+  </div>
+</div>
+<button id="tour-start-btn" onclick="startTour()">📖 선생님 가이드</button>
+
 <div class="header">
-  <h1>티처스 캔버스</h1>
-  <div class="xp-display">
-    <span>👤 선생님</span>
-    <span id="header-level">🌱 새싹</span>
-    <span id="header-xp">0 XP</span>
+  <h1>🎨 티처스 캔버스</h1>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="xp-display" id="header-xp-box">
+      <span>👤 선생님</span>
+      <span id="header-level">🌱 새싹</span>
+      <span id="header-xp">0 XP</span>
+    </div>
+    <!-- 로그인 버튼 (비로그인 상태) -->
+    <button id="login-btn" onclick="document.getElementById('login-modal').classList.add('show')" style="
+      background:rgba(255,255,255,0.15);
+      border:1.5px solid rgba(255,255,255,0.5);
+      color:white;
+      padding:6px 16px;
+      border-radius:20px;
+      font-size:13px;
+      font-weight:600;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      transition:background 0.2s;
+    " onmouseover="this.style.background='rgba(255,255,255,0.28)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+      🔐 회원 로그인
+    </button>
+    <!-- 로그인 후 프로필 (기본 숨김) -->
+    <div id="user-profile-chip" style="display:none;align-items:center;gap:8px;background:rgba(255,255,255,0.18);border:1.5px solid rgba(255,255,255,0.4);padding:5px 14px;border-radius:20px;font-size:13px;">
+      <span id="profile-avatar" style="font-size:18px;">🧑‍🏫</span>
+      <span id="profile-name" style="font-weight:700;"></span>
+      <span id="profile-role" style="font-size:11px;opacity:0.8;"></span>
+      <button onclick="logoutUser()" style="background:rgba(255,255,255,0.2);border:none;color:white;font-size:11px;padding:2px 8px;border-radius:10px;cursor:pointer;margin-left:4px;">로그아웃</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 로그인 모달 ===== -->
+<div class="modal-overlay" id="login-modal">
+  <div class="modal" style="max-width:400px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <h3 style="font-size:18px;color:var(--primary-dark);font-weight:800;margin:0;">🔐 회원 로그인</h3>
+      <button onclick="document.getElementById('login-modal').classList.remove('show')" style="background:none;border:none;font-size:20px;cursor:pointer;color:#999;">✕</button>
+    </div>
+    <!-- 탭: 로그인 / 회원가입 -->
+    <div style="display:flex;border-bottom:2px solid var(--gray-200);margin-bottom:20px;">
+      <button id="tab-login" onclick="switchLoginTab('login')" style="flex:1;padding:10px;border:none;background:none;font-weight:700;color:var(--primary);border-bottom:3px solid var(--primary);margin-bottom:-2px;cursor:pointer;font-size:14px;">로그인</button>
+      <button id="tab-signup" onclick="switchLoginTab('signup')" style="flex:1;padding:10px;border:none;background:none;font-weight:600;color:var(--gray-500);cursor:pointer;font-size:14px;">회원가입</button>
+    </div>
+    <!-- 로그인 폼 -->
+    <div id="form-login">
+      <div style="margin-bottom:14px;">
+        <label style="font-size:13px;font-weight:600;color:var(--gray-700);display:block;margin-bottom:5px;">아이디</label>
+        <input type="text" id="login-id" placeholder="아이디 입력" style="margin-bottom:0;" autocomplete="username">
+      </div>
+      <div style="margin-bottom:20px;">
+        <label style="font-size:13px;font-weight:600;color:var(--gray-700);display:block;margin-bottom:5px;">비밀번호</label>
+        <input type="password" id="login-pw" placeholder="비밀번호 입력" style="margin-bottom:0;" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <div id="login-error" style="color:#e74c3c;font-size:13px;margin-bottom:10px;display:none;"></div>
+      <button class="btn btn-primary" onclick="doLogin()" style="width:100%;justify-content:center;padding:11px;">로그인</button>
+      <div style="margin-top:12px;text-align:center;font-size:12px;color:var(--gray-500);">
+        계정이 없으신가요? <a href="#" onclick="switchLoginTab('signup');return false;" style="color:var(--primary);font-weight:600;">회원가입</a>
+      </div>
+    </div>
+    <!-- 회원가입 폼 -->
+    <div id="form-signup" style="display:none;">
+      <div style="margin-bottom:12px;">
+        <label style="font-size:13px;font-weight:600;color:var(--gray-700);display:block;margin-bottom:5px;">이름</label>
+        <input type="text" id="signup-name" placeholder="실명 입력" style="margin-bottom:0;">
+      </div>
+      <div style="margin-bottom:12px;">
+        <label style="font-size:13px;font-weight:600;color:var(--gray-700);display:block;margin-bottom:5px;">역할</label>
+        <select id="signup-role" style="margin-bottom:0;">
+          <option value="teacher">🍎 교사</option>
+          <option value="student">📚 학생</option>
+          <option value="admin">🛡️ 관리자</option>
+        </select>
+      </div>
+      <div style="margin-bottom:12px;">
+        <label style="font-size:13px;font-weight:600;color:var(--gray-700);display:block;margin-bottom:5px;">아이디</label>
+        <input type="text" id="signup-id" placeholder="아이디 (영문+숫자 4자 이상)" style="margin-bottom:0;" autocomplete="username">
+      </div>
+      <div style="margin-bottom:20px;">
+        <label style="font-size:13px;font-weight:600;color:var(--gray-700);display:block;margin-bottom:5px;">비밀번호</label>
+        <input type="password" id="signup-pw" placeholder="비밀번호 (6자 이상)" style="margin-bottom:0;" autocomplete="new-password">
+      </div>
+      <div id="signup-error" style="color:#e74c3c;font-size:13px;margin-bottom:10px;display:none;"></div>
+      <button class="btn btn-primary" onclick="doSignup()" style="width:100%;justify-content:center;padding:11px;">가입하기</button>
+    </div>
   </div>
 </div>
 
 <div class="nav-tabs" id="nav-tabs">
-  <button class="active" data-mode="teacher"><span class="mode-icon">🍎</span> 선생님</button>
-  <button data-mode="student"><span class="mode-icon">📚</span> 학생</button>
-  <button data-mode="lesson"><span class="mode-icon">✏️</span> 수업설계</button>
-  <button data-mode="dashboard"><span class="mode-icon">📊</span> 대시보드</button>
-  <button data-mode="relation"><span class="mode-icon">🔗</span> 관계분석</button>
+  <button class="active" data-mode="teacher"><span>🍎</span> 선생님</button>
+  <button data-mode="student"><span>📚</span> 학생</button>
+  <button data-mode="lesson"><span>✏️</span> 수업설계</button>
+  <button data-mode="survey"><span>📋</span> 설문</button>
+  <button data-mode="dashboard"><span>📊</span> 대시보드</button>
+  <button data-mode="relation"><span>🔗</span> 관계분석</button>
 </div>
 
 <!-- ========== 선생님 모드 ========== -->
@@ -287,7 +722,7 @@ table th { background: #e0f4ff; font-weight: 600; }
     <label for="t-idea">아이디어 내용</label>
     <textarea id="t-idea" placeholder="수업 활동, 진행 방법 등을 자유롭게 적어주세요" maxlength="1000"></textarea>
     <div class="btn-row">
-      <button class="btn btn-primary" id="t-save">저장하기 (+5 XP)</button>
+      <button class="btn btn-primary" id="t-save" disabled>저장하기 (+5 XP)</button>
       <button class="btn btn-secondary" id="t-draft">AI 초안 받기 (목업)</button>
     </div>
     <div id="t-feedback"></div>
@@ -302,6 +737,19 @@ table th { background: #e0f4ff; font-weight: 600; }
     <h3>👥 학생 목록 (기본 6명)</h3>
     <div id="t-students"></div>
     <p style="font-size:12px;color:#888;margin-top:8px;">학생 정보는 로컬에만 저장되며 실제 학생 정보가 아닙니다.</p>
+  </div>
+
+  <!-- E. 데이터 내보내기/가져오기 + H. 초기화 -->
+  <div class="card">
+    <h3>💾 데이터 관리</h3>
+    <p style="font-size:12px;color:#888;margin-bottom:12px;">모든 데이터는 이 브라우저에만 저장됩니다. 백업을 권장합니다.</p>
+    <div class="data-io-row">
+      <button class="btn btn-primary" id="btn-export">📥 JSON 내보내기</button>
+      <input type="file" id="btn-import-file" accept=".json" style="display:none;">
+      <button class="btn btn-secondary" id="btn-import">📤 JSON 불러오기</button>
+      <button class="btn danger-btn" id="btn-reset">🗑️ 전체 초기화</button>
+    </div>
+    <div id="io-feedback"></div>
   </div>
 
   <div class="card">
@@ -320,7 +768,7 @@ table th { background: #e0f4ff; font-weight: 600; }
   <div class="card">
     <h3>📊 XP 현황</h3>
     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-      <span class="level-badge" id="s-level-badge">🌱 새싹</span>
+      <span id="s-level-badge" style="font-size:18px;">🌱 새싹</span>
       <div style="flex:1;min-width:200px;">
         <div style="display:flex;justify-content:space-between;font-size:12px;color:#888;margin-bottom:4px;">
           <span>현재 XP: <strong id="s-xp">0</strong></span>
@@ -331,7 +779,6 @@ table th { background: #e0f4ff; font-weight: 600; }
         </div>
       </div>
     </div>
-    <div style="margin-top:12px;font-size:13px;color:#888;">게시물 작성, AI 대화 등으로 XP를 모아 레벨을 올려보세요.</div>
   </div>
 
   <div class="card">
@@ -339,65 +786,197 @@ table th { background: #e0f4ff; font-weight: 600; }
     <div class="badge-grid" id="s-badges"></div>
   </div>
 
+  <!-- C. 성찰 일지 4문항 -->
   <div class="card">
-    <h3>📝 성찰 일지 작성</h3>
-    <textarea class="diary-textarea" id="s-diary" placeholder="오늘 수업을 돌아보며 느낀 점, 배운 점, 궁금한 점을 적어보세요."></textarea>
+    <h3>📝 성찰 일지 (4단계)</h3>
+    <p style="font-size:12px;color:#888;margin-bottom:14px;">4가지 질문에 답하며 오늘 수업을 돌아봐요. (+15 XP)</p>
+
+    <div class="reflect-step step-1">
+      <div class="step-label"><span style="color:#28a745;">✅ STEP 1</span> <span style="color:#28a745;font-size:11px;">성취 인정</span></div>
+      <div class="step-q">오늘 AI가 어떤 부분에서 도움이 됐나요?</div>
+      <textarea id="reflect-q1" placeholder="어떤 부분에서, 왜 도움이 됐는지 구체적으로 써보세요." maxlength="500"></textarea>
+    </div>
+
+    <div class="reflect-step step-2">
+      <div class="step-label"><span style="color:#fd7e14;">🔍 STEP 2</span> <span style="color:#fd7e14;font-size:11px;">결함 진단</span></div>
+      <div class="step-q">AI 답을 그냥 썼나요, 직접 검증했나요?</div>
+      <textarea id="reflect-q2" placeholder="검증했다면 어떻게, 안 했다면 왜 안 했는지 써보세요." maxlength="500"></textarea>
+    </div>
+
+    <div class="reflect-step step-3">
+      <div class="step-label"><span style="color:#17a2b8;">🚀 STEP 3</span> <span style="color:#17a2b8;font-size:11px;">처방 프롬프트</span></div>
+      <div class="step-q">다음번엔 AI에게 어떤 질문을 먼저 하겠어요?</div>
+      <textarea id="reflect-q3" placeholder="오늘보다 나은 질문 1개를 직접 써보세요." maxlength="300"></textarea>
+    </div>
+
+    <div class="reflect-step step-4">
+      <div class="step-label"><span style="color:#6f42c1;">⚠️ STEP 4</span> <span style="color:#6f42c1;font-size:11px;">안전망 퀘스트</span></div>
+      <div class="step-q">아직 모르는 개념이나 기술은 무엇인가요?</div>
+      <textarea id="reflect-q4" placeholder="다음 수업 전에 찾아볼 것을 1개 써보세요." maxlength="300"></textarea>
+    </div>
+
     <div class="btn-row">
-      <button class="btn btn-success" id="s-diary-save">저장하기 (+10 XP)</button>
+      <button class="btn btn-success" id="s-diary-save">성찰 일지 저장 (+15 XP)</button>
     </div>
     <div id="s-diary-feedback"></div>
   </div>
 
+  <!-- B. S단계 AI 소크라테스 대화 -->
   <div class="card">
     <h3>🤖 AI 소크라테스 대화</h3>
+
+    <div style="margin-bottom:12px;padding:10px;background:#f8fbff;border-radius:8px;border:1px solid #d0eaf8;">
+      <div style="font-size:12px;font-weight:700;color:#4682B4;margin-bottom:8px;">📊 현재 질문 단계 (S0→S3)</div>
+      <div class="s-level-indicator" id="s-stage-indicator">
+        <div class="s-dot s0">S0</div>
+        <span style="font-size:10px;color:#aaa;">→</span>
+        <div class="s-dot inactive">S1</div>
+        <span style="font-size:10px;color:#aaa;">→</span>
+        <div class="s-dot inactive">S2</div>
+        <span style="font-size:10px;color:#aaa;">→</span>
+        <div class="s-dot inactive">S3</div>
+        <span class="xp-chip" id="stage-xp-hint">+5 XP</span>
+      </div>
+      <div style="font-size:11px;color:#888;" id="stage-desc">S0: AI 답 그대로 사용 단계입니다. S1 이상으로 올라가 보세요!</div>
+    </div>
+
     <div style="margin-bottom:10px;">
-      <div style="font-size:12px;color:#888;margin-bottom:6px;">💡 참고할 프롬프트 카드 (클릭하면 채팅창 위에 표시)</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;">
-        <button class="prompt-card-btn" data-prompt="분수를 왜 배워야 하나요? 실생활 예시를 들어주세요." style="font-size:10px;padding:4px 8px;border:1px solid #87CEEB;border-radius:4px;background:#f0f8ff;cursor:pointer;color:#4682B4;">분수 실생활 예시</button>
-        <button class="prompt-card-btn" data-prompt="소수와 분수는 어떻게 서로 변환할 수 있나요?" style="font-size:10px;padding:4px 8px;border:1px solid #87CEEB;border-radius:4px;background:#f0f8ff;cursor:pointer;color:#4682B4;">소수↔분수 변환</button>
-        <button class="prompt-card-btn" data-prompt="이 개념이 실생활에서 어떻게 활용되나요?" style="font-size:10px;padding:4px 8px;border:1px solid #87CEEB;border-radius:4px;background:#f0f8ff;cursor:pointer;color:#4682B4;">실생활 활용</button>
-        <button class="prompt-card-btn" data-prompt="반대 입장이라면 이 개념에 대해 어떻게 생각할까요?" style="font-size:10px;padding:4px 8px;border:1px solid #87CEEB;border-radius:4px;background:#f0f8ff;cursor:pointer;color:#4682B4;">반대 입장 생각</button>
+      <div style="font-size:12px;color:#888;margin-bottom:6px;">💡 S단계별 프롬프트 카드 (클릭하면 입력)</div>
+      <div class="s-stage-cards">
+        <div class="s-stage-card s0" data-prompt="이 개념을 한 문장으로 설명해줘.">S0 기본질문</div>
+        <div class="s-stage-card s1" data-prompt="AI 답이 맞는지 확인할 수 있는 다른 방법은 뭐가 있어?">S1 재질문</div>
+        <div class="s-stage-card s1" data-prompt="반대 의견이 있다면 어떻게 답할 수 있을까?">S1 반대입장</div>
+        <div class="s-stage-card s2" data-prompt="실제로 실험/검색해서 확인해봤을 때 AI 답과 달랐던 점이 있어?">S2 검증</div>
+        <div class="s-stage-card s2" data-prompt="AI가 제안한 방법과 내가 선택한 방법의 차이를 비교해줘.">S2 비교</div>
+        <div class="s-stage-card s3" data-prompt="내가 고른 방법의 근거를 한 문장으로 설명하면?">S3 근거도출</div>
+        <div class="s-stage-card s3" data-prompt="AI 없이 내가 직접 판단한다면 어떤 기준으로 결정하겠어?">S3 자기판단</div>
       </div>
     </div>
+
     <div class="chat-box" id="s-chat-box">
       <div class="chat-msg ai">
         <div class="msg-label">AI 튜터</div>
-        안녕하세요! 오늘 배운 내용 중 궁금한 점을 물어보세요. 제가 질문으로 도와드릴게요.
+        안녕하세요! 오늘 배운 내용 중 궁금한 점을 물어보세요. 질문 단계(S0→S3)를 올릴수록 더 많은 XP를 얻어요! 🎯
       </div>
     </div>
     <div class="chat-input-row">
-      <input type="text" id="s-chat-input" placeholder="메시지를 입력하세요... (또는 위 프롬프트 카드 클릭)">
+      <input type="text" id="s-chat-input" placeholder="메시지 입력 (또는 위 카드 클릭)">
       <button class="btn btn-primary" id="s-chat-send">전송</button>
     </div>
-    <div style="margin-top:8px;padding:8px;background:#f0f8ff;border-radius:6px;border:1px solid #87CEEB;">
-      <h5 style="font-size:11px;color:#4682B4;margin-bottom:4px;">📝 프롬프트 작성 공식 (참고용)</h5>
-      <div style="font-size:10px;line-height:1.5;color:#555;">
-        <strong>[1단계: 조건 포함 첫 질문]</strong><br>
-        "현재 [교과/실습 장비 환경]에서 [해결하려는 과제]를 수행 중이다. 반드시 지켜야 할 제약 조건은 [치수/허용 지연시간/데이터 형식/안전 기준 수치]이고, 내 초기 예상은 [나의 예상]이다. 이 조건을 만족하는 설계안과 내가 실습으로 직접 확인할 수 있는 검증 절차를 제시해 줘."<br><br>
-        <strong>[2→3단계: 실험 후 후속 질문]</strong><br>
-        "제안한 방법대로 [고정한 조건]에서 [바꾼 조건 1가지]만 변경하여 시험한 결과, 예상과 달리 [실측 수치/오류 현상]이 발생했다. 이 측정값을 기준으로 볼 때 원인이 무엇이며, 어떤 기준값을 어떻게 수정해야 하는지 비교해 줘."
+    <div id="s-chat-feedback" style="margin-top:6px;"></div>
+
+    <div style="margin-top:10px;padding:10px;background:#f0f8ff;border-radius:6px;border:1px solid #87CEEB;">
+      <h5 style="font-size:11px;color:#4682B4;margin-bottom:6px;">📝 프롬프트 작성 공식 (참고용)</h5>
+      <div style="font-size:10px;line-height:1.6;color:#555;">
+        <strong>[S2→S3 질문 공식]</strong><br>
+        "현재 [교과/실습 환경]에서 [과제]를 수행 중이다. 제약 조건은 [수치/기준]이고, 내 예상은 [예상]이다. AI 없이 내가 직접 확인할 수 있는 검증 절차를 알려줘."
       </div>
     </div>
-    <p style="font-size:11px;color:#999;margin-top:6px;">※ AI 응답은 목업입니다. 실제 AI API 연동 시 Upstage Solar로 교체 예정입니다.</p>
+    <p style="font-size:11px;color:#999;margin-top:6px;">※ AI 응답은 목업입니다. Upstage Solar API 연동 예정.</p>
+  </div>
+
+  <!-- G. 루브릭 자가평가 -->
+  <div class="card">
+    <h3>📊 루브릭 자가평가 (성찰 연계)</h3>
+    <p style="font-size:12px;color:#888;margin-bottom:12px;">오늘 수업의 루브릭 기준에 따라 스스로 점수를 매겨보세요. (+10 XP)</p>
+    <table class="rubric-self-table">
+      <thead>
+        <tr>
+          <th style="width:40%;">평가 요소</th>
+          <th style="width:15%;">배점</th>
+          <th style="width:25%;">자기평가</th>
+          <th style="width:20%;">근거 한 줄</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>① 프롬프트 설계 (S단계)</td>
+          <td>30점</td>
+          <td>
+            <select id="rubric-s1">
+              <option value="">선택</option>
+              <option value="27">상 (27~30)</option>
+              <option value="21">중 (21~26)</option>
+              <option value="15">하 (15~20)</option>
+              <option value="8">기초미달 (~14)</option>
+            </select>
+          </td>
+          <td><input type="text" id="rubric-r1" placeholder="한 줄 근거" style="font-size:11px;padding:4px;margin-bottom:0;"></td>
+        </tr>
+        <tr>
+          <td>② AI 협업·산출물</td>
+          <td>25점</td>
+          <td>
+            <select id="rubric-s2">
+              <option value="">선택</option>
+              <option value="23">상 (23~25)</option>
+              <option value="18">중 (18~22)</option>
+              <option value="13">하 (13~17)</option>
+              <option value="6">기초미달 (~12)</option>
+            </select>
+          </td>
+          <td><input type="text" id="rubric-r2" placeholder="한 줄 근거" style="font-size:11px;padding:4px;margin-bottom:0;"></td>
+        </tr>
+        <tr>
+          <td>③ 오류 검증·디버깅</td>
+          <td>25점</td>
+          <td>
+            <select id="rubric-s3">
+              <option value="">선택</option>
+              <option value="23">상 (23~25)</option>
+              <option value="18">중 (18~22)</option>
+              <option value="13">하 (13~17)</option>
+              <option value="6">기초미달 (~12)</option>
+            </select>
+          </td>
+          <td><input type="text" id="rubric-r3" placeholder="한 줄 근거" style="font-size:11px;padding:4px;margin-bottom:0;"></td>
+        </tr>
+        <tr>
+          <td>④ 성찰·인계</td>
+          <td>20점</td>
+          <td>
+            <select id="rubric-s4">
+              <option value="">선택</option>
+              <option value="18">상 (18~20)</option>
+              <option value="14">중 (14~17)</option>
+              <option value="10">하 (10~13)</option>
+              <option value="5">기초미달 (~9)</option>
+            </select>
+          </td>
+          <td><input type="text" id="rubric-r4" placeholder="한 줄 근거" style="font-size:11px;padding:4px;margin-bottom:0;"></td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="text-align:right;margin-top:10px;padding:10px;background:#e0f4ff;border-radius:8px;">
+      합계: <span class="rubric-score-total" id="rubric-total">0</span> / 100점
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-success" id="rubric-save">자가평가 저장 (+10 XP)</button>
+    </div>
+    <div id="rubric-feedback"></div>
   </div>
 
   <div class="card">
     <h3>📄 내 성찰 일지 목록</h3>
     <div id="s-diary-list"></div>
+    <div class="pagination" id="diary-pagination"></div>
   </div>
 </div>
 
 <!-- ========== 수업설계 모드 ========== -->
-<div class="mode-section" id="mode-lesson"><div class="card"><h3>기본 수업설계</h3><label for="plan-subject">교과</label><textarea id="plan-subject" maxlength="1500"></textarea><label for="plan-grade">학년·차시</label><textarea id="plan-grade" maxlength="1500"></textarea><label for="plan-level">학생 수준과 사전 지식</label><textarea id="plan-level" maxlength="1500"></textarea><label for="plan-intro">도입 활동과 시간</label><textarea id="plan-intro" maxlength="1500"></textarea><label for="plan-main">전개 활동과 시간</label><textarea id="plan-main" maxlength="1500"></textarea><label for="plan-closing">정리 활동과 시간</label><textarea id="plan-closing" maxlength="1500"></textarea><label for="plan-materials">준비 자료</label><textarea id="plan-materials" maxlength="1500"></textarea><button type="button" class="btn btn-primary" id="plan-guide">수업안·교사용 가이드 내려받기</button><p id="plan-status" role="status"></p></div>
+<div class="mode-section" id="mode-lesson">
+  <!-- I. 교과별 수업 예시 -->
+  <div class="card" id="lesson-example-card">
+    <h3>📚 교과별 수업 예시 (클릭하면 STEP 1 자동 입력)</h3>
+    <div id="lesson-examples-list"></div>
+  </div>
   <div class="step-indicator">
     <div class="step-dot active" data-step="1">1</div>
     <div class="step-dot" data-step="2">2</div>
     <div class="step-dot" data-step="3">3</div>
     <div class="step-dot" data-step="4">4</div>
   </div>
-
   <div id="lesson-step-content"></div>
-
   <div class="btn-row" id="lesson-nav" style="display:none;">
     <button class="btn btn-secondary" id="lesson-prev">이전</button>
     <button class="btn btn-primary" id="lesson-next">다음</button>
@@ -407,58 +986,361 @@ table th { background: #e0f4ff; font-weight: 600; }
   </div>
 </div>
 
+<!-- ========== A. 설문 모드 ========== -->
+<div class="mode-section" id="mode-survey">
+  <div class="card">
+    <h3>📋 AI 활용 인식 설문 (13문항)</h3>
+    <p style="font-size:13px;color:#555;margin-bottom:16px;">수업 전·후로 각각 작성하여 변화를 측정합니다. 5점 척도 (1=전혀 그렇지 않다 ~ 5=매우 그렇다)</p>
+
+    <div style="margin-bottom:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+      <label style="font-size:13px;margin-bottom:0;">측정 시점:</label>
+      <select id="survey-timing" style="width:auto;margin-bottom:0;">
+        <option value="pre">사전 (수업 시작 전)</option>
+        <option value="post">사후 (수업 종료 후)</option>
+      </select>
+      <label style="font-size:13px;margin-bottom:0;">교과명:</label>
+      <input type="text" id="survey-subject" placeholder="예: 네트워크프로그래밍" style="width:auto;flex:1;min-width:140px;margin-bottom:0;">
+    </div>
+
+    <!-- 영역 1: AI 활용 태도 -->
+    <div class="survey-section">
+      <h4>🔵 영역 1. AI 활용 태도 (Q1~Q5)</h4>
+
+      <div class="survey-item">
+        <div class="q-text">Q1. 나는 AI가 알려준 내용을 그대로 사용한다.</div>
+        <div class="q-kpi">📌 KPI-3: 낮을수록 좋음 (무비판 수용 감소 지표)</div>
+        <div class="likert-row">
+          <label><input type="radio" name="q1" value="1"> 1</label>
+          <label><input type="radio" name="q1" value="2"> 2</label>
+          <label><input type="radio" name="q1" value="3"> 3</label>
+          <label><input type="radio" name="q1" value="4"> 4</label>
+          <label><input type="radio" name="q1" value="5"> 5</label>
+        </div>
+        <div class="likert-labels"><span>전혀 그렇지 않다</span><span>매우 그렇다</span></div>
+      </div>
+
+      <div class="survey-item">
+        <div class="q-text">Q2. AI 답변이 틀릴 수 있다고 생각한다.</div>
+        <div class="q-kpi">📌 비판적 수용 지표</div>
+        <div class="likert-row">
+          <label><input type="radio" name="q2" value="1"> 1</label>
+          <label><input type="radio" name="q2" value="2"> 2</label>
+          <label><input type="radio" name="q2" value="3"> 3</label>
+          <label><input type="radio" name="q2" value="4"> 4</label>
+          <label><input type="radio" name="q2" value="5"> 5</label>
+        </div>
+        <div class="likert-labels"><span>전혀 그렇지 않다</span><span>매우 그렇다</span></div>
+      </div>
+
+      <div class="survey-item">
+        <div class="q-text">Q3. AI를 사용할 때 다른 자료로 확인해본다.</div>
+        <div class="q-kpi">📌 검증 행동 지표</div>
+        <div class="likert-row">
+          <label><input type="radio" name="q3" value="1"> 1</label>
+          <label><input type="radio" name="q3" value="2"> 2</label>
+          <label><input type="radio" name="q3" value="3"> 3</label>
+          <label><input type="radio" name="q3" value="4"> 4</label>
+          <label><input type="radio" name="q3" value="5"> 5</label>
+        </div>
+        <div class="likert-labels"><span>전혀 그렇지 않다</span><span>매우 그렇다</span></div>
+      </div>
+
+      <div class="survey-item">
+        <div class="q-text">Q4. AI에게 질문하는 방법이 결과에 영향을 준다.</div>
+        <div class="q-kpi">📌 프롬프트 인식 지표</div>
+        <div class="likert-row">
+          <label><input type="radio" name="q4" value="1"> 1</label>
+          <label><input type="radio" name="q4" value="2"> 2</label>
+          <label><input type="radio" name="q4" value="3"> 3</label>
+          <label><input type="radio" name="q4" value="4"> 4</label>
+          <label><input type="radio" name="q4" value="5"> 5</label>
+        </div>
+        <div class="likert-labels"><span>전혀 그렇지 않다</span><span>매우 그렇다</span></div>
+      </div>
+
+      <div class="survey-item">
+        <div class="q-text">Q5. AI보다 내 판단이 더 중요할 때가 있다.</div>
+        <div class="q-kpi">📌 주체성 지표</div>
+        <div class="likert-row">
+          <label><input type="radio" name="q5" value="1"> 1</label>
+          <label><input type="radio" name="q5" value="2"> 2</label>
+          <label><input type="radio" name="q5" value="3"> 3</label>
+          <label><input type="radio" name="q5" value="4"> 4</label>
+          <label><input type="radio" name="q5" value="5"> 5</label>
+        </div>
+        <div class="likert-labels"><span>전혀 그렇지 않다</span><span>매우 그렇다</span></div>
+      </div>
+    </div>
+
+    <!-- 영역 2: 비교 검증 태도 -->
+    <div class="survey-section">
+      <h4>🟢 영역 2. 비교 검증 태도 (Q6~Q8)</h4>
+
+      <div class="survey-item">
+        <div class="q-text">Q6. 나는 AI 답변과 다른 방법을 비교해본다.</div>
+        <div class="q-kpi">📌 핵심 KPI: 비교 검증 태도 (목표 +0.70점)</div>
+        <div class="likert-row">
+          <label><input type="radio" name="q6" value="1"> 1</label>
+          <label><input type="radio" name="q6" value="2"> 2</label>
+          <label><input type="radio" name="q6" value="3"> 3</label>
+          <label><input type="radio" name="q6" value="4"> 4</label>
+          <label><input type="radio" name="q6" value="5"> 5</label>
+        </div>
+        <div class="likert-labels"><span>전혀 그렇지 않다</span><span>매우 그렇다</span></div>
+      </div>
+
+      <div class="survey-item">
+        <div class="q-text">Q7. 실험·검색으로 AI 답변을 직접 확인해본다.</div>
+        <div class="q-kpi">📌 검증 행동 지표</div>
+        <div class="likert-row">
+          <label><input type="radio" name="q7" value="1"> 1</label>
+          <label><input type="radio" name="q7" value="2"> 2</label>
+          <label><input type="radio" name="q7" value="3"> 3</label>
+          <label><input type="radio" name="q7" value="4"> 4</label>
+          <label><input type="radio" name="q7" value="5"> 5</label>
+        </div>
+        <div class="likert-labels"><span>전혀 그렇지 않다</span><span>매우 그렇다</span></div>
+      </div>
+
+      <div class="survey-item">
+        <div class="q-text">Q8. AI가 틀렸을 때 그 이유를 찾아본다.</div>
+        <div class="q-kpi">📌 오류 분석 지표</div>
+        <div class="likert-row">
+          <label><input type="radio" name="q8" value="1"> 1</label>
+          <label><input type="radio" name="q8" value="2"> 2</label>
+          <label><input type="radio" name="q8" value="3"> 3</label>
+          <label><input type="radio" name="q8" value="4"> 4</label>
+          <label><input type="radio" name="q8" value="5"> 5</label>
+        </div>
+        <div class="likert-labels"><span>전혀 그렇지 않다</span><span>매우 그렇다</span></div>
+      </div>
+    </div>
+
+    <!-- 영역 3: 전문교과 성취 인식 -->
+    <div class="survey-section">
+      <h4>🟡 영역 3. 전문교과 성취 인식 (Q9~Q11)</h4>
+
+      <div class="survey-item">
+        <div class="q-text">Q9. 나는 이 교과의 핵심 개념을 이해하고 있다.</div>
+        <div class="q-kpi">📌 S1 지표</div>
+        <div class="likert-row">
+          <label><input type="radio" name="q9" value="1"> 1</label>
+          <label><input type="radio" name="q9" value="2"> 2</label>
+          <label><input type="radio" name="q9" value="3"> 3</label>
+          <label><input type="radio" name="q9" value="4"> 4</label>
+          <label><input type="radio" name="q9" value="5"> 5</label>
+        </div>
+        <div class="likert-labels"><span>전혀 그렇지 않다</span><span>매우 그렇다</span></div>
+      </div>
+
+      <div class="survey-item">
+        <div class="q-text">Q10. AI 없이도 기본 과제를 해결할 수 있다.</div>
+        <div class="q-kpi">📌 S2 지표</div>
+        <div class="likert-row">
+          <label><input type="radio" name="q10" value="1"> 1</label>
+          <label><input type="radio" name="q10" value="2"> 2</label>
+          <label><input type="radio" name="q10" value="3"> 3</label>
+          <label><input type="radio" name="q10" value="4"> 4</label>
+          <label><input type="radio" name="q10" value="5"> 5</label>
+        </div>
+        <div class="likert-labels"><span>전혀 그렇지 않다</span><span>매우 그렇다</span></div>
+      </div>
+
+      <div class="survey-item">
+        <div class="q-text">Q11. AI를 활용하면 더 좋은 결과물을 만들 수 있다.</div>
+        <div class="q-kpi">📌 S3 지표</div>
+        <div class="likert-row">
+          <label><input type="radio" name="q11" value="1"> 1</label>
+          <label><input type="radio" name="q11" value="2"> 2</label>
+          <label><input type="radio" name="q11" value="3"> 3</label>
+          <label><input type="radio" name="q11" value="4"> 4</label>
+          <label><input type="radio" name="q11" value="5"> 5</label>
+        </div>
+        <div class="likert-labels"><span>전혀 그렇지 않다</span><span>매우 그렇다</span></div>
+      </div>
+    </div>
+
+    <!-- 영역 4: 서술형 -->
+    <div class="survey-section">
+      <h4>🔴 영역 4. 서술형 (Q12~Q13)</h4>
+
+      <div class="survey-item">
+        <div class="q-text">Q12. AI를 사용하면서 가장 도움이 됐던 순간을 써주세요.</div>
+        <textarea class="survey-textarea" id="survey-q12" placeholder="구체적인 상황과 이유를 써주세요." maxlength="500"></textarea>
+      </div>
+
+      <div class="survey-item">
+        <div class="q-text">Q13. AI를 믿지 않게 된 경험이 있다면 써주세요.</div>
+        <textarea class="survey-textarea" id="survey-q13" placeholder="어떤 상황이었는지, 어떻게 대처했는지 써주세요." maxlength="500"></textarea>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" id="survey-submit">설문 제출 (+20 XP)</button>
+      <button class="btn btn-secondary" id="survey-reset">초기화</button>
+    </div>
+    <div id="survey-feedback"></div>
+  </div>
+
+  <!-- 설문 결과 목록 -->
+  <div class="card">
+    <h3>📊 제출된 설문 목록</h3>
+    <div id="survey-list"></div>
+  </div>
+</div>
+
 <!-- ========== 대시보드 모드 ========== -->
 <div class="mode-section" id="mode-dashboard">
-  <div class="stats-row">
-    <div class="stat-card">
-      <div class="stat-value" id="d-total-xp">0</div>
-      <div class="stat-label">총 XP</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value" id="d-level">🌱 새싹</div>
-      <div class="stat-label">현재 레벨</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value" id="d-ideas">0</div>
-      <div class="stat-label">아이디어</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value" id="d-diaries">0</div>
-      <div class="stat-label">성찰 일지</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value" id="d-lessons">0</div>
-      <div class="stat-label">수업설계</div>
+
+  <!-- 로그인 안 된 경우 안내 -->
+  <div id="dash-guest" style="display:none;">
+    <div class="card" style="text-align:center;padding:40px 20px;">
+      <div style="font-size:48px;margin-bottom:16px;">🔒</div>
+      <h3 style="margin-bottom:8px;">로그인이 필요합니다</h3>
+      <p style="color:var(--gray-500);margin-bottom:20px;">역할별 대시보드를 보려면 먼저 로그인해주세요.</p>
+      <button class="btn btn-primary" onclick="document.getElementById('login-btn').click()">🔑 로그인하기</button>
     </div>
   </div>
 
-  <div class="card">
-    <h3>🏅 뱃지 취득 현황</h3>
-    <div class="badge-grid" id="d-badges"></div>
-  </div>
-
-  <div class="card">
-    <h3>📈 레벨 추이</h3>
-    <div style="padding:12px;">
-      <div class="xp-bar-container" style="height:24px;">
-        <div class="xp-bar" id="d-level-bar" style="width:0%;"></div>
+  <!-- ===== 학생 대시보드 ===== -->
+  <div id="dash-student" style="display:none;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+      <span style="font-size:28px;">📚</span>
+      <div>
+        <h2 style="margin:0;font-size:18px;color:var(--primary);">학생 대시보드</h2>
+        <p style="margin:0;font-size:13px;color:var(--gray-500);" id="dash-student-name">학생 이름</p>
       </div>
-      <div style="margin-top:8px;font-size:13px;color:#888;">다음 레벨(<span id="d-next-level">🌿 성장중</span>)까지 <strong id="d-next-xp">50</strong> XP 필요</div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-value" id="d-total-xp">0</div><div class="stat-label">총 XP</div></div>
+      <div class="stat-card"><div class="stat-value" id="d-level">🌱 새싹</div><div class="stat-label">현재 레벨</div></div>
+      <div class="stat-card"><div class="stat-value" id="d-ideas">0</div><div class="stat-label">아이디어</div></div>
+      <div class="stat-card"><div class="stat-value" id="d-diaries">0</div><div class="stat-label">성찰 일지</div></div>
+      <div class="stat-card"><div class="stat-value" id="d-lessons">0</div><div class="stat-label">수업설계</div></div>
+      <div class="stat-card"><div class="stat-value" id="d-surveys">0</div><div class="stat-label">설문</div></div>
+    </div>
+
+    <div class="card">
+      <h3>📈 XP 레벨 현황</h3>
+      <div style="padding:12px;">
+        <div class="xp-bar-container" style="height:24px;"><div class="xp-bar" id="d-level-bar" style="width:0%;"></div></div>
+        <div style="margin-top:8px;font-size:13px;color:#888;">다음 레벨(<span id="d-next-level">🌿 성장중</span>)까지 <strong id="d-next-xp">50</strong> XP 필요</div>
+      </div>
+    </div>
+
+    <div class="card" id="d-compare-card">
+      <h3>📊 사전·사후 설문 비교</h3>
+      <div id="d-compare-content"><div class="empty-state" style="padding:16px;">설문을 사전·사후 각 1회 이상 제출하면 비교 그래프가 표시됩니다.</div></div>
+    </div>
+
+    <div class="card">
+      <h3>🏅 뱃지 취득 현황</h3>
+      <div class="badge-grid" id="d-badges"></div>
+    </div>
+
+    <div class="card">
+      <h3>📋 나의 활동 기록</h3>
+      <div id="d-activity"></div>
     </div>
   </div>
 
-  <div class="card">
-    <h3>📋 전체 활동 기록</h3>
-    <div id="d-activity"></div>
+  <!-- ===== 선생님 대시보드 ===== -->
+  <div id="dash-teacher" style="display:none;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+      <span style="font-size:28px;">🍎</span>
+      <div>
+        <h2 style="margin:0;font-size:18px;color:var(--primary);">선생님 대시보드</h2>
+        <p style="margin:0;font-size:13px;color:var(--gray-500);" id="dash-teacher-name">교사 이름</p>
+      </div>
+    </div>
+
+    <div class="stats-row" id="dash-teacher-stats">
+      <div class="stat-card"><div class="stat-value" id="dt-student-count">0</div><div class="stat-label">전체 학생</div></div>
+      <div class="stat-card"><div class="stat-value" id="dt-survey-done">0</div><div class="stat-label">설문 완료</div></div>
+      <div class="stat-card"><div class="stat-value" id="dt-lesson-count">0</div><div class="stat-label">수업설계 수</div></div>
+      <div class="stat-card"><div class="stat-value" id="dt-avg-xp">0</div><div class="stat-label">학생 평균 XP</div></div>
+    </div>
+
+    <div class="card">
+      <h3>📈 사전·사후 비교 (KPI 대시보드)</h3>
+      <div id="d-compare-card">
+        <div id="d-compare-content"><div class="empty-state" style="padding:16px;">설문을 사전·사후 각 1회 이상 제출하면 비교 그래프가 표시됩니다.</div></div>
+      </div>
+    </div>
+
+    <div class="card" id="d-type-card">
+      <h3>👥 학생 유형 분류 (사후 설문 기준)</h3>
+      <div id="d-type-content"><div class="empty-state" style="padding:16px;">사후 설문 제출 후 학생 유형이 분류됩니다.</div></div>
+    </div>
+
+    <div class="card">
+      <h3>🏆 학생 XP 순위표</h3>
+      <table id="d-ranking">
+        <thead><tr><th>순위</th><th>학생</th><th>XP</th><th>레벨</th><th>유형</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>📋 수업 아이디어 목록</h3>
+      <div id="dt-ideas-list"><div class="empty-state">등록된 수업 아이디어가 없습니다.</div></div>
+    </div>
   </div>
 
-  <div class="card">
-    <h3>🏆 학생 XP 순위표</h3>
-    <table id="d-ranking">
-      <thead><tr><th>순위</th><th>학생</th><th>XP</th><th>레벨</th></tr></thead>
-      <tbody></tbody>
-    </table>
+  <!-- ===== 관리자 대시보드 ===== -->
+  <div id="dash-admin" style="display:none;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+      <span style="font-size:28px;">🛡️</span>
+      <div>
+        <h2 style="margin:0;font-size:18px;color:#7c3aed;">관리자 대시보드</h2>
+        <p style="margin:0;font-size:13px;color:var(--gray-500);" id="dash-admin-name">관리자 이름</p>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card" style="border-top:3px solid #7c3aed;"><div class="stat-value" style="color:#7c3aed;" id="da-total-users">0</div><div class="stat-label">전체 회원</div></div>
+      <div class="stat-card" style="border-top:3px solid #7c3aed;"><div class="stat-value" style="color:#7c3aed;" id="da-teacher-count">0</div><div class="stat-label">교사</div></div>
+      <div class="stat-card" style="border-top:3px solid #7c3aed;"><div class="stat-value" style="color:#7c3aed;" id="da-student-count">0</div><div class="stat-label">학생</div></div>
+      <div class="stat-card" style="border-top:3px solid #7c3aed;"><div class="stat-value" style="color:#7c3aed;" id="da-admin-count">0</div><div class="stat-label">관리자</div></div>
+    </div>
+
+    <div class="card">
+      <h3 style="color:#7c3aed;">👥 회원 목록 관리</h3>
+      <div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn" style="font-size:12px;padding:6px 12px;background:var(--primary-bg);color:var(--primary);" onclick="filterAdminUsers('all')">전체</button>
+        <button class="btn" style="font-size:12px;padding:6px 12px;" onclick="filterAdminUsers('teacher')">🍎 교사</button>
+        <button class="btn" style="font-size:12px;padding:6px 12px;" onclick="filterAdminUsers('student')">📚 학생</button>
+        <button class="btn" style="font-size:12px;padding:6px 12px;" onclick="filterAdminUsers('admin')">🛡️ 관리자</button>
+      </div>
+      <div id="da-user-table-wrap" style="overflow-x:auto;">
+        <table id="da-user-table" style="font-size:13px;">
+          <thead><tr><th>이름</th><th>아이디</th><th>역할</th><th>가입일</th><th>XP</th><th>관리</th></tr></thead>
+          <tbody id="da-user-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="color:#7c3aed;">📊 플랫폼 활동 통계</h3>
+      <div class="stats-row" style="margin-top:0;">
+        <div class="stat-card"><div class="stat-value" id="da-total-ideas">0</div><div class="stat-label">총 아이디어</div></div>
+        <div class="stat-card"><div class="stat-value" id="da-total-lessons">0</div><div class="stat-label">총 수업설계</div></div>
+        <div class="stat-card"><div class="stat-value" id="da-total-surveys">0</div><div class="stat-label">총 설문</div></div>
+        <div class="stat-card"><div class="stat-value" id="da-total-xp">0</div><div class="stat-label">총 XP 발급</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="color:#7c3aed;">📢 공지사항 등록</h3>
+      <div style="display:flex;gap:8px;flex-direction:column;">
+        <input type="text" id="da-notice-input" placeholder="공지사항 내용 입력..." style="margin-bottom:0;">
+        <button class="btn btn-primary" style="align-self:flex-end;background:#7c3aed;" onclick="addAdminNotice()">📢 공지 등록</button>
+      </div>
+      <div id="da-notice-list" style="margin-top:12px;"></div>
+    </div>
   </div>
+
 </div>
 
 <!-- ========== 관계분석 모드 ========== -->
@@ -466,7 +1348,7 @@ table th { background: #e0f4ff; font-weight: 600; }
   <div class="card">
     <h3>🔗 소시오그램 (학생 관계 시각화)</h3>
     <canvas class="sociogram-canvas" id="sociogram" width="700" height="350"></canvas>
-    <p style="font-size:12px;color:#888;margin-top:8px;">※ Canvas 기반 소시오그램 (목업). 학생 노드 클릭 시 상세 정보 확인 가능.</p>
+    <p style="font-size:12px;color:#888;margin-top:8px;">※ 노드 클릭 시 학생 상세 정보 확인 가능.</p>
   </div>
 
   <div class="card">
@@ -489,6 +1371,19 @@ table th { background: #e0f4ff; font-weight: 600; }
   </div>
 </div>
 
+<!-- H. 초기화 확인 모달 -->
+<div class="modal-overlay" id="reset-modal">
+  <div class="modal confirm-modal-box">
+    <h3 style="color:#dc3545;">⚠️ 전체 데이터 초기화</h3>
+    <p style="margin-top:12px;">저장된 <strong>모든 데이터(아이디어, 성찰 일지, 설문, XP 등)</strong>가 삭제됩니다.<br>이 작업은 되돌릴 수 없습니다.</p>
+    <p style="font-size:13px;color:#888;">먼저 "JSON 내보내기"로 백업을 권장합니다.</p>
+    <div class="btn-row" style="margin-top:16px;">
+      <button class="btn danger-btn" id="reset-confirm">삭제 확인</button>
+      <button class="btn btn-secondary" id="reset-cancel">취소</button>
+    </div>
+  </div>
+</div>
+
 <!-- 학생 상세 모달 -->
 <div class="modal-overlay" id="student-modal">
   <div class="modal">
@@ -497,6 +1392,8 @@ table th { background: #e0f4ff; font-weight: 600; }
       <span>XP: <strong id="modal-student-xp">0</strong></span>
       <span style="margin:0 8px;">|</span>
       <span>레벨: <strong id="modal-student-level">🌱 새싹</strong></span>
+      <span style="margin:0 8px;">|</span>
+      <span>유형: <strong id="modal-student-type">-</strong></span>
     </div>
     <h4>성찰 일지</h4>
     <div id="modal-student-diaries"></div>
@@ -505,31 +1402,33 @@ table th { background: #e0f4ff; font-weight: 600; }
 </div>
 
 <script>
-// ==================== 상수 정의 ====================
+// ==================== 상수 ====================
 const LEVELS = [
-  { name: '🌱 새싹',   min: 0,   max: 50 },
-  { name: '🌿 성장중', min: 50,  max: 120 },
-  { name: '🌳 나무',   min: 120, max: 220 },
-  { name: '⭐ 별',     min: 220, max: 350 },
-  { name: '🏆 MVP',    min: 350, max: 9999 }
+  { name: '🌱 새싹', min: 0, max: 50 },
+  { name: '🌿 성장중', min: 50, max: 120 },
+  { name: '🌳 나무', min: 120, max: 220 },
+  { name: '⭐ 별', min: 220, max: 350 },
+  { name: '🏆 MVP', min: 350, max: 9999 }
 ];
 
 const BADGES_DEF = [
-  { id: 'first',    icon: '🌟', name: '첫 일지',    cond: '성찰 일지 1회 작성' },
-  { id: 'streak3',  icon: '🔥', name: '3일 연속',   cond: '3일 연속 일지 작성' },
-  { id: 'solo',     icon: '🤔', name: '혼자 함',    cond: 'AI 대화 5회 완료' },
-  { id: 'helper',   icon: '🤝', name: '도우미',     cond: '관계 연결 3개 이상' },
-  { id: 'thinker',  icon: '💡', name: '생각쟁이',   cond: '일지 10회 작성' },
-  { id: 'active',   icon: '🎯', name: '적극참여',   cond: '총 XP 200 이상' }
+  { id: 'first', icon: '🌟', name: '첫 일지', cond: '성찰 일지 1회 작성' },
+  { id: 'streak3', icon: '🔥', name: '3일 연속', cond: '3일 연속 일지 작성' },
+  { id: 'solo', icon: '🤔', name: '질문왕', cond: 'AI 대화 5회 완료' },
+  { id: 'helper', icon: '🤝', name: '도우미', cond: '관계 연결 3개 이상' },
+  { id: 'thinker', icon: '💡', name: '생각쟁이', cond: '일지 10회 작성' },
+  { id: 'active', icon: '🎯', name: '적극참여', cond: '총 XP 200 이상' },
+  { id: 'surveyor', icon: '📋', name: '성실응답자', cond: '설문 2회 이상 제출' },
+  { id: 's3master', icon: '🚀', name: 'S3 달성', cond: 'S3 단계 질문 3회 이상' }
 ];
 
 const DEFAULT_STUDENTS = [
-  { id: 's1', name: '김민수', xp: 0, diaries: [], chatCount: 0, relations: {} },
-  { id: 's2', name: '이지영', xp: 0, diaries: [], chatCount: 0, relations: {} },
-  { id: 's3', name: '박준호', xp: 0, diaries: [], chatCount: 0, relations: {} },
-  { id: 's4', name: '최서연', xp: 0, diaries: [], chatCount: 0, relations: {} },
-  { id: 's5', name: '정우석', xp: 0, diaries: [], chatCount: 0, relations: {} },
-  { id: 's6', name: '한소율', xp: 0, diaries: [], chatCount: 0, relations: {} }
+  { id: 's1', name: '김민수', xp: 0, diaries: [], chatCount: 0, relations: {}, sStage: 0 },
+  { id: 's2', name: '이지영', xp: 0, diaries: [], chatCount: 0, relations: {}, sStage: 0 },
+  { id: 's3', name: '박준호', xp: 0, diaries: [], chatCount: 0, relations: {}, sStage: 0 },
+  { id: 's4', name: '최서연', xp: 0, diaries: [], chatCount: 0, relations: {}, sStage: 0 },
+  { id: 's5', name: '정우석', xp: 0, diaries: [], chatCount: 0, relations: {}, sStage: 0 },
+  { id: 's6', name: '한소율', xp: 0, diaries: [], chatCount: 0, relations: {}, sStage: 0 }
 ];
 
 const BLOOM_LEVELS = [
@@ -542,24 +1441,98 @@ const BLOOM_LEVELS = [
 ];
 
 const ACTIVITY_TYPES = [
-  { key: 'idea',    label: '아이디어 등록', icon: '📝' },
-  { key: 'diary',   label: '성찰 일지',     icon: '📝' },
-  { key: 'lesson',  label: '수업설계 저장', icon: '✏️' },
-  { key: 'relation',label: '관계 연결',    icon: '🔗' },
-  { key: 'chat',    label: 'AI 대화',       icon: '🤖' }
+  { key: 'idea', label: '아이디어 등록', icon: '📝' },
+  { key: 'diary', label: '성찰 일지', icon: '📝' },
+  { key: 'lesson', label: '수업설계 저장', icon: '✏️' },
+  { key: 'relation', label: '관계 연결', icon: '🔗' },
+  { key: 'chat', label: 'AI 대화', icon: '🤖' },
+  { key: 'survey', label: '설문 제출', icon: '📋' }
 ];
 
-const SOCRATIC_Q = [
-  '왜 그렇게 생각하게 됐나요?',
-  '그 개념을 실생활에 적용하면 어떤 예가 있을까요?',
-  '반대 의견이 있다면 어떻게 답할 수 있을까요?',
-  '오늘 배운 것 중 가장 어려웠던 부분은 무엇인가요? 그 이유는?',
-  '만약 그 방법을 사용하지 않는다면 어떤 문제가 생길까요?',
-  '그 개념을 한 문장으로 설명한다면?',
-  '더 알고 싶은 점이 있나요? 왜 그 부분이 궁금한가요?'
-];
+// S단계별 소크라테스 응답 (4단계 피드백 구조)
+const S_STAGE_RESPONSES = {
+  s0: [
+    '🌟 1. 성취 인정: 첫 질문을 해줬어요! 용기 있는 시작이에요.\n🔍 2. 결함 진단: 이 답을 그대로 쓰기 전에, "이게 맞나?" 한 번만 더 생각해보세요.\n🚀 3. 다음 질문: "이 개념을 다른 말로 설명한다면?" 이라고 물어보세요.\n⚠️ 4. 안전망: 아직 개념이 익숙하지 않다면 교과서 먼저 확인해보세요.'
+  ],
+  s1: [
+    '🌟 1. 성취 인정: S1 단계! 한번 더 질문했군요. 좋아요!\n🔍 2. 결함 진단: 여러 가능성을 생각해봤나요? 반대 의견도 떠올려보세요.\n🚀 3. 다음 질문: "AI 답과 내 생각이 다른 부분은 어디야?" 라고 물어보세요. (+10 XP!)\n⚠️ 4. 안전망: 모르는 용어가 있으면 먼저 그것부터 확인해요.'
+  ],
+  s2: [
+    '🌟 1. 성취 인정: S2 단계! 검증까지 했군요. 훌륭해요!\n🔍 2. 결함 진단: 단일 변인 통제로 비교했나요? 한 번에 여러 조건을 바꾸면 원인을 알기 어려워요.\n🚀 3. 다음 질문: "실측 수치(mm, ms, %)를 기준으로 AI 답이 맞는지 판정한다면?" (+20 XP!)\n⚠️ 4. 안전망: 결과가 예상과 다르면 그 이유를 꼭 기록해두세요.'
+  ],
+  s3: [
+    '🌟 1. 성취 인정: S3 단계! 최고예요! 스스로 판단 근거를 만들었군요! 🏆\n🔍 2. 결함 진단: 이 판단을 다른 사람에게 설명할 수 있나요? 재현 가능한 기준이 있나요?\n🚀 3. 다음 질문: "내 판단의 근거를 한 문장으로 정리하면?" → 이게 최고의 성찰이에요. (+30 XP!)\n⚠️ 4. 안전망: 이 결론을 다음 차시에 이어서 활용해보세요.'
+  ]
+};
 
-const STORAGE_KEY = 'aiPlatformV2';
+const STORAGE_KEY = 'aiPlatformV4';
+
+// ===== I. 수업 활동 유형별 예시 데이터 =====
+const SUBJECT_EXAMPLES = [
+  {
+    subject: '🔬 실험·측정 활동',
+    tag: 'experiment',
+    goal: '단일 변인을 통제하여 실험을 설계하고, AI 예측값과 직접 측정값을 수치로 비교·검증할 수 있다.',
+    bloom: 'analyze',
+    method: '실습',
+    prompt: '[S2 검증 질문]\n현재 [실습 환경]에서 [측정 대상]을 측정 중이다.\n변인: [변수 1개만 변경], 제약 조건: [수치 기준]\n내 예상: [예상값]\nAI 없이 직접 확인할 수 있는 단일 변인 실험 절차를 알려줘.',
+    reflectQuestion: 'AI 예측값과 실측값이 달랐다면, 그 오차의 원인은 무엇일까?'
+  },
+  {
+    subject: '💬 토론·논증 활동',
+    tag: 'debate',
+    goal: 'AI가 제시한 주장의 근거를 분석하고, 반대 입장을 논리적으로 구성하여 발표할 수 있다.',
+    bloom: 'evaluate',
+    method: '토론',
+    prompt: '[S1 반대 입장]\nAI는 "[AI 주장]"을 제안했다.\n이 주장에 반대되는 사례나 조건을 1가지 찾아줘.\n그리고 반대 입장에서 가장 강력한 논거 1개를 알려줘.',
+    reflectQuestion: 'AI 주장 중 내가 동의하지 않는 부분은 무엇이고, 그 이유는?'
+  },
+  {
+    subject: '📐 설계·제작 활동',
+    tag: 'design',
+    goal: 'AI가 제안한 설계안을 검토하고 조건에 맞게 수정·제작하여 결과물의 완성도를 평가할 수 있다.',
+    bloom: 'create',
+    method: '프로젝트',
+    prompt: '[S3 자기판단]\n내가 최종 선택한 설계안의 근거를 한 문장으로 정리하면?\n조건: [수치/기준], AI 제안: [AI안], 내 선택: [내 안]\n두 안의 차이점과 내 판단 기준을 명확히 해줘.',
+    reflectQuestion: 'AI 제안과 내 최종 설계가 달라진 부분은 어디이고, 왜 그렇게 결정했나?'
+  },
+  {
+    subject: '📊 데이터 분석 활동',
+    tag: 'data',
+    goal: '데이터를 직접 수집·정리하고, AI가 제시한 분석 결과의 타당성을 검증할 수 있다.',
+    bloom: 'analyze',
+    method: '실습',
+    prompt: '[S2 비교]\n[데이터 조건]에서 AI가 제안한 [분석 방법]을 적용했을 때 나온 결과와\n내가 직접 계산한 결과를 비교해줘.\n어느 쪽이 더 신뢰할 수 있는지 근거와 함께 알려줘.',
+    reflectQuestion: 'AI가 분석한 결과와 내 계산 결과 중 무엇이 더 맞았고, 왜 차이가 났을까?'
+  },
+  {
+    subject: '🗣️ 발표·인계 활동',
+    tag: 'presentation',
+    goal: 'AI 도움 없이 수업 결과를 체계적으로 정리하고, 근거를 갖춰 다른 모둠에 설명할 수 있다.',
+    bloom: 'evaluate',
+    method: '협동학습',
+    prompt: '[S3 근거 도출]\n오늘 수업에서 내가 내린 결론을 한 문장으로 정리하면?\n이 결론을 AI 없이 다른 사람에게 설명할 때 가장 중요한 근거 2가지를 알려줘.',
+    reflectQuestion: '내가 발표한 내용 중 가장 자신 있는 부분과 보완이 필요한 부분은?'
+  },
+  {
+    subject: '🔁 오류 수정·디버깅 활동',
+    tag: 'debug',
+    goal: 'AI가 생성한 코드·결과물의 오류를 직접 찾아 수정하고, 오류의 원인을 설명할 수 있다.',
+    bloom: 'apply',
+    method: '실습',
+    prompt: '[S2 오류검증]\nAI가 제안한 [코드/결과물]을 직접 실행하거나 검토했을 때 발생한 오류는:\n오류 메시지: [오류 내용]\n내 환경: [실습 환경]\n이 오류의 원인과 수정 방법을 단계별로 알려줘.',
+    reflectQuestion: 'AI 코드를 그대로 썼을 때 생긴 문제는 무엇이고, 어떻게 직접 해결했나?'
+  },
+  {
+    subject: '🤝 협동·역할분담 활동',
+    tag: 'cooperative',
+    goal: '모둠원과 역할을 분담하여 AI 활용 협업 과제를 완수하고, 각자의 기여를 성찰할 수 있다.',
+    bloom: 'apply',
+    method: '협동학습',
+    prompt: '[S1 역할 재질문]\n우리 모둠에서 AI에게 질문한 사람은 [역할]이다.\nAI 답변 중 [모둠원 이름]이 맡은 부분과 연결되는 내용을 찾아줘.\n역할별로 AI를 어떻게 다르게 활용할 수 있는지 알려줘.',
+    reflectQuestion: '오늘 협동 활동에서 AI가 도움이 된 역할과 그렇지 않은 역할은 무엇이었나?'
+  }
+];
 
 // ==================== 데이터 ====================
 let state = {
@@ -569,16 +1542,22 @@ let state = {
   myXp: 0,
   myDiaries: [],
   myChatCount: 0,
+  myS3Count: 0,
   relations: {},
   chatHistory: [],
   activityLog: [],
+  surveys: [],
+  currentSStage: 0,
+  rubricLogs: [],
+  diaryPage: 0,
   lessonStep: 1,
   lessonForm: {
     step1: { title: '', goal: '', bloom: 'apply' },
     step2: { content: '' },
-    step3: { method: ' 토론', time: '', reflectQuestion: '' },
+    step3: { method: '토론', time: '', reflectQuestion: '' },
     step4: { evalCriteria: '', rubric: '' }
-  }
+  },
+  researches: []
 };
 
 // ==================== 유틸리티 ====================
@@ -591,34 +1570,31 @@ function getLevel(xp) {
 
 function getLevelProgress(xp) {
   const level = getLevel(xp);
-  const next = LEVELS[LEVELS.indexOf(level) + 1];
+  const idx = LEVELS.indexOf(level);
+  const next = LEVELS[idx + 1];
   if (!next) return 100;
-  const range = next.min - level.min;
-  const progress = xp - level.min;
-  return Math.min(100, (progress / range) * 100);
+  return Math.min(100, ((xp - level.min) / (next.min - level.min)) * 100);
 }
 
-function getBadges(xp, diaries, chatCount, relations) {
+function getBadges(xp, diaries, chatCount, relations, surveys, s3Count) {
   const badges = [];
   if (diaries.length >= 1) badges.push('first');
   if (chatCount >= 5) badges.push('solo');
   if (Object.keys(relations).length >= 3) badges.push('helper');
   if (diaries.length >= 10) badges.push('thinker');
   if (xp >= 200) badges.push('active');
-
+  if ((surveys || []).length >= 2) badges.push('surveyor');
+  if ((s3Count || 0) >= 3) badges.push('s3master');
   if (diaries.length >= 3) {
     const dates = diaries.map(d => d.date).sort();
     let streak = 1;
     for (let i = 1; i < dates.length; i++) {
-      const prev = new Date(dates[i-1]);
-      const curr = new Date(dates[i]);
-      const diff = (curr - prev) / (1000*60*60*24);
+      const diff = (new Date(dates[i]) - new Date(dates[i-1])) / (1000*60*60*24);
       if (diff === 1) streak++;
-      else { streak = 1; }
+      else streak = 1;
     }
     if (streak >= 3) badges.push('streak3');
   }
-
   return badges;
 }
 
@@ -637,19 +1613,13 @@ function loadState() {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const saved = JSON.parse(raw);
-      state.ideas = saved.ideas || [];
-      state.students = saved.students || JSON.parse(JSON.stringify(DEFAULT_STUDENTS));
-      state.lessons = saved.lessons || [];
-      state.myXp = saved.myXp || 0;
-      state.myDiaries = saved.myDiaries || [];
-      state.myChatCount = saved.myChatCount || 0;
-      state.relations = saved.relations || {};
-      state.chatHistory = saved.chatHistory || [];
-      state.activityLog = saved.activityLog || [];
+      Object.keys(saved).forEach(k => {
+        if (k !== 'lessonStep' && k !== 'lessonForm' && k !== 'currentSStage') {
+          state[k] = saved[k];
+        }
+      });
     }
-  } catch (e) {
-    console.warn('localStorage 로드 오류:', e);
-  }
+  } catch(e) { console.warn('load error', e); }
 }
 
 function saveState() {
@@ -661,41 +1631,97 @@ function saveState() {
       myXp: state.myXp,
       myDiaries: state.myDiaries,
       myChatCount: state.myChatCount,
+      myS3Count: state.myS3Count,
       relations: state.relations,
       chatHistory: state.chatHistory,
-      activityLog: state.activityLog
+      activityLog: state.activityLog,
+      surveys: state.surveys,
+      researches: state.researches,
+      rubricLogs: state.rubricLogs || []
     }));
     return true;
-  } catch (e) {
-    console.warn('localStorage 저장 오류:', e);
-    return false;
-  }
+  } catch(e) { return false; }
 }
 
 function addXp(amount) {
   state.myXp += amount;
-  const saved = saveState();
+  saveState();
   renderAll();
-  if (!saved) {
-    console.warn('localStorage 저장에 실패했어요. 새로고침하면 데이터가 사라질 수 있습니다.');
-    showFeedback('t-feedback', '저장 공간 부족으로 데이터가 로컬에 보관되지 않았어요. 새로고침 시 사라질 수 있습니다.', 'info');
-  }
 }
 
 function logActivity(typeKey, detail) {
-  state.activityLog.unshift({
-    type: typeKey,
-    detail: detail,
-    date: nowIso(),
-    xp: getTypeXp(typeKey)
-  });
+  const xpMap = { idea: 5, diary: 15, lesson: 15, relation: 10, chat: 5, survey: 20 };
+  state.activityLog.unshift({ type: typeKey, detail, date: nowIso(), xp: xpMap[typeKey] || 0 });
   if (state.activityLog.length > 50) state.activityLog.length = 50;
   saveState();
 }
 
-function getTypeXp(typeKey) {
-  const map = { idea: 5, diary: 10, lesson: 15, relation: 10, chat: 5 };
-  return map[typeKey] || 0;
+function showFeedback(id, message, type) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.className = 'feedback-msg ' + type;
+  el.textContent = message;
+  setTimeout(() => { if (el.textContent === message) el.textContent = ''; }, 4000);
+}
+
+// ==================== S단계 판별 ====================
+function detectSStage(text) {
+  const t = text.toLowerCase();
+  if (t.includes('근거') || t.includes('판단') || t.includes('결론') || t.includes('인계') || t.includes('없이')) return 3;
+  if (t.includes('검증') || t.includes('비교') || t.includes('실험') || t.includes('실측') || t.includes('차이')) return 2;
+  if (t.includes('다른') || t.includes('또') || t.includes('반대') || t.includes('왜') || t.includes('이유')) return 1;
+  return 0;
+}
+
+function getStageXp(stage) {
+  return [5, 10, 20, 30][stage] || 5;
+}
+
+function updateStageUI(stage) {
+  state.currentSStage = stage;
+  const dots = document.querySelectorAll('.s-level-indicator .s-dot');
+  const labels = ['s0', 's1', 's2', 's3'];
+  dots.forEach((dot, i) => {
+    dot.className = 's-dot';
+    if (i <= stage) dot.classList.add(labels[i]);
+    else dot.classList.add('inactive');
+  });
+  const xpHint = document.getElementById('stage-xp-hint');
+  if (xpHint) xpHint.textContent = '+' + getStageXp(stage) + ' XP';
+  const desc = document.getElementById('stage-desc');
+  const descs = [
+    'S0: AI 답 그대로 사용 단계입니다. S1 이상으로 올라가 보세요!',
+    'S1: 재질문·반대 의견 탐색 단계! (+10 XP) S2를 목표로 해보세요.',
+    'S2: 검증·비교 단계! (+20 XP) 훌륭해요. S3도 도전해보세요!',
+    'S3: 최고 단계! 스스로 판단 근거 도출 (+30 XP) 🏆'
+  ];
+  if (desc) desc.textContent = descs[stage];
+}
+
+// ==================== 설문 점수 계산 ====================
+function calcSurveyScore(survey) {
+  const qs = ['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q11'];
+  let total = 0, count = 0;
+  qs.forEach(q => {
+    if (survey.answers && survey.answers[q]) {
+      total += parseInt(survey.answers[q]);
+      count++;
+    }
+  });
+  return count > 0 ? (total / count).toFixed(2) : null;
+}
+
+function classifyStudentType(survey) {
+  if (!survey || !survey.answers) return null;
+  const q1 = parseInt(survey.answers.q1 || 3);
+  const q6 = parseInt(survey.answers.q6 || 3);
+  const q9 = parseInt(survey.answers.q9 || 3);
+  const q10 = parseInt(survey.answers.q10 || 3);
+
+  if (q6 >= 4 && q9 >= 4 && q10 >= 4) return { type: 'leader', label: '🎯 융합형 리더', cls: 'type-leader' };
+  if (q1 <= 2 && q6 >= 4) return { type: 'verifier', label: '🔍 꼼꼼한 검증가', cls: 'type-verifier' };
+  if (q1 >= 4) return { type: 'acceptor', label: '⚠️ 맹목적 AI 수용자', cls: 'type-acceptor' };
+  return { type: 'support', label: '🆘 기초집중 지원군', cls: 'type-support' };
 }
 
 // ==================== 렌더링 ====================
@@ -706,34 +1732,34 @@ function renderHeader() {
 }
 
 function renderTeacher() {
-  const subject = document.getElementById('t-subject').value.trim();
-  document.getElementById('t-save').disabled = subject.length === 0;
+  const subject = document.getElementById('t-subject');
+  if (subject) {
+    document.getElementById('t-save').disabled = subject.value.trim().length === 0;
+  }
 
   const listEl = document.getElementById('t-list');
+  if (!listEl) return;
   if (state.ideas.length === 0) {
-    listEl.innerHTML = '<div class="empty-state">아직 등록한 아이디어가 없어요. 위의 칸에 주제를 입력하고 저장해 보세요.</div>';
+    listEl.innerHTML = '<div class="empty-state">아직 등록한 아이디어가 없어요.</div>';
   } else {
-    let html = '';
-    state.ideas.forEach(idea => {
-      html += `<div class="list-item">
+    listEl.innerHTML = state.ideas.map(idea => `
+      <div class="list-item">
         <div class="item-title">${escapeHtml(idea.subject)}</div>
-        ${idea.idea ? '<div style="font-size:13px;color:#555;margin-top:4px;">' + escapeHtml(idea.idea) + '</div>' : '<div style="font-size:12px;color:#aaa;margin-top:4px;">(내용 없음)</div>'}
+        ${idea.idea ? `<div style="font-size:13px;color:#555;margin-top:4px;">${escapeHtml(idea.idea)}</div>` : ''}
         <div class="item-meta">등록일: ${idea.date}</div>
-      </div>`;
-    });
-    listEl.innerHTML = html;
+      </div>`).join('');
   }
 
   const studentsEl = document.getElementById('t-students');
-  let sHtml = '';
-  state.students.forEach(s => {
-    const lvl = getLevel(s.xp);
-    sHtml += `<div class="student-card">
-      <div class="name">${escapeHtml(s.name)}</div>
-      <div class="xp">${s.xp} XP · ${lvl.name}</div>
-    </div>`;
-  });
-  studentsEl.innerHTML = sHtml;
+  if (studentsEl) {
+    studentsEl.innerHTML = state.students.map(s => {
+      const lvl = getLevel(s.xp);
+      return `<div class="student-card">
+        <div class="name">${escapeHtml(s.name)}</div>
+        <div class="xp">${s.xp} XP · ${lvl.name}</div>
+      </div>`;
+    }).join('');
+  }
 }
 
 function renderStudent() {
@@ -741,38 +1767,239 @@ function renderStudent() {
   const progress = getLevelProgress(state.myXp);
   const nextLevel = LEVELS[LEVELS.indexOf(level) + 1];
 
-  document.getElementById('s-level-badge').textContent = level.name;
-  document.getElementById('s-xp').textContent = state.myXp;
-  document.getElementById('s-xp-bar').style.width = progress + '%';
-  document.getElementById('s-xp-bar').textContent = Math.round(progress) + '%';
-  document.getElementById('s-next').textContent = nextLevel ? nextLevel.min - state.myXp : '-';
+  const badge = document.getElementById('s-level-badge');
+  if (badge) badge.textContent = level.name;
+  const xpEl = document.getElementById('s-xp');
+  if (xpEl) xpEl.textContent = state.myXp;
+  const bar = document.getElementById('s-xp-bar');
+  if (bar) { bar.style.width = progress + '%'; bar.textContent = Math.round(progress) + '%'; }
+  const nextEl = document.getElementById('s-next');
+  if (nextEl) nextEl.textContent = nextLevel ? nextLevel.min - state.myXp : '-';
 
-  const myBadges = getBadges(state.myXp, state.myDiaries, state.myChatCount, state.relations);
+  const myBadges = getBadges(state.myXp, state.myDiaries, state.myChatCount, state.relations, state.surveys, state.myS3Count);
   const badgeEl = document.getElementById('s-badges');
-  let bHtml = '';
-  BADGES_DEF.forEach(b => {
-    const unlocked = myBadges.includes(b.id);
-    bHtml += `<div class="badge-item ${unlocked ? '' : 'locked'}">
-      <div class="badge-icon">${b.icon}</div>
-      <div class="badge-name">${unlocked ? b.name : '???'}</div>
-      <div class="badge-cond">${b.cond}</div>
-    </div>`;
-  });
-  badgeEl.innerHTML = bHtml;
-
-  const diaryListEl = document.getElementById('s-diary-list');
-  if (state.myDiaries.length === 0) {
-    diaryListEl.innerHTML = '<div class="empty-state" style="padding:16px;">작성한 성찰 일지가 없어요.</div>';
-  } else {
-    let dHtml = '';
-    state.myDiaries.forEach(d => {
-      dHtml += `<div class="list-item">
-        <div class="item-title">${escapeHtml(d.content.substring(0, 50))}${d.content.length > 50 ? '…' : ''}</div>
-        <div class="item-meta">${d.date}</div>
+  if (badgeEl) {
+    badgeEl.innerHTML = BADGES_DEF.map(b => {
+      const unlocked = myBadges.includes(b.id);
+      return `<div class="badge-item ${unlocked ? '' : 'locked'}">
+        <div class="badge-icon">${unlocked ? b.icon : '🔒'}</div>
+        <div class="badge-name">${unlocked ? b.name : '???'}</div>
+        <div class="badge-cond">${b.cond}</div>
       </div>`;
-    });
-    diaryListEl.innerHTML = dHtml;
+    }).join('');
   }
+
+  renderDiaryList();
+}
+
+function renderDashboard() {
+  document.getElementById('d-total-xp').textContent = state.myXp;
+  const level = getLevel(state.myXp);
+  document.getElementById('d-level').textContent = level.name;
+  document.getElementById('d-ideas').textContent = state.ideas.length;
+  document.getElementById('d-diaries').textContent = state.myDiaries.length;
+  document.getElementById('d-lessons').textContent = state.lessons.length;
+  document.getElementById('d-surveys').textContent = (state.surveys || []).length;
+
+  const progress = getLevelProgress(state.myXp);
+  const nextLevel = LEVELS[LEVELS.indexOf(level) + 1];
+  document.getElementById('d-level-bar').style.width = progress + '%';
+  document.getElementById('d-next-level').textContent = nextLevel ? nextLevel.name : '-';
+  document.getElementById('d-next-xp').textContent = nextLevel ? nextLevel.min - state.myXp : '-';
+
+  const myBadges = getBadges(state.myXp, state.myDiaries, state.myChatCount, state.relations, state.surveys, state.myS3Count);
+  const badgeEl = document.getElementById('d-badges');
+  if (badgeEl) {
+    badgeEl.innerHTML = BADGES_DEF.map(b => {
+      const unlocked = myBadges.includes(b.id);
+      return `<div class="badge-item ${unlocked ? '' : 'locked'}">
+        <div class="badge-icon">${unlocked ? b.icon : '🔒'}</div>
+        <div class="badge-name">${unlocked ? b.name : '잠금'}</div>
+        <div class="badge-cond">${b.cond}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // D. 사전·사후 비교
+  renderCompare();
+
+  // 활동 기록
+  const actEl = document.getElementById('d-activity');
+  if (actEl) {
+    if (state.activityLog.length === 0) {
+      actEl.innerHTML = '<div class="empty-state" style="padding:16px;">아직 활동 기록이 없어요.</div>';
+    } else {
+      let aHtml = '<table><thead><tr><th>날짜</th><th>활동</th><th>XP</th></tr></thead><tbody>';
+      state.activityLog.forEach(a => {
+        const typeInfo = ACTIVITY_TYPES.find(t => t.key === a.type);
+        aHtml += `<tr>
+          <td>${a.date}</td>
+          <td>${typeInfo ? typeInfo.icon + ' ' + typeInfo.label : a.type}<br><span style="color:#888;font-size:12px;">${escapeHtml(a.detail)}</span></td>
+          <td>+${a.xp} XP</td>
+        </tr>`;
+      });
+      aHtml += '</tbody></table>';
+      actEl.innerHTML = aHtml;
+    }
+  }
+
+  // 순위표 (유형 추가)
+  const rankingBody = document.querySelector('#d-ranking tbody');
+  if (rankingBody) {
+    const sorted = [...state.students].sort((a, b) => b.xp - a.xp);
+    if (sorted.length === 0) {
+      rankingBody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#888;">학생 데이터가 없어요.</td></tr>';
+    } else {
+      rankingBody.innerHTML = sorted.map((s, i) => {
+        const lvl = getLevel(s.xp);
+        const type = classifyStudentType(null);
+        return `<tr>
+          <td>${i + 1}등</td>
+          <td>${escapeHtml(s.name)}</td>
+          <td>${s.xp} XP</td>
+          <td>${lvl.name}</td>
+          <td>-</td>
+        </tr>`;
+      }).join('');
+    }
+  }
+}
+
+function renderCompare() {
+  const surveys = state.surveys || [];
+  const pre = surveys.filter(s => s.timing === 'pre');
+  const post = surveys.filter(s => s.timing === 'post');
+
+  const compareEl = document.getElementById('d-compare-content');
+  const typeEl = document.getElementById('d-type-content');
+
+  if (pre.length === 0 || post.length === 0) {
+    if (compareEl) compareEl.innerHTML = '<div class="empty-state" style="padding:16px;">설문을 사전·사후 각 1회 이상 제출하면 비교 그래프가 표시됩니다.</div>';
+    if (typeEl) typeEl.innerHTML = '<div class="empty-state" style="padding:16px;">사후 설문 제출 후 학생 유형이 분류됩니다.</div>';
+    return;
+  }
+
+  // 최신 사전·사후 각 1개
+  const latestPre = pre[pre.length - 1];
+  const latestPost = post[post.length - 1];
+
+  const qs = ['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q11'];
+  const qLabels = {
+    q1: 'AI 무비판 수용 (낮을수록↓)',
+    q2: '비판적 수용',
+    q3: '검증 행동',
+    q4: '프롬프트 인식',
+    q5: '주체성',
+    q6: '비교 검증 태도 ⭐',
+    q7: '검증 행동 2',
+    q8: '오류 분석',
+    q9: '개념 이해 (S1)',
+    q10: '자립 해결 (S2)',
+    q11: 'AI 활용 성과 (S3)'
+  };
+
+  let preAvg = 0, postAvg = 0, count = 0;
+  qs.forEach(q => {
+    if (latestPre.answers && latestPost.answers && latestPre.answers[q] && latestPost.answers[q]) {
+      preAvg += parseInt(latestPre.answers[q]);
+      postAvg += parseInt(latestPost.answers[q]);
+      count++;
+    }
+  });
+  preAvg = count > 0 ? (preAvg / count).toFixed(2) : '-';
+  postAvg = count > 0 ? (postAvg / count).toFixed(2) : '-';
+  const diff = count > 0 ? (parseFloat(postAvg) - parseFloat(preAvg)).toFixed(2) : '-';
+  const diffVal = parseFloat(diff);
+
+  // 핵심 KPI 계산
+  const kpiData = qs.map(q => {
+    const pre_v = latestPre.answers && latestPre.answers[q] ? parseInt(latestPre.answers[q]) : 0;
+    const post_v = latestPost.answers && latestPost.answers[q] ? parseInt(latestPost.answers[q]) : 0;
+    return { q, label: qLabels[q], pre: pre_v, post: post_v, diff: post_v - pre_v };
+  }).filter(d => d.pre > 0 && d.post > 0);
+
+  if (compareEl) {
+    compareEl.innerHTML = `
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h5>📊 평균 점수 비교</h5>
+          <div class="compare-row"><span class="label">사전 평균</span><span class="val">${preAvg}점</span></div>
+          <div class="compare-row"><span class="label">사후 평균</span><span class="val">${postAvg}점</span></div>
+          <div class="compare-row"><span class="label">변화폭</span><span class="val ${diffVal >= 0 ? 'up' : 'down'}">${diffVal >= 0 ? '+' : ''}${diff}점</span></div>
+        </div>
+        <div class="compare-card">
+          <h5>🎯 핵심 KPI 달성 여부</h5>
+          <div class="compare-row">
+            <span class="label">AI 무비판 수용 감소 (Q1)</span>
+            ${latestPre.answers && latestPost.answers && latestPre.answers.q1 && latestPost.answers.q1
+              ? `<span class="val ${parseInt(latestPost.answers.q1) < parseInt(latestPre.answers.q1) ? 'up' : 'down'}">${parseInt(latestPost.answers.q1) - parseInt(latestPre.answers.q1) > 0 ? '+' : ''}${parseInt(latestPost.answers.q1) - parseInt(latestPre.answers.q1)}점</span>`
+              : '<span class="val">-</span>'}
+          </div>
+          <div class="compare-row">
+            <span class="label">비교 검증 태도 ⭐ (Q6)</span>
+            ${latestPre.answers && latestPost.answers && latestPre.answers.q6 && latestPost.answers.q6
+              ? `<span class="val ${parseInt(latestPost.answers.q6) > parseInt(latestPre.answers.q6) ? 'up' : 'down'}">${parseInt(latestPost.answers.q6) - parseInt(latestPre.answers.q6) >= 0 ? '+' : ''}${parseInt(latestPost.answers.q6) - parseInt(latestPre.answers.q6)}점</span>`
+              : '<span class="val">-</span>'}
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:12px;">
+        <div style="font-size:13px;font-weight:600;color:#4682B4;margin-bottom:10px;">📊 문항별 사전·사후 비교</div>
+        ${kpiData.map(d => `
+          <div class="kpi-bar-wrap">
+            <div class="kpi-label">
+              <span>${d.label}</span>
+              <span>${d.diff >= 0 ? '<span style="color:#28a745">▲' + d.diff : '<span style="color:#dc3545">▼' + Math.abs(d.diff)}점</span></span>
+            </div>
+            <div class="kpi-bar-bg"><div class="kpi-bar-pre" style="width:${(d.pre/5)*100}%"></div></div>
+            <div class="kpi-bar-bg"><div class="kpi-bar-post" style="width:${(d.post/5)*100}%"></div></div>
+            <div style="display:flex;gap:12px;font-size:10px;color:#aaa;margin-top:2px;">
+              <span style="color:#87CEEB;">■ 사전 ${d.pre}점</span>
+              <span style="color:#28a745;">■ 사후 ${d.post}점</span>
+            </div>
+          </div>`).join('')}
+      </div>`;
+  }
+
+  // 학생 유형 분류
+  if (typeEl) {
+    const type = classifyStudentType(latestPost);
+    if (type) {
+      typeEl.innerHTML = `
+        <div style="text-align:center;padding:16px;">
+          <div style="font-size:32px;margin-bottom:8px;">${type.label.split(' ')[0]}</div>
+          <span class="type-chip ${type.cls}">${type.label}</span>
+          <div style="margin-top:12px;font-size:13px;color:#555;line-height:1.6;">
+            ${type.type === 'leader' ? '개념 이해, AI 검증, 자립 해결 모두 우수합니다. 모둠장 역할이나 발표·인계 역할을 맡겨보세요.' : ''}
+            ${type.type === 'verifier' ? 'AI 무비판 수용 없이 꼼꼼하게 검증합니다. 검증 과정을 다른 학생과 공유하게 해보세요.' : ''}
+            ${type.type === 'acceptor' ? 'AI 답을 그대로 사용하는 경향이 있습니다. S2 질문 카드를 활용하여 검증 습관을 길러주세요.' : ''}
+            ${type.type === 'support' ? '기초 개념 보충이 필요합니다. 안전망 퀘스트를 활용하고 교사의 집중 지원이 필요합니다.' : ''}
+          </div>
+        </div>`;
+    }
+  }
+}
+
+function renderSurveyList() {
+  const listEl = document.getElementById('survey-list');
+  if (!listEl) return;
+  const surveys = state.surveys || [];
+  if (surveys.length === 0) {
+    listEl.innerHTML = '<div class="empty-state" style="padding:16px;">제출된 설문이 없어요.</div>';
+    return;
+  }
+  listEl.innerHTML = surveys.map((s, i) => {
+    const score = calcSurveyScore(s);
+    const type = classifyStudentType(s);
+    return `<div class="list-item">
+      <div class="item-title">
+        ${s.timing === 'pre' ? '🔵 사전' : '🟢 사후'} 설문 · ${s.subject || '교과 미입력'}
+        ${score ? `<span class="survey-score-badge">${score}점</span>` : ''}
+        ${type ? `<span class="type-chip ${type.cls}" style="margin-left:6px;">${type.label}</span>` : ''}
+      </div>
+      <div class="item-meta">제출일: ${s.date}</div>
+    </div>`;
+  }).join('');
 }
 
 function renderLesson(step) {
@@ -792,7 +2019,7 @@ function renderLesson(step) {
       <label for="l-goal">학습 목표</label>
       <textarea id="l-goal" placeholder="이 차시를 통해 학생이 무엇을 할 수 있게 될지 작성" maxlength="500">${escapeHtml(form.step1.goal)}</textarea>
       <label for="l-bloom">블룸 택소노미 레벨</label>
-      <select class="bloom-select" id="l-bloom">
+      <select id="l-bloom">
         ${BLOOM_LEVELS.map(b => `<option value="${b.value}" ${form.step1.bloom === b.value ? 'selected' : ''}>${b.label}</option>`).join('')}
       </select>`;
     nextLabel = 'AI 초안 받기 (목업) →';
@@ -807,25 +2034,21 @@ function renderLesson(step) {
     html = `<h3>STEP 3. 교수학습 방법</h3>
       <label for="l-method">활동 유형</label>
       <select id="l-method">
-        <option value="강의식" ${form.step3.method === '강의식' ? 'selected' : ''}>강의식</option>
-        <option value="토론" ${form.step3.method === '토론' ? 'selected' : ''}>토론</option>
-        <option value="프로젝트" ${form.step3.method === '프로젝트' ? 'selected' : ''}>프로젝트</option>
-        <option value="플립" ${form.step3.method === '플립' ? 'selected' : ''}>플립러닝</option>
-        <option value="협동" ${form.step3.method === '협동' ? 'selected' : ''}>협동학습</option>
-        <option value="실습" ${form.step3.method === '실습' ? 'selected' : ''}>실습</option>
+        ${['강의식','토론','프로젝트','플립러닝','협동학습','실습'].map(m => `<option value="${m}" ${form.step3.method === m ? 'selected' : ''}>${m}</option>`).join('')}
       </select>
       <label for="l-time">시간 배분 (분)</label>
       <input type="number" id="l-time" placeholder="예: 50" value="${form.step3.time}" min="1" max="480">
-      <label for="l-reflect">성찰 질문</label>
-      <textarea id="l-reflect" placeholder="수업 후 학생이 생각해볼 질문을 작성" maxlength="200">${escapeHtml(form.step3.reflectQuestion)}</textarea>`;
+      <label for="l-reflect">성찰 질문 (STEP 3 처방 프롬프트 참고)</label>
+      <textarea id="l-reflect" placeholder="수업 후 학생이 AI 없이 판단할 수 있는 질문을 작성" maxlength="300">${escapeHtml(form.step3.reflectQuestion)}</textarea>`;
   } else if (step === 4) {
-    html = `<h3>STEP 4. 평가 방법</h3>
-      <label for="l-eval">평가 기준</label>
-      <textarea id="l-eval" placeholder="우수/보통/기초/미흡 평가 기준을 직접 입력" maxlength="500">${escapeHtml(form.step4.evalCriteria)}</textarea>
+    html = `<h3>STEP 4. 평가 방법 (공통 100점 루브릭)</h3>
+      <label for="l-eval">평가 기준 (우수/보통/기초/미흡)</label>
+      <textarea id="l-eval" placeholder="우수·보통·기초·미흡 기준을 직접 입력" maxlength="500">${escapeHtml(form.step4.evalCriteria)}</textarea>
       <div class="btn-row">
         <button class="btn btn-secondary" id="l-gen-rubric">AI 루브릭 생성 (목업)</button>
       </div>
       <div id="l-rubric-output" style="margin-top:12px;"></div>`;
+    nextLabel = '저장 완료 (+15 XP)';
   }
 
   contentEl.innerHTML = html;
@@ -838,108 +2061,31 @@ function renderLesson(step) {
   document.getElementById('lesson-prev').disabled = prevDisabled;
   document.getElementById('lesson-next').textContent = nextLabel;
 
+  // 이벤트 바인딩
   if (step === 1) {
-    document.getElementById('l-title')?.addEventListener('input', () => {
-      form.step1.title = document.getElementById('l-title').value;
-    });
-    document.getElementById('l-goal')?.addEventListener('input', () => {
-      form.step1.goal = document.getElementById('l-goal').value;
-    });
-    document.getElementById('l-bloom')?.addEventListener('change', () => {
-      form.step1.bloom = document.getElementById('l-bloom').value;
-    });
+    document.getElementById('l-title')?.addEventListener('input', () => { form.step1.title = document.getElementById('l-title').value; });
+    document.getElementById('l-goal')?.addEventListener('input', () => { form.step1.goal = document.getElementById('l-goal').value; });
+    document.getElementById('l-bloom')?.addEventListener('change', () => { form.step1.bloom = document.getElementById('l-bloom').value; });
   } else if (step === 2) {
-    document.getElementById('l-content')?.addEventListener('input', () => {
-      form.step2.content = document.getElementById('l-content').value;
-    });
+    document.getElementById('l-content')?.addEventListener('input', () => { form.step2.content = document.getElementById('l-content').value; });
     document.getElementById('l-gen-draft')?.addEventListener('click', genDraftMock);
   } else if (step === 3) {
-    document.getElementById('l-method')?.addEventListener('change', () => {
-      form.step3.method = document.getElementById('l-method').value;
-    });
-    document.getElementById('l-time')?.addEventListener('input', () => {
-      form.step3.time = document.getElementById('l-time').value;
-    });
-    document.getElementById('l-reflect')?.addEventListener('input', () => {
-      form.step3.reflectQuestion = document.getElementById('l-reflect').value;
-    });
+    document.getElementById('l-method')?.addEventListener('change', () => { form.step3.method = document.getElementById('l-method').value; });
+    document.getElementById('l-time')?.addEventListener('input', () => { form.step3.time = document.getElementById('l-time').value; });
+    document.getElementById('l-reflect')?.addEventListener('input', () => { form.step3.reflectQuestion = document.getElementById('l-reflect').value; });
   } else if (step === 4) {
-    document.getElementById('l-eval')?.addEventListener('input', () => {
-      form.step4.evalCriteria = document.getElementById('l-eval').value;
-    });
+    document.getElementById('l-eval')?.addEventListener('input', () => { form.step4.evalCriteria = document.getElementById('l-eval').value; });
     document.getElementById('l-gen-rubric')?.addEventListener('click', genRubricMock);
-  }
-}
-
-function renderDashboard() {
-  document.getElementById('d-total-xp').textContent = state.myXp;
-  const level = getLevel(state.myXp);
-  document.getElementById('d-level').textContent = level.name;
-  document.getElementById('d-ideas').textContent = state.ideas.length;
-  document.getElementById('d-diaries').textContent = state.myDiaries.length;
-  document.getElementById('d-lessons').textContent = state.lessons.length;
-
-  const progress = getLevelProgress(state.myXp);
-  const nextLevel = LEVELS[LEVELS.indexOf(level) + 1];
-  document.getElementById('d-level-bar').style.width = progress + '%';
-  document.getElementById('d-next-level').textContent = nextLevel ? nextLevel.name : '-';
-  document.getElementById('d-next-xp').textContent = nextLevel ? nextLevel.min - state.myXp : '-';
-
-  const myBadges = getBadges(state.myXp, state.myDiaries, state.myChatCount, state.relations);
-  const badgeEl = document.getElementById('d-badges');
-  let bHtml = '';
-  BADGES_DEF.forEach(b => {
-    const unlocked = myBadges.includes(b.id);
-    bHtml += `<div class="badge-item ${unlocked ? '' : 'locked'}">
-      <div class="badge-icon">${unlocked ? b.icon : '🔒'}</div>
-      <div class="badge-name">${unlocked ? b.name : '잠금'}</div>
-      <div class="badge-cond">${b.cond}</div>
-    </div>`;
-  });
-  badgeEl.innerHTML = bHtml;
-
-  const actEl = document.getElementById('d-activity');
-  if (state.activityLog.length === 0) {
-    actEl.innerHTML = '<div class="empty-state" style="padding:16px;">아직 활동 기록이 없어요.</div>';
-  } else {
-    let aHtml = '<table><thead><tr><th>날짜</th><th>활동</th><th>XP</th></tr></thead><tbody>';
-    state.activityLog.forEach(a => {
-      const typeInfo = ACTIVITY_TYPES.find(t => t.key === a.type);
-      aHtml += `<tr>
-        <td>${a.date}</td>
-        <td>${typeInfo ? typeInfo.icon + ' ' + typeInfo.label : a.type}<br><span style="color:#888;font-size:12px;">${escapeHtml(a.detail)}</span></td>
-        <td>+${a.xp} XP</td>
-      </tr>`;
-    });
-    aHtml += '</tbody></table>';
-    actEl.innerHTML = aHtml;
-  }
-
-  const rankingBody = document.querySelector('#d-ranking tbody');
-  if (rankingBody) {
-    const sorted = [...state.students].sort((a, b) => b.xp - a.xp);
-    let rHtml = '';
-    sorted.forEach((s, i) => {
-      const lvl = getLevel(s.xp);
-      rHtml += `<tr>
-        <td>${i + 1}등</td>
-        <td>${escapeHtml(s.name)}</td>
-        <td>${s.xp} XP</td>
-        <td>${lvl.name}</td>
-      </tr>`;
-    });
-    if (sorted.length === 0) {
-      rHtml = '<tr><td colspan="4" style="text-align:center;color:#888;">학생 데이터가 없어요.</td></tr>';
-    }
-    rankingBody.innerHTML = rHtml;
   }
 }
 
 function renderRelations() {
   const controlsEl = document.getElementById('relation-controls');
-  let html = '<table id="relation-table"><thead><tr><th>학생 A</th><th>학생 B</th><th>강도</th></tr></thead><tbody>';
+  if (!controlsEl) return;
   const studentNames = {};
   state.students.forEach(s => { studentNames[s.id] = s.name; });
+
+  let html = '<table><thead><tr><th>학생 A</th><th>학생 B</th><th>강도</th></tr></thead><tbody>';
 
   Object.keys(state.relations).forEach(key => {
     const [a, b] = key.split('-');
@@ -960,14 +2106,12 @@ function renderRelations() {
   for (let i = 0; i < state.students.length; i++) {
     for (let j = i + 1; j < state.students.length; j++) {
       const key = state.students[i].id + '-' + state.students[j].id;
-      if (!state.relations[key]) {
-        pairs.push([state.students[i], state.students[j], key]);
-      }
+      if (!state.relations[key]) pairs.push([state.students[i], state.students[j], key]);
     }
   }
 
   pairs.forEach(([a, b, key]) => {
-    html += `<tr class="relation-new-row" data-key="${key}">
+    html += `<tr>
       <td>${escapeHtml(a.name)}</td>
       <td>${escapeHtml(b.name)}</td>
       <td>
@@ -985,26 +2129,21 @@ function renderRelations() {
   controlsEl.innerHTML = html;
 
   document.querySelectorAll('.relation-strength').forEach(sel => {
-    sel.addEventListener('change', () => {
-      state.relations[sel.dataset.key] = parseInt(sel.value);
-    });
+    sel.addEventListener('change', () => { state.relations[sel.dataset.key] = parseInt(sel.value); });
   });
   document.querySelectorAll('.relation-strength-new').forEach(sel => {
     sel.addEventListener('change', () => {
-      if (sel.value) {
-        state.relations[sel.dataset.key] = parseInt(sel.value);
-        renderRelations();
-      }
+      if (sel.value) { state.relations[sel.dataset.key] = parseInt(sel.value); renderRelations(); }
     });
   });
 }
 
 function renderSociogram() {
   const canvas = document.getElementById('sociogram');
+  if (!canvas) return;
   const ctx = canvas.getContext('2d');
   const w = canvas.width, h = canvas.height;
   ctx.clearRect(0, 0, w, h);
-
   ctx.fillStyle = '#fafafa';
   ctx.fillRect(0, 0, w, h);
 
@@ -1012,15 +2151,12 @@ function renderSociogram() {
   const cx = w / 2, cy = h / 2;
   const radius = Math.min(w, h) * 0.32;
   const angles = students.map((_, i) => (i / students.length) * 2 * Math.PI - Math.PI / 2);
-
   const positions = students.map((s, i) => ({
     x: cx + radius * Math.cos(angles[i]),
     y: cy + radius * Math.sin(angles[i]),
     student: s
   }));
 
-  ctx.strokeStyle = '#aaa';
-  ctx.lineWidth = 1;
   Object.keys(state.relations).forEach(key => {
     const [aId, bId] = key.split('-');
     const p1 = positions.find(p => p.student.id === aId);
@@ -1038,26 +2174,23 @@ function renderSociogram() {
 
   positions.forEach(p => {
     const lvl = getLevel(p.student.xp);
-    ctx.fillStyle = lvl.name.includes('MVP') ? '#ffc107' : lvl.name.includes('별') ? '#ffc107' : '#4a90d9';
+    ctx.fillStyle = lvl.name.includes('MVP') || lvl.name.includes('별') ? '#ffc107' : '#4a90d9';
     ctx.beginPath();
     ctx.arc(p.x, p.y, 22, 0, 2 * Math.PI);
     ctx.fill();
-
     ctx.fillStyle = 'white';
     ctx.font = 'bold 12px sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(p.student.name, p.x, p.y);
-
-    ctx.fillStyle = 'white';
     ctx.font = '10px sans-serif';
-    ctx.fillText(p.student.xp + 'XP', p.x, p.y + 16);
+    ctx.fillText(p.student.xp + 'XP', p.x, p.y + 15);
   });
 
   ctx.fillStyle = '#888';
   ctx.font = '12px sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('노드: 학생 이름 + XP  |  선 두께: 관계 강도 (1=얇음, 3=굵음)', w / 2, h - 10);
+  ctx.fillText('노드: 학생 이름 + XP | 선 두께: 관계 강도', w / 2, h - 10);
 }
 
 function renderAll() {
@@ -1065,102 +2198,49 @@ function renderAll() {
   renderTeacher();
   renderStudent();
   renderDashboard();
-  renderRelations();
-  renderSociogram();
+  renderSurveyList();
 }
 
-// ==================== 모달 ====================
-let modalStudentId = null;
-function showStudentModal(studentId) {
-  modalStudentId = studentId;
-  const s = state.students.find(st => st.id === studentId);
-  if (!s) return;
-  document.getElementById('modal-student-name').textContent = s.name;
-  const lvl = getLevel(s.xp);
-  document.getElementById('modal-student-xp').textContent = s.xp;
-  document.getElementById('modal-student-level').textContent = lvl.name;
-
-  const diariesEl = document.getElementById('modal-student-diaries');
-  if (s.diaries.length === 0) {
-    diariesEl.innerHTML = '<div style="color:#888;font-size:13px;">작성한 일지가 없어요.</div>';
-  } else {
-    let html = '';
-    s.diaries.forEach(d => {
-      html += `<div class="list-item" style="margin-bottom:6px;">
-        <div style="font-size:13px;">${escapeHtml(d.content.substring(0, 80))}${d.content.length > 80 ? '…' : ''}</div>
-        <div style="font-size:11px;color:#888;">${d.date}</div>
-      </div>`;
-    });
-    diariesEl.innerHTML = html;
-  }
-  document.getElementById('student-modal').classList.add('show');
-}
-
-// ==================== 목업 AI 함수 ====================
+// ==================== 목업 AI ====================
 function genDraftMock() {
   const title = state.lessonForm.step1.title || '수업';
-  const draft = `[AI 초안] "${escapeHtml(title)}" 수업 내용\n\n` +
-    `1. 도입 (10분): 일상 속 예시로 흥미 유발\n` +
-    `2. 전개 (25분): 핵심 개념 설명 및 예시\n` +
-    `3. 정리 (15분): 주요 내용 요약 및 성찰 질문\n\n` +
-    `※ 이 초안은 목업입니다. 실제 Solar API 연동 시 더 정교한 초안을 받을 수 있습니다.`;
-
-  state.lessonForm.step2.content = draft;
+  state.lessonForm.step2.content = `[AI 초안] "${title}" 수업 내용\n\n1. 도입 (10분): 일상 속 예시로 흥미 유발\n2. 전개1 질문 구성 (10분): S2 질문 카드 활용\n3. 전개2 실험·검증 (15분): 단일 변인 통제\n4. 전개3 후속질문 (10분): S3 판단 근거 도출\n5. 정리 (5분): 성찰 일지 4문항 작성\n\n※ 이 초안은 목업입니다.`;
   renderLesson(state.lessonStep);
 }
 
 function genRubricMock() {
-  const goal = state.lessonForm.step4.evalCriteria || '학습 목표 달성';
-    // 더 구조화된 루브릭 데이터를 생성
-    // 기존 루브릭 데이터 (기본 4단계)
-    // const basicRubricData = [
-    //   { criteria: '개념 이해', excellent: '개념을 정확히 설명하고 예시를 든다', proficient: '개념을 대체로 이해한다', basic: '일부 개념만 이해', incomplete: '개념 이해가 부족' },
-    //   { criteria: '적용 능력', excellent: '실제 상황에 능숙히 적용', proficient: '부분적 적용 가능', basic: '제한적 적용', incomplete: '적용 불가' },
-    //   { criteria: '분석력', excellent: '장단점을 비교·분석한다', proficient: '비교적 분석 가능', basic: '표면적 분석', incomplete: '분석 미흡' },
-    // ];
-    
-    // 루브릭을 테이블로 렌더링
-    let rubricHtml = '<div style="margin-top:8px;"><h4 style="font-size:13px;color:#357abd;margin-bottom:6px;">📊 평가 루브릭 (목업)</h4><table style="width:100%;border-collapse:collapse;font-size:11px;">';
-    // 100점 루브릭 구조 (사이트 참고)
-    const rubricData = [
-      { criteria: '1. 문제 정의 및 프롬프트 설계', points: '25점', excellent: '과제 목표와 제약조건을 구조화하여 3가지 필수 조건 포함', proficient: '목표는 이해했으나 일부 조건 누락', basic: '일부 개념만 이해', incomplete: '단편적 질문, 문제 분해 못함' },
-      { criteria: '2. AI 협업 및 산출물 구현', points: '30점', excellent: 'AI 제안을 단계적으로 적용, 예외 처리 완비', proficient: '기본 기능 구현했으나 예외 처리 미흡', basic: '제한적 적용', incomplete: 'AI 코드 무비판적 복사, 산출물 미완성' },
-      { criteria: '3. 오류 검증·디버깅', points: '25점', excellent: '단일 변인 통제 실험, 실측 수치(mm, ms, %)로 AI 답 검증', proficient: '실험·측정했으나 여러 조건 동시 변경으로 원인 추론 부족', basic: '표면적 분석', incomplete: '실측 대조 없이 AI 설명 그대로 믿음' },
-      { criteria: '4. 결과물 완성도 및 발표', points: '20점', excellent: '재현 가능한 인계 명세서 작성, 논리적 설명', proficient: '완성됐으나 인계 명세서의 검증 수치 일부 누락', basic: '일부만 설명', incomplete: '산출물 누락, 수정 근거 설명 못함' },
-    ];
-    
-    rubricHtml += '<tr style="background:#f5f5f5;"><th style="padding:4px 6px;border:1px solid #ddd;">평가 요소 (배점)</th><th style="padding:4px 6px;border:1px solid #ddd;">상 수준 (80~100%)</th><th style="padding:4px 6px;border:1px solid #ddd;">중 수준 (60~79%)</th><th style="padding:4px 6px;border:1px solid #ddd;">하 수준 (0~59%)</th><th style="padding:4px 6px;border:1px solid #ddd;">기본점수 기준</th></tr>';
-    rubricData.forEach(row => {
-      rubricHtml += `<tr style="background:#fafafa;"><td style="padding:4px 6px;border:1px solid #ddd;font-weight:500;">${row.criteria}</td><td style="padding:4px 6px;border:1px solid #ddd;">${row.excellent}</td><td style="padding:4px 6px;border:1px solid #ddd;">${row.proficient}</td><td style="padding:4px 6px;border:1px solid #ddd;">${row.basic}</td><td style="padding:4px 6px;border:1px solid #ddd;">${row.incomplete}</td></tr>`;
-    });
-    rubricHtml += '</table>';
-    rubricHtml += '<div style="margin-top:6px;font-size:11px;color:#888;">※ 이 루브릭은 목업입니다. 실제 Solar API 연동 시 목표·블룸 레벨 기반 루브릭을 생성합니다.</div>';
-    
-    document.getElementById('l-rubric-output').innerHTML = rubricHtml;
-    
-    // 3단계 질문·검토 중심 수업 모델 참고 (사이트 교사용 가이드 참고)
-    setTimeout(() => {
-      const rubricBox = document.getElementById('l-rubric-output');
-      if (rubricBox && rubricBox.parentNode) {
-        const modelDiv = document.createElement('div');
-        modelDiv.style.cssText = 'margin-top:16px;padding:12px;background:#f0f8ff;border-radius:8px;border:1px solid #87CEEB;';
-        modelDiv.innerHTML = '<h4 style="font-size:13px;color:#4682B4;margin-bottom:8px;">📚 3단계 질문·검토 중심 수업 모델 (참고용)</h4>' +
-          '<div style="font-size:12px;line-height:1.6;">' +
-          '<p><strong>STEP 1 · 질문 구성 (10분)</strong><br>' +
-          '과제 목표, 장비 제약(치수·지연·권한·화면 크기 등), 입출력 기준을 명시하여 첫 질문 작성. ' +
-          '질문 전 <strong>본인</strong>의 초기 예상과 판단 기준을 활동지에 먼저 기록.</p>' +
-          '<p><strong>STEP 2 · 실험 대조 (15분)</strong><br>' +
-          'AI 답변에서 바로 쓸 수 있는 것과 실험으로 확인해야 할 가정을 분리. ' +
-          '<strong>한 번에 하나의 조건만 바꾸며(단일 변인 통제)</strong> 전·후 측정값 비교.</p>' +
-          '<p><strong>STEP 3 · 후속 질문 & 인계 (10분)</strong><br>' +
-          '실측 오차·경계조건 수치를 넣어 후속 질문 진행. ' +
-          '<strong>실측 수치(mm, ms, %, 건수)를 근거로 채택·수정·보류 판정</strong>하여 다음 차시/교과로 인계.</p>' +
-          '</div>' +
-          '<p style="font-size:10px;color:#888;margin-top:6px;">※ 50분 기준 표준 운영안: 도입(10분) → 전개1 질문(10분) → 전개2 검증(15분) → 전개3 후속질문(10분) → 정리(5분)</p>';
-        rubricBox.parentNode.appendChild(modelDiv);
-      }
-    }, 100);
+  const rubricData = [
+    { criteria: '1. 프롬프트 설계 (S단계)', points: '30점', excellent: 'S3: 판단 근거 도출 질문', proficient: 'S2: 검증·비교 질문', basic: 'S1: 재질문', incomplete: 'S0: AI 답 그대로 복붙' },
+    { criteria: '2. AI 협업·산출물', points: '25점', excellent: 'AI 제안을 단계적 적용, 예외 처리 완비', proficient: '기본 기능 구현, 예외 처리 미흡', basic: '제한적 적용', incomplete: 'AI 코드 무비판 복사, 미완성' },
+    { criteria: '3. 오류 검증·디버깅', points: '25점', excellent: '단일 변인 통제 실험, 실측 수치로 AI 답 검증', proficient: '실험했으나 여러 조건 동시 변경', basic: '표면적 분석', incomplete: '실측 대조 없이 AI 그대로 믿음' },
+    { criteria: '4. 성찰·인계', points: '20점', excellent: '4문항 성찰 완성, 다음 질문 준비', proficient: '대부분 작성, 일부 누락', basic: '형식적 작성', incomplete: '성찰 미작성' }
+  ];
 
+  const rubricHtml = `<div style="margin-top:8px;">
+    <h4 style="font-size:13px;color:#357abd;margin-bottom:6px;">📊 공통 100점 루브릭 (목업)</h4>
+    <table style="width:100%;border-collapse:collapse;font-size:11px;">
+      <tr style="background:#f5f5f5;">
+        <th style="padding:4px 6px;border:1px solid #ddd;">평가 요소</th>
+        <th style="padding:4px 6px;border:1px solid #ddd;">상 (80~100%)</th>
+        <th style="padding:4px 6px;border:1px solid #ddd;">중 (60~79%)</th>
+        <th style="padding:4px 6px;border:1px solid #ddd;">하 (40~59%)</th>
+        <th style="padding:4px 6px;border:1px solid #ddd;">기초미달 (~39%)</th>
+      </tr>
+      ${rubricData.map(r => `<tr>
+        <td style="padding:4px 6px;border:1px solid #ddd;font-weight:600;">${r.criteria}<br><small style="color:#888;">${r.points}</small></td>
+        <td style="padding:4px 6px;border:1px solid #ddd;">${r.excellent}</td>
+        <td style="padding:4px 6px;border:1px solid #ddd;">${r.proficient}</td>
+        <td style="padding:4px 6px;border:1px solid #ddd;">${r.basic}</td>
+        <td style="padding:4px 6px;border:1px solid #ddd;color:#dc3545;">${r.incomplete}</td>
+      </tr>`).join('')}
+    </table>
+    <div style="margin-top:8px;padding:10px;background:#fff3cd;border-radius:6px;font-size:12px;color:#856404;">
+      ⚠️ <strong>안전망:</strong> 40점 미만 학생은 성찰 일지 STEP 4(안전망 퀘스트)를 필수 제출하고 교사 개별 피드백을 받아야 합니다.
+    </div>
+    <div style="margin-top:6px;font-size:11px;color:#888;">※ 목업입니다. Solar API 연동 시 블룸 레벨 기반 루브릭 자동 생성 예정.</div>
+  </div>`;
+
+  document.getElementById('l-rubric-output').innerHTML = rubricHtml;
   state.lessonForm.step4.rubric = rubricHtml;
 }
 
@@ -1168,87 +2248,42 @@ let chatTurn = 0;
 function sendChatMock(text) {
   if (!text.trim()) return;
 
-  state.chatHistory.push({ role: 'user', text: text });
+  const detectedStage = detectSStage(text);
+  const stageXp = getStageXp(detectedStage);
+  state.chatHistory.push({ role: 'user', text });
   chatTurn++;
 
   const chatBox = document.getElementById('s-chat-box');
   chatBox.innerHTML += `<div class="chat-msg user"><div class="msg-label">나</div>${escapeHtml(text)}</div>`;
   chatBox.scrollTop = chatBox.scrollHeight;
 
-  const delay = 600 + Math.random() * 800;
+  updateStageUI(detectedStage);
+
+  if (detectedStage === 3) {
+    state.myS3Count = (state.myS3Count || 0) + 1;
+  }
+
   setTimeout(() => {
-    const qIndex = chatTurn % SOCRATIC_Q.length;
-    
-    // 4단계 피드백 구조로 응답 구성 (사이트 AI 피드백 대시보드 참고)
-    const feedback4Step = [
-      `🌟 1. 강점 및 성취 인정: "${SOCRATIC_Q[qIndex]}" — 좋은 질문이에요. 이 방향의 사고는 학습 이해에 도움이 됩니다.`,
-      `🔍 2. 핵심 결함 및 오개념 진단: 그런데 혹시 이 개념의 실생활 예시를 생각해 보셨나요? 구체적 사례를 떠올리면 더 깊어질 거예요.`,
-      `🚀 3. 다음 행동 및 후속 프롬프트 가이드: "만약 [반대 상황]이라면 어떻게 될까요?"라고 스스로 질문해 보세요.`,
-      `⚠️ 4. 최소 성취수준 보장 안전망: 이해가 안 되는 부분이 있으면 작은 단위로 나누어 다시 질문하는 것이 좋아요.`,
-    ];
-    const response = feedback4Step[(chatTurn - 1) % 4];
+    const stageKey = ['s0', 's1', 's2', 's3'][detectedStage];
+    const responses = S_STAGE_RESPONSES[stageKey];
+    const response = responses[Math.floor(Math.random() * responses.length)];
 
     state.chatHistory.push({ role: 'ai', text: response });
     state.myChatCount++;
-    chatBox.innerHTML += `<div class="chat-msg ai"><div class="msg-label">AI 튜터</div>${escapeHtml(response)}</div>`;
+    chatBox.innerHTML += `<div class="chat-msg ai"><div class="msg-label">AI 튜터 [S${detectedStage} 감지 · +${stageXp} XP]</div>${escapeHtml(response)}</div>`;
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    if (state.myChatCount % 3 === 0) {
-      addXp(5);
-      showFeedback('s-chat-feedback', `AI 대화 3회 완료! +5 XP`, 'info');
-    }
-  }, delay);
+    addXp(stageXp);
+    logActivity('chat', `S${detectedStage} 질문: ${text.substring(0, 30)}…`);
+    showFeedback('s-chat-feedback', `S${detectedStage} 단계 질문 감지! +${stageXp} XP`, 'info');
+  }, 500 + Math.random() * 600);
 }
 
-// ==================== 피드백 ====================
-function showFeedback(id, message, type) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.className = 'feedback-msg ' + type;
-  el.textContent = message;
-  setTimeout(() => { if (el.textContent === message) el.textContent = ''; }, 4000);
-}
-
-// ==================== 이벤트 바인딩 ====================
+// ==================== 이벤트 ====================
 function init() {
   loadState();
 
-const planKeys = ['subject','grade','level','intro','main','closing','materials'];
-let lessonContext = {};
-try { lessonContext = JSON.parse(localStorage.getItem('teachersCanvasPlan') || '{}') || {}; } catch {}
-planKeys.forEach(key => {
-  const field = document.getElementById('plan-' + key);
-  field.value = lessonContext[key] || '';
-  field.addEventListener('input', () => {
-    lessonContext[key] = field.value;
-    try { localStorage.setItem('teachersCanvasPlan', JSON.stringify(lessonContext)); }
-    catch { document.getElementById('plan-status').textContent = '저장 공간을 확인하고 가이드를 내려받아 보관해 주세요.'; }
-  });
-});
-document.getElementById('plan-guide').addEventListener('click', () => {
-  const form = state.lessonForm;
-  const draft = form.step1.title.trim() ? {
-    title: form.step1.title, goal: form.step1.goal, content: form.step2.content,
-    eval: form.step4.evalCriteria, reflect: form.step3.reflectQuestion
-  } : state.lessons.at(-1);
-  if (!draft) {
-    document.getElementById('plan-status').textContent = '차시 제목을 입력하거나 수업안을 저장해 주세요.';
-    return;
-  }
-  const labels = ['교과','학년·차시','학생 수준과 사전 지식','도입 활동과 시간','전개 활동과 시간','정리 활동과 시간','준비 자료'];
-  const lines = ['교사용 수업 가이드', draft.title, '',
-    ...planKeys.map((key,i) => labels[i] + '\n' + (lessonContext[key] || '교사가 작성할 항목')),
-    '학습 목표\n' + (draft.goal || ''), '학습 내용\n' + (draft.content || ''),
-    '평가 기준\n' + (draft.eval || ''), '성찰 질문\n' + (draft.reflect || ''),
-    '수업 후 기록\n목표 달성 근거와 학생 반응을 확인하고 다음 수업의 수정 사항을 기록합니다.'];
-  const link = document.createElement('a');
-  link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(lines.join('\n\n'));
-  link.download = '교사용-수업가이드.txt';
-  link.click();
-  document.getElementById('plan-status').textContent = '현재 수업안을 반영한 가이드를 생성했습니다.';
-});
-
-
+  // 탭 전환
   document.querySelectorAll('.nav-tabs button').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
@@ -1256,214 +2291,52 @@ document.getElementById('plan-guide').addEventListener('click', () => {
       btn.classList.add('active');
       const mode = btn.dataset.mode;
       document.getElementById('mode-' + mode).classList.add('active');
-
-      if (mode === 'lesson') renderLesson(state.lessonStep);
+      if (mode === 'lesson') { renderLesson(state.lessonStep); renderSubjectExamples(); }
       if (mode === 'relation') { renderRelations(); renderSociogram(); }
-      if (mode === 'dashboard') renderDashboard();
+      if (mode === 'dashboard') renderRoleDashboard();
       if (mode === 'student') renderStudent();
+      if (mode === 'survey') renderSurveyList();
       if (mode === 'teacher') renderResearchLog();
     });
   });
 
+  // 선생님 모드
   document.getElementById('t-subject')?.addEventListener('input', () => {
-    const subject = document.getElementById('t-subject').value.trim();
-    document.getElementById('t-save').disabled = subject.length === 0;
-  });
-  document.getElementById('t-idea')?.addEventListener('input', () => {
     document.getElementById('t-save').disabled = document.getElementById('t-subject').value.trim().length === 0;
   });
 
   document.getElementById('t-save')?.addEventListener('click', () => {
     const subject = document.getElementById('t-subject').value.trim();
     const idea = document.getElementById('t-idea').value;
-
-    if (subject.length === 0) {
-      showFeedback('t-feedback', '주제를 입력해 주세요.', 'error');
-      return;
-    }
-    if (subject.length > 100) {
-      showFeedback('t-feedback', '주제는 100자 이내로 입력해 주세요.', 'error');
-      return;
-    }
-    if (idea.length > 1000) {
-      showFeedback('t-feedback', '아이디어 내용은 1000자 이내로 입력해 주세요.', 'error');
-      return;
-    }
-
-    fetch('/api/idea', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ topic: subject, idea: idea })
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.ok) {
-        state.ideas.push({
-          id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-          subject: data.topic,
-          idea: data.idea,
-          date: nowIso()
-        });
-        addXp(5);
-        logActivity('idea', data.topic);
-        showFeedback('t-feedback', `"${data.topic}" 저장 완료! +5 XP`, 'success');
-        document.getElementById('t-subject').value = '';
-        document.getElementById('t-idea').value = '';
-        renderTeacher();
-      } else {
-        const errors = data.errors || ['저장 오류가 발생했어요.'];
-        showFeedback('t-feedback', errors.join(' · '), 'error');
-      }
-    })
-    .catch(err => {
-      showFeedback('t-feedback', '서버에 연결할 수 없어요. Flask가 실행 중인지 확인해 주세요.', 'error');
-    });
+    if (!subject) { showFeedback('t-feedback', '주제를 입력해 주세요.', 'error'); return; }
+    state.ideas.push({ id: Date.now().toString(36), subject, idea, date: nowIso() });
+    addXp(5);
+    logActivity('idea', subject);
+    showFeedback('t-feedback', `"${subject}" 저장 완료! +5 XP`, 'success');
+    document.getElementById('t-subject').value = '';
+    document.getElementById('t-idea').value = '';
+    document.getElementById('t-save').disabled = true;
+    renderTeacher();
   });
 
   document.getElementById('t-draft')?.addEventListener('click', () => {
     const subject = document.getElementById('t-subject').value.trim();
-    if (!subject) {
-      showFeedback('t-feedback', '먼저 주제를 입력해 주세요.', 'info');
-      return;
-    }
-    const draft = `[AI 초안] "${escapeHtml(subject)}" 관련 수업 아이디어\n\n` +
-      `1. 도입: 일상 속 사례로 관심 끌기\n` +
-      `2. 전개: 개념 설명 + 학생 활동\n` +
-      `3. 정리: 성찰 질문으로 마무리\n\n` +
-      `※ 이 초안은 목업입니다. 실제 Solar API 연동 시 더 정교한 초안을 받을 수 있습니다.`;
-
-    document.getElementById('t-idea').value = draft;
+    if (!subject) { showFeedback('t-feedback', '먼저 주제를 입력해 주세요.', 'info'); return; }
+    document.getElementById('t-idea').value = `[AI 초안] "${subject}" 수업 아이디어\n\n1. 도입: 일상 속 사례로 관심 끌기\n2. 전개: S0→S3 단계별 질문 활동\n3. 정리: 성찰 일지 4문항 작성\n\n※ 목업입니다.`;
     showFeedback('t-feedback', 'AI 초안을 불러왔어요. (목업)', 'info');
   });
 
-  document.getElementById('s-diary-save')?.addEventListener('click', () => {
-    const content = document.getElementById('s-diary').value.trim();
-    if (!content) {
-      showFeedback('s-diary-feedback', '일지 내용을 입력해 주세요.', 'error');
-      return;
-    }
-    if (content.length > 2000) {
-      showFeedback('s-diary-feedback', '일지 내용은 2000자 이내로 작성해 주세요.', 'error');
-      return;
-    }
-
-    state.myDiaries.push({
-      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-      content: content,
-      date: nowIso()
-    });
-    addXp(10);
-    logActivity('diary', content.substring(0, 40) + '…');
-    showFeedback('s-diary-feedback', '성찰 일지 저장 완료! +10 XP', 'success');
-    document.getElementById('s-diary').value = '';
-    renderStudent();
-  });
-
-  // 프롬프트 카드 버튼 클릭 처리
-  document.querySelectorAll('.prompt-card-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const prompt = btn.getAttribute('data-prompt');
-      if (prompt) {
-        document.getElementById('s-chat-input').value = prompt;
-      }
-    });
-  });
-  document.getElementById('s-chat-send')?.addEventListener('click', () => {
-    const text = document.getElementById('s-chat-input').value.trim();
-    if (!text) return;
-    sendChatMock(text);
-    document.getElementById('s-chat-input').value = '';
-  });
-  document.getElementById('s-chat-input')?.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      document.getElementById('s-chat-send').click();
-    }
-  });
-
-  document.getElementById('lesson-prev')?.addEventListener('click', () => {
-    if (state.lessonStep > 1) {
-      state.lessonStep--;
-      renderLesson(state.lessonStep);
-    }
-  });
-  document.getElementById('lesson-next')?.addEventListener('click', () => {
-    const step = state.lessonStep;
-    if (step === 1) {
-      state.lessonForm.step1.title = document.getElementById('l-title').value;
-      state.lessonForm.step1.goal = document.getElementById('l-goal').value;
-      state.lessonForm.step1.bloom = document.getElementById('l-bloom').value;
-      state.lessonStep = 2;
-      renderLesson(2);
-    } else if (step === 2) {
-      state.lessonForm.step2.content = document.getElementById('l-content').value;
-      state.lessonStep = 3;
-      renderLesson(3);
-    } else if (step === 3) {
-      state.lessonForm.step3.method = document.getElementById('l-method').value;
-      state.lessonForm.step3.time = document.getElementById('l-time').value;
-      state.lessonForm.step3.reflectQuestion = document.getElementById('l-reflect').value;
-      state.lessonStep = 4;
-      renderLesson(4);
-    } else if (step === 4) {
-      const title = state.lessonForm.step1.title;
-      if (!title.trim()) {
-        showFeedback('l-rubric-output', '차시 제목을 입력해 주세요.', 'error');
-        return;
-      }
-      state.lessons.push({
-        id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-        title: title,
-        goal: state.lessonForm.step1.goal,
-        bloom: state.lessonForm.step1.bloom,
-        content: state.lessonForm.step2.content,
-        method: state.lessonForm.step3.method,
-        time: state.lessonForm.step3.time,
-        reflect: state.lessonForm.step3.reflectQuestion,
-        eval: state.lessonForm.step4.evalCriteria,
-        rubric: state.lessonForm.step4.rubric,
-        date: nowIso()
-      });
-      addXp(15);
-      logActivity('lesson', title);
-      showFeedback('l-rubric-output', `수업설계 저장 완료! +15 XP`, 'success');
-
-      state.lessonStep = 1;
-      state.lessonForm = {
-        step1: { title: '', goal: '', bloom: 'apply' },
-        step2: { content: '' },
-        step3: { method: '토론', time: '', reflectQuestion: '' },
-        step4: { evalCriteria: '', rubric: '' }
-      };
-      renderLesson(1);
-      renderDashboard();
-
-      document.getElementById('lesson-action-row').style.display = 'flex';
-    }
-  });
-
-  document.getElementById('lesson-print')?.addEventListener('click', () => {
-    window.print();
-  });
-
+  // 연구 로그
   document.getElementById('t-research-save')?.addEventListener('click', () => {
     const content = document.getElementById('t-research-log').value.trim();
-    if (!content) {
-      showFeedback('t-feedback', '저장할 내용을 입력해 주세요.', 'error');
-      return;
-    }
+    if (!content) { showFeedback('t-feedback', '저장할 내용을 입력해 주세요.', 'error'); return; }
     if (!state.researches) state.researches = [];
-    state.researches.push({
-      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-      content: content,
-      date: nowIso()
-    });
+    state.researches.push({ id: Date.now().toString(36), content, date: nowIso() });
     saveState();
     renderResearchLog();
     document.getElementById('t-research-log').value = '';
     showFeedback('t-feedback', '연구 로그를 저장했어요.', 'success');
   });
-
   document.getElementById('t-research-clear')?.addEventListener('click', () => {
     document.getElementById('t-research-log').value = '';
   });
@@ -1474,74 +2347,171 @@ document.getElementById('plan-guide').addEventListener('click', () => {
       if (el) el.innerHTML = '<div style="font-size:13px;color:#888;">저장된 연구 로그가 없어요.</div>';
       return;
     }
-    let html = '<div style="margin-top:8px;">';
-    state.researches.slice().reverse().forEach(r => {
-      html += `<div class="list-item" style="margin-bottom:6px;">
+    el.innerHTML = state.researches.slice().reverse().map(r => `
+      <div class="list-item">
         <div style="font-size:13px;">${escapeHtml(r.content)}</div>
         <div style="font-size:11px;color:#888;">${r.date}</div>
-      </div>`;
-    });
-    html += '</div>';
-    el.innerHTML = html;
+      </div>`).join('');
   }
 
-  document.getElementById('relation-save')?.addEventListener('click', () => {
-    const count = Object.keys(state.relations).length;
-    if (count === 0) {
-      showFeedback('relation-feedback', '관계를 하나 이상 설정해 주세요.', 'info');
+  // C. 성찰 일지 저장 (4문항)
+  document.getElementById('s-diary-save')?.addEventListener('click', () => {
+    const q1 = document.getElementById('reflect-q1').value.trim();
+    const q2 = document.getElementById('reflect-q2').value.trim();
+    const q3 = document.getElementById('reflect-q3').value.trim();
+    const q4 = document.getElementById('reflect-q4').value.trim();
+    if (!q1 && !q2 && !q3 && !q4) {
+      showFeedback('s-diary-feedback', '최소 1개 이상 답변을 입력해 주세요.', 'error');
       return;
     }
+    state.myDiaries.push({ id: Date.now().toString(36), q1, q2, q3, q4, date: nowIso() });
+    addXp(15);
+    logActivity('diary', q1.substring(0, 40) || '(성찰 일지)');
+    showFeedback('s-diary-feedback', '성찰 일지 저장 완료! +15 XP 🎉', 'success');
+    ['reflect-q1','reflect-q2','reflect-q3','reflect-q4'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    renderStudent();
+  });
+
+  // B. S단계 프롬프트 카드
+  document.querySelectorAll('.s-stage-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.getElementById('s-chat-input').value = card.dataset.prompt;
+      document.getElementById('s-chat-input').focus();
+    });
+  });
+
+  // AI 채팅
+  document.getElementById('s-chat-send')?.addEventListener('click', () => {
+    const text = document.getElementById('s-chat-input').value.trim();
+    if (!text) return;
+    sendChatMock(text);
+    document.getElementById('s-chat-input').value = '';
+  });
+  document.getElementById('s-chat-input')?.addEventListener('keypress', e => {
+    if (e.key === 'Enter') { e.preventDefault(); document.getElementById('s-chat-send').click(); }
+  });
+
+  // 수업설계
+  document.getElementById('lesson-prev')?.addEventListener('click', () => {
+    if (state.lessonStep > 1) { state.lessonStep--; renderLesson(state.lessonStep); }
+  });
+  document.getElementById('lesson-next')?.addEventListener('click', () => {
+    const step = state.lessonStep;
+    if (step === 1) {
+      state.lessonForm.step1.title = document.getElementById('l-title').value;
+      state.lessonForm.step1.goal = document.getElementById('l-goal').value;
+      state.lessonForm.step1.bloom = document.getElementById('l-bloom').value;
+      state.lessonStep = 2; renderLesson(2);
+    } else if (step === 2) {
+      state.lessonForm.step2.content = document.getElementById('l-content').value;
+      state.lessonStep = 3; renderLesson(3);
+    } else if (step === 3) {
+      state.lessonForm.step3.method = document.getElementById('l-method').value;
+      state.lessonForm.step3.time = document.getElementById('l-time').value;
+      state.lessonForm.step3.reflectQuestion = document.getElementById('l-reflect').value;
+      state.lessonStep = 4; renderLesson(4);
+    } else if (step === 4) {
+      const title = state.lessonForm.step1.title;
+      if (!title.trim()) { showFeedback('l-rubric-output', '차시 제목을 입력해 주세요.', 'error'); return; }
+      state.lessons.push({
+        id: Date.now().toString(36), title,
+        goal: state.lessonForm.step1.goal,
+        bloom: state.lessonForm.step1.bloom,
+        content: state.lessonForm.step2.content,
+        method: state.lessonForm.step3.method,
+        time: state.lessonForm.step3.time,
+        reflect: state.lessonForm.step3.reflectQuestion,
+        eval: state.lessonForm.step4.evalCriteria,
+        date: nowIso()
+      });
+      addXp(15);
+      logActivity('lesson', title);
+      showFeedback('l-rubric-output', `수업설계 저장 완료! +15 XP`, 'success');
+      state.lessonStep = 1;
+      state.lessonForm = {
+        step1: { title: '', goal: '', bloom: 'apply' },
+        step2: { content: '' },
+        step3: { method: '토론', time: '', reflectQuestion: '' },
+        step4: { evalCriteria: '', rubric: '' }
+      };
+      renderLesson(1);
+      document.getElementById('lesson-action-row').style.display = 'flex';
+    }
+  });
+  document.getElementById('lesson-print')?.addEventListener('click', () => window.print());
+
+  // A. 설문 제출
+  document.getElementById('survey-submit')?.addEventListener('click', () => {
+    const timing = document.getElementById('survey-timing').value;
+    const subject = document.getElementById('survey-subject').value.trim();
+    const answers = {};
+    let answered = 0;
+    for (let i = 1; i <= 11; i++) {
+      const sel = document.querySelector(`input[name="q${i}"]:checked`);
+      if (sel) { answers[`q${i}`] = sel.value; answered++; }
+    }
+    answers.q12 = document.getElementById('survey-q12').value.trim();
+    answers.q13 = document.getElementById('survey-q13').value.trim();
+
+    if (answered < 5) {
+      showFeedback('survey-feedback', '최소 5문항 이상 응답해 주세요.', 'error');
+      return;
+    }
+
+    if (!state.surveys) state.surveys = [];
+    state.surveys.push({ id: Date.now().toString(36), timing, subject, answers, date: nowIso() });
+    addXp(20);
+    logActivity('survey', `${timing === 'pre' ? '사전' : '사후'} 설문 · ${subject || '교과 미입력'}`);
+    showFeedback('survey-feedback', `${timing === 'pre' ? '사전' : '사후'} 설문 제출 완료! +20 XP 🎉`, 'success');
+    renderSurveyList();
+  });
+
+  document.getElementById('survey-reset')?.addEventListener('click', () => {
+    for (let i = 1; i <= 11; i++) {
+      document.querySelectorAll(`input[name="q${i}"]`).forEach(r => r.checked = false);
+    }
+    document.getElementById('survey-q12').value = '';
+    document.getElementById('survey-q13').value = '';
+  });
+
+  // 관계분석
+  document.getElementById('relation-save')?.addEventListener('click', () => {
+    const count = Object.keys(state.relations).length;
+    if (count === 0) { showFeedback('relation-feedback', '관계를 하나 이상 설정해 주세요.', 'info'); return; }
     addXp(10);
     logActivity('relation', `관계 ${count}개 저장`);
     showFeedback('relation-feedback', `관계 저장 완료! +10 XP (${count}개)`, 'success');
-    renderRelations();
-    renderSociogram();
-    renderDashboard();
+    renderRelations(); renderSociogram(); renderDashboard();
   });
 
   document.getElementById('relation-group-btn')?.addEventListener('click', () => {
     const count = Object.keys(state.relations).length;
-    if (count < 3) {
-      showFeedback('relation-group-recommend', '관계를 3개 이상 설정해야 그룹을 추천할 수 있어요.', 'info');
-      return;
-    }
-    const studentIds = state.students.map(s => s.id);
-    const shuffled = [...studentIds].sort(() => Math.random() - 0.5);
+    if (count < 3) { showFeedback('relation-feedback', '관계를 3개 이상 설정해야 그룹을 추천할 수 있어요.', 'info'); return; }
+    const shuffled = [...state.students].sort(() => Math.random() - 0.5);
     const groups = [];
-    for (let i = 0; i < shuffled.length; i += 3) {
-      groups.push(shuffled.slice(i, i + 3));
-    }
+    for (let i = 0; i < shuffled.length; i += 3) groups.push(shuffled.slice(i, i + 3));
     const html = '<div style="margin-top:12px;">' +
-      groups.map((g, i) => {
-        const names = g.map(id => {
-          const s = state.students.find(st => st.id === id);
-          return s ? s.name : id;
-        }).join(', ');
-        return `<div class="list-item"><strong>그룹 ${i + 1}</strong>: ${escapeHtml(names)}</div>`;
-      }).join('') +
-      '<div style="margin-top:8px;font-size:12px;color:#888;">※ 이 그룹 추천은 목업입니다. 실제 Solar API 연동 시 관계 밀도 기반 그룹 추천이 가능합니다.</div>' +
-      '</div>';
+      groups.map((g, i) => `<div class="list-item"><strong>그룹 ${i + 1}</strong>: ${g.map(s => escapeHtml(s.name)).join(', ')}</div>`).join('') +
+      '<div style="margin-top:8px;font-size:12px;color:#888;">※ 목업입니다. Solar API 연동 시 관계 밀도 기반 그룹 추천 예정.</div></div>';
     document.getElementById('relation-group-recommend').innerHTML = html;
-    showFeedback('relation-feedback', 'AI 그룹 추천을 생성했어요. (목업)', 'info');
   });
 
-  document.getElementById('sociogram')?.addEventListener('click', (e) => {
+  // 소시오그램 클릭
+  document.getElementById('sociogram')?.addEventListener('click', e => {
     const canvas = e.target;
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-
-    const students = state.students;
     const cx = canvas.width / 2, cy = canvas.height / 2;
     const radius = Math.min(canvas.width, canvas.height) * 0.32;
-    const angles = students.map((_, i) => (i / students.length) * 2 * Math.PI - Math.PI / 2);
-
-    for (let i = 0; i < students.length; i++) {
+    const angles = state.students.map((_, i) => (i / state.students.length) * 2 * Math.PI - Math.PI / 2);
+    for (let i = 0; i < state.students.length; i++) {
       const px = cx + radius * Math.cos(angles[i]);
       const py = cy + radius * Math.sin(angles[i]);
-      const dist = Math.sqrt((x - px)**2 + (y - py)**2);
-      if (dist < 25) {
-        showStudentModal(students[i].id);
+      if (Math.sqrt((x - px) ** 2 + (y - py) ** 2) < 25) {
+        showStudentModal(state.students[i].id);
         break;
       }
     }
@@ -1550,16 +2520,689 @@ document.getElementById('plan-guide').addEventListener('click', () => {
   document.getElementById('modal-close')?.addEventListener('click', () => {
     document.getElementById('student-modal').classList.remove('show');
   });
-  document.getElementById('student-modal')?.addEventListener('click', (e) => {
-    if (e.target.id === 'student-modal') {
-      document.getElementById('student-modal').classList.remove('show');
-    }
+  document.getElementById('student-modal')?.addEventListener('click', e => {
+    if (e.target.id === 'student-modal') document.getElementById('student-modal').classList.remove('show');
   });
 
+  // ===== E. 데이터 IO 이벤트 =====
+  document.getElementById('btn-export')?.addEventListener('click', exportData);
+  document.getElementById('btn-import')?.addEventListener('click', () => {
+    document.getElementById('btn-import-file').click();
+  });
+  document.getElementById('btn-import-file')?.addEventListener('change', (e) => {
+    importData(e.target.files[0]);
+    e.target.value = '';
+  });
+
+  // ===== H. 초기화 모달 이벤트 =====
+  document.getElementById('btn-reset')?.addEventListener('click', () => {
+    document.getElementById('reset-modal').classList.add('show');
+  });
+  document.getElementById('reset-cancel')?.addEventListener('click', () => {
+    document.getElementById('reset-modal').classList.remove('show');
+  });
+  document.getElementById('reset-confirm')?.addEventListener('click', () => {
+    document.getElementById('reset-modal').classList.remove('show');
+    resetAllData();
+  });
+
+  // ===== G. 루브릭 자가평가 이벤트 =====
+  ['rubric-s1','rubric-s2','rubric-s3','rubric-s4'].forEach(id => {
+    document.getElementById(id)?.addEventListener('change', calcRubricTotal);
+  });
+  document.getElementById('rubric-save')?.addEventListener('click', saveRubric);
+
+  // ===== I. 교과별 예시 =====
+  renderSubjectExamples();
+
   renderAll();
+  renderDiaryList();
+  renderLesson(state.lessonStep);
 }
 
-document.addEventListener('DOMContentLoaded', init);
+// ===== E. 데이터 내보내기/가져오기 =====
+function exportData() {
+  const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'ai_platform_backup_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showFeedback('io-feedback', '✅ JSON 파일로 내보냈습니다. 안전한 곳에 보관하세요.', 'success');
+}
+
+function importData(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      Object.keys(parsed).forEach(k => { state[k] = parsed[k]; });
+      saveState();
+      renderAll();
+      showFeedback('io-feedback', '✅ 데이터를 불러왔습니다!', 'success');
+    } catch(err) {
+      showFeedback('io-feedback', '❌ JSON 파일 형식이 올바르지 않습니다.', 'error');
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ===== G. 루브릭 자가평가 =====
+function calcRubricTotal() {
+  const v1 = parseInt(document.getElementById('rubric-s1')?.value || 0);
+  const v2 = parseInt(document.getElementById('rubric-s2')?.value || 0);
+  const v3 = parseInt(document.getElementById('rubric-s3')?.value || 0);
+  const v4 = parseInt(document.getElementById('rubric-s4')?.value || 0);
+  const total = (v1||0) + (v2||0) + (v3||0) + (v4||0);
+  const el = document.getElementById('rubric-total');
+  if (el) el.textContent = total;
+  return total;
+}
+
+function saveRubric() {
+  const scores = {
+    s1: parseInt(document.getElementById('rubric-s1')?.value || 0),
+    s2: parseInt(document.getElementById('rubric-s2')?.value || 0),
+    s3: parseInt(document.getElementById('rubric-s3')?.value || 0),
+    s4: parseInt(document.getElementById('rubric-s4')?.value || 0)
+  };
+  const reasons = {
+    r1: document.getElementById('rubric-r1')?.value || '',
+    r2: document.getElementById('rubric-r2')?.value || '',
+    r3: document.getElementById('rubric-r3')?.value || '',
+    r4: document.getElementById('rubric-r4')?.value || ''
+  };
+  const total = scores.s1 + scores.s2 + scores.s3 + scores.s4;
+  if (total === 0) {
+    showFeedback('rubric-feedback', '최소 1개 항목을 선택해 주세요.', 'error');
+    return;
+  }
+  if (!state.rubricLogs) state.rubricLogs = [];
+  state.rubricLogs.push({ id: Date.now().toString(36), scores, reasons, total, date: nowIso() });
+  addXp(10);
+  logActivity('diary', `루브릭 자가평가 ${total}점`);
+  showFeedback('rubric-feedback', `자가평가 저장! 총 ${total}점 · +10 XP 🎯`, 'success');
+  saveState();
+}
+
+// ===== H. 초기화 =====
+function resetAllData() {
+  localStorage.removeItem(STORAGE_KEY);
+  state.ideas = [];
+  state.students = JSON.parse(JSON.stringify(DEFAULT_STUDENTS));
+  state.lessons = [];
+  state.myXp = 0;
+  state.myDiaries = [];
+  state.myChatCount = 0;
+  state.myS3Count = 0;
+  state.relations = {};
+  state.chatHistory = [];
+  state.activityLog = [];
+  state.surveys = [];
+  state.rubricLogs = [];
+  state.researches = [];
+  state.currentSStage = 0;
+  state.lessonStep = 1;
+  renderAll();
+  showFeedback('io-feedback', '✅ 전체 데이터를 초기화했습니다.', 'info');
+}
+
+// ===== I. 교과별 예시 렌더링 =====
+function renderSubjectExamples() {
+  const el = document.getElementById('lesson-examples-list');
+  if (!el) return;
+  const methodBadge = { '실습': '#3498db', '토론': '#e67e22', '프로젝트': '#27ae60', '협동학습': '#8e44ad' };
+  el.innerHTML = SUBJECT_EXAMPLES.map((ex, i) => {
+    const badgeColor = methodBadge[ex.method] || '#555';
+    return `
+    <div class="subject-example-card" data-idx="${i}" style="border-left: 4px solid ${badgeColor};">
+      <div class="ex-title">${ex.subject}</div>
+      <div style="display:flex;gap:6px;align-items:center;margin-bottom:4px;">
+        <span style="background:${badgeColor};color:white;font-size:10px;padding:2px 7px;border-radius:10px;">${ex.method}</span>
+        <span style="font-size:11px;color:#777;">${ex.bloom ? '블룸: ' + ex.bloom : ''}</span>
+      </div>
+      <div class="ex-desc">${ex.goal.substring(0, 60)}…</div>
+    </div>`;
+  }).join('');
+  el.querySelectorAll('.subject-example-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const ex = SUBJECT_EXAMPLES[parseInt(card.dataset.idx)];
+      state.lessonForm.step1.title = ex.subject.replace(/^[^\s]+\s/, '') + ' 활동';
+      state.lessonForm.step1.goal = ex.goal;
+      state.lessonForm.step1.bloom = ex.bloom;
+      state.lessonForm.step2.content = '[예시 프롬프트]\n' + ex.prompt +
+        (ex.reflectQuestion ? '\n\n[성찰 질문]\n' + ex.reflectQuestion : '');
+      state.lessonStep = 1;
+      renderLesson(1);
+      document.getElementById('lesson-step-content').scrollIntoView({ behavior: 'smooth' });
+      showFeedback('io-feedback', `"${ex.subject}" 예시를 불러왔습니다. STEP 1을 확인하세요.`, 'info');
+    });
+  });
+}
+
+// ===== 일지 페이지네이션 =====
+const DIARY_PER_PAGE = 5;
+function renderDiaryList() {
+  const el = document.getElementById('s-diary-list');
+  const pagEl = document.getElementById('diary-pagination');
+  if (!el) return;
+  const diaries = [...state.myDiaries].reverse();
+  const totalPages = Math.max(1, Math.ceil(diaries.length / DIARY_PER_PAGE));
+  if (state.diaryPage >= totalPages) state.diaryPage = totalPages - 1;
+  const page = state.diaryPage;
+  const slice = diaries.slice(page * DIARY_PER_PAGE, (page + 1) * DIARY_PER_PAGE);
+
+  if (diaries.length === 0) {
+    el.innerHTML = '<div class="empty-state" style="padding:16px;">작성한 성찰 일지가 없어요.</div>';
+    if (pagEl) pagEl.innerHTML = '';
+    return;
+  }
+  el.innerHTML = slice.map(d => `
+    <div class="list-item">
+      <div class="item-title">✅ ${escapeHtml((d.q1 || d.content || '').substring(0, 40))}…</div>
+      <div style="font-size:12px;color:#555;margin-top:3px;">
+        ${d.q2 ? '🔍 ' + escapeHtml(d.q2.substring(0, 30)) + '…' : ''}
+      </div>
+      <div class="item-meta">${d.date}</div>
+    </div>`).join('');
+
+  if (pagEl) {
+    let pHtml = '';
+    if (page > 0) pHtml += `<button id="diary-prev">◀</button>`;
+    for (let p = 0; p < totalPages; p++) {
+      pHtml += `<button class="${p === page ? 'active' : ''}" data-p="${p}">${p+1}</button>`;
+    }
+    if (page < totalPages - 1) pHtml += `<button id="diary-next">▶</button>`;
+    pagEl.innerHTML = pHtml;
+    pagEl.querySelectorAll('button[data-p]').forEach(b => {
+      b.addEventListener('click', () => { state.diaryPage = parseInt(b.dataset.p); renderDiaryList(); });
+    });
+    document.getElementById('diary-prev')?.addEventListener('click', () => { state.diaryPage--; renderDiaryList(); });
+    document.getElementById('diary-next')?.addEventListener('click', () => { state.diaryPage++; renderDiaryList(); });
+  }
+}
+
+function showStudentModal(studentId) {
+  const s = state.students.find(st => st.id === studentId);
+  if (!s) return;
+  document.getElementById('modal-student-name').textContent = s.name;
+  document.getElementById('modal-student-xp').textContent = s.xp;
+  document.getElementById('modal-student-level').textContent = getLevel(s.xp).name;
+  document.getElementById('modal-student-type').textContent = '-';
+  const diariesEl = document.getElementById('modal-student-diaries');
+  if (s.diaries.length === 0) {
+    diariesEl.innerHTML = '<div style="color:#888;font-size:13px;">작성한 일지가 없어요.</div>';
+  } else {
+    diariesEl.innerHTML = s.diaries.map(d => `
+      <div class="list-item" style="margin-bottom:6px;">
+        <div style="font-size:13px;">${escapeHtml((d.content || '').substring(0, 80))}…</div>
+        <div style="font-size:11px;color:#888;">${d.date}</div>
+      </div>`).join('');
+  }
+  document.getElementById('student-modal').classList.add('show');
+}
+
+init();
+
+// ===== 선생님 가이드 투어 =====
+const TOUR_STEPS = [
+  {
+    title: '👋 티처스 캔버스에 오신 걸 환영합니다!',
+    desc: 'AI 수업설계 플랫폼 사용법을 단계별로 안내해 드릴게요. 각 단계에서 직접 따라해보세요!',
+    target: '.header',
+    arrow: 'top',
+    action: null,
+    hint: null,
+    tab: null
+  },
+  {
+    title: '🍎 선생님 탭 — 수업 아이디어 등록',
+    desc: '수업 주제와 아이디어를 입력하고 저장하면 아이디어 목록에 쌓입니다. AI 초안 보기 버튼으로 AI가 수업 개요를 생성해줍니다.',
+    target: '[data-mode="teacher"]',
+    arrow: 'bottom',
+    tab: 'teacher',
+    hint: '👉 수업 주제 입력란에 아이디어를 직접 입력해 보세요!',
+    action: () => document.getElementById('t-subject').focus()
+  },
+  {
+    title: '📚 학생 탭 — AI 질문 단계 연습',
+    desc: 'S0~S3 단계로 AI에게 질문하는 연습을 합니다. 질문 수준이 올라갈수록 XP를 더 많이 획득합니다. 프롬프트 카드를 클릭하면 예시 문구가 채워집니다.',
+    target: '[data-mode="student"]',
+    arrow: 'bottom',
+    tab: 'student',
+    hint: '👉 S단계 카드 중 하나를 클릭해 예시 프롬프트를 불러와 보세요!',
+    action: null
+  },
+  {
+    title: '✏️ 수업설계 탭 — 4단계 수업 설계',
+    desc: 'STEP1(목표) → STEP2(프롬프트) → STEP3(성찰) → STEP4(루브릭) 순서로 한 차시 수업을 완성합니다. 하단 활동 유형별 예시를 클릭하면 자동 입력됩니다.',
+    target: '[data-mode="lesson"]',
+    arrow: 'bottom',
+    tab: 'lesson',
+    hint: '👉 아래 활동 유형 카드 중 하나를 클릭해서 자동 입력을 체험해보세요!',
+    action: null
+  },
+  {
+    title: '📋 설문 탭 — 사전·사후 설문',
+    desc: 'AI 활용 역량을 측정하는 13문항 설문입니다. 수업 전 사전 설문, 수업 후 사후 설문을 각각 저장하면 대시보드에서 변화를 비교할 수 있습니다.',
+    target: '[data-mode="survey"]',
+    arrow: 'bottom',
+    tab: 'survey',
+    hint: '👉 Likert 척도 문항을 클릭해 응답하고 "설문 저장" 버튼을 눌러보세요!',
+    action: null
+  },
+  {
+    title: '📊 대시보드 탭 — 사전·사후 비교',
+    desc: '설문 결과를 바탕으로 학생 유형을 분류하고, 사전·사후 점수 변화를 시각화합니다. KPI 막대로 어떤 역량이 얼마나 성장했는지 한눈에 확인합니다.',
+    target: '[data-mode="dashboard"]',
+    arrow: 'bottom',
+    tab: 'dashboard',
+    hint: null,
+    action: null
+  },
+  {
+    title: '🎉 준비 완료! 지금 바로 시작하세요',
+    desc: '오른쪽 하단 📖 선생님 가이드 버튼을 누르면 언제든 이 투어를 다시 볼 수 있습니다. AI와 함께하는 수업설계, 티처스 캔버스로 시작해보세요!',
+    target: '#tour-start-btn',
+    arrow: 'bottom',
+    hint: null,
+    tab: null,
+    action: null
+  }
+];
+
+let tourStep = 0;
+let tourActive = false;
+
+function startTour() {
+  tourStep = 0;
+  tourActive = true;
+  document.getElementById('tour-overlay').classList.remove('hidden');
+  document.getElementById('tour-overlay').style.pointerEvents = 'none';
+  renderTourStep();
+}
+
+function endTour() {
+  tourActive = false;
+  document.getElementById('tour-overlay').classList.add('hidden');
+  document.getElementById('tour-highlight').style.display = 'none';
+  document.getElementById('tour-tooltip').style.display = 'none';
+  // 하이라이트 링 제거
+  document.querySelectorAll('.tour-highlight-ring').forEach(el => el.classList.remove('tour-highlight-ring'));
+}
+
+function tourNext() {
+  document.querySelectorAll('.tour-highlight-ring').forEach(el => el.classList.remove('tour-highlight-ring'));
+  tourStep++;
+  if (tourStep >= TOUR_STEPS.length) { endTour(); return; }
+  renderTourStep();
+}
+
+function renderTourStep() {
+  const step = TOUR_STEPS[tourStep];
+  const total = TOUR_STEPS.length;
+
+  // 탭 전환
+  if (step.tab) {
+    document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.mode-section').forEach(s => s.classList.remove('active'));
+    const tabBtn = document.querySelector(`[data-mode="${step.tab}"]`);
+    const section = document.getElementById(`mode-${step.tab}`);
+    if (tabBtn) tabBtn.classList.add('active');
+    if (section) section.classList.add('active');
+  }
+
+  // 대상 엘리먼트 찾기
+  const targetEl = document.querySelector(step.target);
+  if (targetEl) {
+    targetEl.classList.add('tour-highlight-ring');
+    targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    setTimeout(() => {
+      const rect = targetEl.getBoundingClientRect();
+      const hl = document.getElementById('tour-highlight');
+      hl.style.display = 'block';
+      hl.style.left = (rect.left - 6) + 'px';
+      hl.style.top = (rect.top - 6) + 'px';
+      hl.style.width = (rect.width + 12) + 'px';
+      hl.style.height = (rect.height + 12) + 'px';
+
+      // 말풍선 위치
+      const tt = document.getElementById('tour-tooltip');
+      tt.style.display = 'block';
+      tt.className = '';
+      const ttW = 320, ttH = 180;
+      let left = rect.left;
+      let top;
+      if (step.arrow === 'bottom' || rect.top > window.innerHeight / 2) {
+        top = rect.top - ttH - 20;
+        tt.classList.add('arrow-bottom');
+        if (top < 10) { top = rect.bottom + 16; tt.className = ''; tt.classList.add('arrow-top'); }
+      } else {
+        top = rect.bottom + 16;
+        tt.classList.add('arrow-top');
+      }
+      left = Math.min(Math.max(left, 10), window.innerWidth - ttW - 10);
+      top = Math.max(10, top);
+      tt.style.left = left + 'px';
+      tt.style.top = top + 'px';
+    }, 300);
+  }
+
+  // 콘텐츠 채우기
+  document.getElementById('tour-step-badge').textContent = `STEP ${tourStep + 1} / ${total}`;
+  document.getElementById('tour-title').textContent = step.title;
+  document.getElementById('tour-desc').textContent = step.desc;
+  const hintEl = document.getElementById('tour-action-hint');
+  if (step.hint) { hintEl.style.display = 'block'; hintEl.textContent = step.hint; }
+  else { hintEl.style.display = 'none'; }
+
+  // 점 표시
+  const dotsEl = document.getElementById('tour-dots');
+  dotsEl.innerHTML = Array.from({length: total}, (_, i) =>
+    `<div class="tour-dot ${i === tourStep ? 'active' : ''}"></div>`).join('');
+
+  // 마지막 단계 버튼
+  document.getElementById('tour-btn-next').textContent = tourStep === total - 1 ? '완료 ✓' : '다음 →';
+  document.getElementById('tour-btn-skip').style.display = tourStep === total - 1 ? 'none' : 'inline-block';
+
+  // 액션 실행
+  if (step.action) setTimeout(step.action, 500);
+}
+
+// ===== 회원 로그인/가입 시스템 =====
+const AUTH_KEY = 'aiPlatformUsers';
+const SESSION_KEY = 'aiPlatformSession';
+
+function getUsers() {
+  return JSON.parse(localStorage.getItem(AUTH_KEY) || '[]');
+}
+function saveUsers(users) {
+  localStorage.setItem(AUTH_KEY, JSON.stringify(users));
+}
+function getCurrentUser() {
+  const s = localStorage.getItem(SESSION_KEY);
+  return s ? JSON.parse(s) : null;
+}
+
+function switchLoginTab(tab) {
+  const isLogin = tab === 'login';
+  document.getElementById('form-login').style.display = isLogin ? 'block' : 'none';
+  document.getElementById('form-signup').style.display = isLogin ? 'none' : 'block';
+  document.getElementById('tab-login').style.cssText = isLogin
+    ? 'flex:1;padding:10px;border:none;background:none;font-weight:700;color:var(--primary);border-bottom:3px solid var(--primary);margin-bottom:-2px;cursor:pointer;font-size:14px;'
+    : 'flex:1;padding:10px;border:none;background:none;font-weight:600;color:var(--gray-500);cursor:pointer;font-size:14px;';
+  document.getElementById('tab-signup').style.cssText = !isLogin
+    ? 'flex:1;padding:10px;border:none;background:none;font-weight:700;color:var(--primary);border-bottom:3px solid var(--primary);margin-bottom:-2px;cursor:pointer;font-size:14px;'
+    : 'flex:1;padding:10px;border:none;background:none;font-weight:600;color:var(--gray-500);cursor:pointer;font-size:14px;';
+}
+
+function doLogin() {
+  const id = document.getElementById('login-id').value.trim();
+  const pw = document.getElementById('login-pw').value;
+  const errEl = document.getElementById('login-error');
+  if (!id || !pw) { errEl.style.display='block'; errEl.textContent='아이디와 비밀번호를 입력해주세요.'; return; }
+  const users = getUsers();
+  const user = users.find(u => u.id === id && u.pw === pw);
+  if (!user) { errEl.style.display='block'; errEl.textContent='아이디 또는 비밀번호가 올바르지 않습니다.'; return; }
+  errEl.style.display='none';
+  localStorage.setItem(SESSION_KEY, JSON.stringify(user));
+  document.getElementById('login-modal').classList.remove('show');
+  updateHeaderProfile(user);
+  document.getElementById('login-id').value = '';
+  document.getElementById('login-pw').value = '';
+}
+
+function doSignup() {
+  const name = document.getElementById('signup-name').value.trim();
+  const role = document.getElementById('signup-role').value;
+  const id = document.getElementById('signup-id').value.trim();
+  const pw = document.getElementById('signup-pw').value;
+  const errEl = document.getElementById('signup-error');
+  if (!name || !id || !pw) { errEl.style.display='block'; errEl.textContent='모든 항목을 입력해주세요.'; return; }
+  if (id.length < 4) { errEl.style.display='block'; errEl.textContent='아이디는 4자 이상이어야 합니다.'; return; }
+  if (pw.length < 6) { errEl.style.display='block'; errEl.textContent='비밀번호는 6자 이상이어야 합니다.'; return; }
+  const users = getUsers();
+  if (users.find(u => u.id === id)) { errEl.style.display='block'; errEl.textContent='이미 사용 중인 아이디입니다.'; return; }
+  const roleMap = { teacher: '교사', student: '학생', admin: '관리자' };
+  const avatarMap = { teacher: '🧑‍🏫', student: '🧑‍💻', admin: '🛡️' };
+  const newUser = { id, pw, name, role, roleLabel: roleMap[role], avatar: avatarMap[role], joinedAt: new Date().toLocaleDateString('ko-KR') };
+  users.push(newUser);
+  saveUsers(users);
+  localStorage.setItem(SESSION_KEY, JSON.stringify(newUser));
+  document.getElementById('login-modal').classList.remove('show');
+  updateHeaderProfile(newUser);
+  ['signup-name','signup-id','signup-pw'].forEach(i => document.getElementById(i).value = '');
+  errEl.style.display = 'none';
+}
+
+function logoutUser() {
+  localStorage.removeItem(SESSION_KEY);
+  document.getElementById('user-profile-chip').style.display = 'none';
+  document.getElementById('login-btn').style.display = 'flex';
+}
+
+function updateHeaderProfile(user) {
+  document.getElementById('login-btn').style.display = 'none';
+  const chip = document.getElementById('user-profile-chip');
+  chip.style.display = 'flex';
+  document.getElementById('profile-avatar').textContent = user.avatar || '👤';
+  document.getElementById('profile-name').textContent = user.name;
+  document.getElementById('profile-role').textContent = user.roleLabel || '';
+  // 대시보드가 현재 열려있으면 갱신
+  const dashSection = document.getElementById('mode-dashboard');
+  if (dashSection && dashSection.classList.contains('active')) {
+    renderRoleDashboard();
+  }
+}
+
+// ===== 역할별 대시보드 렌더 =====
+function renderRoleDashboard() {
+  const user = getCurrentUser();
+  ['dash-guest','dash-student','dash-teacher','dash-admin'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+
+  if (!user) {
+    const g = document.getElementById('dash-guest');
+    if (g) g.style.display = 'block';
+    return;
+  }
+
+  if (user.role === 'student') {
+    renderStudentDash(user);
+  } else if (user.role === 'teacher') {
+    renderTeacherDash(user);
+  } else if (user.role === 'admin') {
+    renderAdminDash(user);
+  }
+}
+
+function renderStudentDash(user) {
+  document.getElementById('dash-student').style.display = 'block';
+  const nameEl = document.getElementById('dash-student-name');
+  if (nameEl) nameEl.textContent = `${user.name} (${user.id})`;
+  // 기존 renderDashboard 로직 호출 (XP, 뱃지 등)
+  renderDashboard();
+}
+
+function renderTeacherDash(user) {
+  document.getElementById('dash-teacher').style.display = 'block';
+  const nameEl = document.getElementById('dash-teacher-name');
+  if (nameEl) nameEl.textContent = `${user.name} (${user.id})`;
+
+  // 학생 목록 집계
+  const users = getUsers();
+  const students = users.filter(u => u.role === 'student');
+  const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  setVal('dt-student-count', students.length);
+
+  // 평균 XP (localStorage에서 각 학생 XP 조회)
+  let totalXP = 0, surveyDone = 0;
+  students.forEach(s => {
+    const sData = JSON.parse(localStorage.getItem(`aiPlatformV4_${s.id}`) || localStorage.getItem('aiPlatformV4') || '{}');
+    totalXP += (sData.totalXP || 0);
+    if (sData.surveys && sData.surveys.length > 0) surveyDone++;
+  });
+  setVal('dt-avg-xp', students.length > 0 ? Math.round(totalXP / students.length) : 0);
+  setVal('dt-survey-done', surveyDone);
+
+  // 수업설계 수
+  const myData = JSON.parse(localStorage.getItem('aiPlatformV4') || '{}');
+  setVal('dt-lesson-count', (myData.lessons || []).length);
+
+  // 학생 XP 순위표
+  const tbody = document.querySelector('#d-ranking tbody');
+  if (tbody) {
+    const LEVELS = ['🌱 새싹','🌿 성장중','🌳 숙련','🔥 고수','⭐ 마스터'];
+    const getLvl = xp => xp < 50 ? LEVELS[0] : xp < 150 ? LEVELS[1] : xp < 300 ? LEVELS[2] : xp < 500 ? LEVELS[3] : LEVELS[4];
+    const sorted = students.map(s => {
+      const d = JSON.parse(localStorage.getItem(`aiPlatformV4_${s.id}`) || '{}');
+      return { name: s.name, xp: d.totalXP || 0 };
+    }).sort((a,b) => b.xp - a.xp);
+    tbody.innerHTML = sorted.map((s,i) =>
+      `<tr><td>${i+1}</td><td>${s.name}</td><td>${s.xp}</td><td>${getLvl(s.xp)}</td><td>-</td></tr>`
+    ).join('') || '<tr><td colspan="5" class="empty-state">학생 데이터 없음</td></tr>';
+  }
+
+  // 수업 아이디어 목록
+  const ideas = myData.ideas || [];
+  const ideasEl = document.getElementById('dt-ideas-list');
+  if (ideasEl) {
+    if (ideas.length === 0) {
+      ideasEl.innerHTML = '<div class="empty-state">등록된 수업 아이디어가 없습니다.</div>';
+    } else {
+      ideasEl.innerHTML = ideas.slice().reverse().map(idea =>
+        `<div style="padding:10px 12px;border-left:3px solid var(--primary);margin-bottom:8px;background:var(--gray-50);border-radius:4px;">
+          <div style="font-weight:600;font-size:13px;">${idea.subject || '(제목없음)'}</div>
+          <div style="font-size:12px;color:var(--gray-500);margin-top:4px;">${(idea.idea||'').substring(0,80)}${(idea.idea||'').length>80?'…':''}</div>
+        </div>`).join('');
+    }
+  }
+
+  // 사전·사후 비교 (기존 로직)
+  renderDashboard();
+}
+
+function renderAdminDash(user) {
+  document.getElementById('dash-admin').style.display = 'block';
+  const nameEl = document.getElementById('dash-admin-name');
+  if (nameEl) nameEl.textContent = `${user.name} (${user.id})`;
+
+  const users = getUsers();
+  const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  setVal('da-total-users', users.length);
+  setVal('da-teacher-count', users.filter(u => u.role === 'teacher').length);
+  setVal('da-student-count', users.filter(u => u.role === 'student').length);
+  setVal('da-admin-count', users.filter(u => u.role === 'admin').length);
+
+  // 플랫폼 전체 통계
+  let totalIdeas=0, totalLessons=0, totalSurveys=0, totalXP=0;
+  users.forEach(u => {
+    const d = JSON.parse(localStorage.getItem(`aiPlatformV4_${u.id}`) || localStorage.getItem('aiPlatformV4') || '{}');
+    totalIdeas += (d.ideas||[]).length;
+    totalLessons += (d.lessons||[]).length;
+    totalSurveys += (d.surveys||[]).length;
+    totalXP += (d.totalXP||0);
+  });
+  // 공통 storage도 카운트
+  const common = JSON.parse(localStorage.getItem('aiPlatformV4') || '{}');
+  totalIdeas = Math.max(totalIdeas, (common.ideas||[]).length);
+  totalLessons = Math.max(totalLessons, (common.lessons||[]).length);
+  totalSurveys = Math.max(totalSurveys, (common.surveys||[]).length);
+  totalXP = Math.max(totalXP, common.totalXP||0);
+  setVal('da-total-ideas', totalIdeas);
+  setVal('da-total-lessons', totalLessons);
+  setVal('da-total-surveys', totalSurveys);
+  setVal('da-total-xp', totalXP);
+
+  // 회원 테이블
+  renderAdminUserTable(users, 'all');
+
+  // 공지사항
+  renderAdminNotices();
+}
+
+let _adminUserFilter = 'all';
+function filterAdminUsers(role) {
+  _adminUserFilter = role;
+  renderAdminUserTable(getUsers(), role);
+}
+
+function renderAdminUserTable(users, role) {
+  const filtered = role === 'all' ? users : users.filter(u => u.role === role);
+  const tbody = document.getElementById('da-user-tbody');
+  if (!tbody) return;
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">해당 역할의 회원이 없습니다.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = filtered.map(u => {
+    const d = JSON.parse(localStorage.getItem(`aiPlatformV4_${u.id}`) || '{}');
+    const xp = d.totalXP || 0;
+    const isSelf = u.id === getCurrentUser()?.id;
+    return `<tr>
+      <td><strong>${u.name}</strong></td>
+      <td style="color:var(--gray-500);">${u.id}</td>
+      <td>${u.avatar||''} ${u.roleLabel||u.role}</td>
+      <td style="font-size:12px;">${u.joinedAt||'-'}</td>
+      <td><strong>${xp}</strong> XP</td>
+      <td>${isSelf ? '<span style="color:var(--gray-400);font-size:12px;">본인</span>' :
+        `<button class="btn" style="font-size:11px;padding:4px 8px;color:#e74c3c;background:#fef2f2;" onclick="adminDeleteUser('${u.id}')">삭제</button>`}</td>
+    </tr>`;
+  }).join('');
+}
+
+function adminDeleteUser(userId) {
+  if (!confirm(`정말 "${userId}" 회원을 삭제하시겠습니까?`)) return;
+  let users = getUsers().filter(u => u.id !== userId);
+  saveUsers(users);
+  localStorage.removeItem(`aiPlatformV4_${userId}`);
+  renderAdminDash(getCurrentUser());
+}
+
+const NOTICE_KEY = 'aiPlatformNotices';
+function addAdminNotice() {
+  const input = document.getElementById('da-notice-input');
+  if (!input || !input.value.trim()) return;
+  const notices = JSON.parse(localStorage.getItem(NOTICE_KEY) || '[]');
+  notices.unshift({ text: input.value.trim(), date: new Date().toLocaleDateString('ko-KR'), by: getCurrentUser()?.name || '관리자' });
+  localStorage.setItem(NOTICE_KEY, JSON.stringify(notices));
+  input.value = '';
+  renderAdminNotices();
+}
+
+function renderAdminNotices() {
+  const el = document.getElementById('da-notice-list');
+  if (!el) return;
+  const notices = JSON.parse(localStorage.getItem(NOTICE_KEY) || '[]');
+  if (notices.length === 0) { el.innerHTML = '<div class="empty-state">등록된 공지가 없습니다.</div>'; return; }
+  el.innerHTML = notices.map((n, i) =>
+    `<div style="display:flex;justify-content:space-between;align-items:start;padding:10px 12px;border:1px solid var(--gray-200);border-radius:6px;margin-bottom:6px;background:var(--gray-50);">
+      <div>
+        <div style="font-size:13px;font-weight:600;">📢 ${n.text}</div>
+        <div style="font-size:11px;color:var(--gray-500);margin-top:3px;">${n.by} · ${n.date}</div>
+      </div>
+      <button onclick="deleteNotice(${i})" style="border:none;background:none;color:var(--gray-400);cursor:pointer;font-size:16px;padding:0 4px;">×</button>
+    </div>`).join('');
+}
+
+function deleteNotice(idx) {
+  const notices = JSON.parse(localStorage.getItem(NOTICE_KEY) || '[]');
+  notices.splice(idx, 1);
+  localStorage.setItem(NOTICE_KEY, JSON.stringify(notices));
+  renderAdminNotices();
+}
+
+// 페이지 로드 시 세션 복원
+(function() {
+  const user = getCurrentUser();
+  if (user) updateHeaderProfile(user);
+})();
 </script>
 </body>
 </html>
