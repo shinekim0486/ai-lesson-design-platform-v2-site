@@ -3595,6 +3595,92 @@ function syncCharCounts() {
   });
 }
 
+// ===== 기본 테스트 계정 및 샘플 데이터 자동 생성 =====
+function initDefaultAccount() {
+  const AUTH_KEY = 'aiPlatformUsers';
+  const STORAGE_KEY = 'aiPlatformV4';
+  const users = JSON.parse(localStorage.getItem(AUTH_KEY) || '[]');
+
+  // 기본 교사 계정이 없으면 생성
+  if (!users.find(u => u.id === 't001')) {
+    const teacher = {
+      id: 't001', pw: 't00111', name: '교사01',
+      role: 'teacher', roleLabel: '교사', avatar: '🧑‍🏫',
+      joinedAt: new Date().toLocaleDateString('ko-KR')
+    };
+    users.push(teacher);
+    localStorage.setItem(AUTH_KEY, JSON.stringify(users));
+  }
+
+  // 샘플 데이터가 없으면 주입
+  const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  if (!existing.lessons || existing.lessons.length === 0) {
+    const sampleState = {
+      lessons: [
+        {
+          title: '[샘플] AI를 활용한 데이터 분석 수업',
+          method: 'PBL (프로젝트 기반 학습)',
+          time: '2차시 (100분)',
+          savedAt: new Date().toLocaleDateString('ko-KR'),
+          tc: {
+            'tc-title': '[샘플] AI를 활용한 데이터 분석 수업',
+            'tc-goal': '학생들이 AI 도구를 활용하여 실제 데이터를 수집·분석하고, 결과를 시각화하여 발표할 수 있다.',
+            'tc-question': '인공지능은 데이터에서 무엇을 찾아낼 수 있을까?',
+            'tc-method': 'PBL (프로젝트 기반 학습)',
+            'tc-time': '2차시 (100분)',
+            'tc-ai': 'ChatGPT로 데이터 분석 코드 생성 → 결과 해석 → 보고서 작성',
+            'tc-prompt': '너는 데이터 분석 전문가야. 학생이 제공하는 CSV 데이터를 분석하고, 주요 패턴과 인사이트를 초등학생도 이해할 수 있게 설명해줘.',
+            'tc-eval': '과정 중심 평가: 데이터 분석 과정 관찰 + 최종 발표 루브릭',
+            'tc-backward': '최종 산출물: 데이터 분석 보고서 + 발표 슬라이드'
+          }
+        },
+        {
+          title: '[샘플] 네트워크 소켓 프로그래밍 실습',
+          method: '직접 교수법 + 실습',
+          time: '1차시 (50분)',
+          savedAt: new Date().toLocaleDateString('ko-KR'),
+          tc: {
+            'tc-title': '[샘플] 네트워크 소켓 프로그래밍 실습',
+            'tc-goal': 'Python socket 라이브러리를 사용하여 TCP 클라이언트-서버 프로그램을 작성하고 실행할 수 있다.',
+            'tc-question': '컴퓨터들은 어떻게 서로 통신할까?',
+            'tc-method': '직접 교수법 + 실습',
+            'tc-time': '1차시 (50분)',
+            'tc-ai': 'AI로 소켓 코드 생성 → 오류 디버깅 → 코드 설명 요청',
+            'tc-prompt': '파이썬 TCP 소켓 서버와 클라이언트 예제 코드를 초보자도 이해할 수 있도록 주석을 달아서 작성해줘.',
+            'tc-eval': '실기 평가: 소켓 통신 프로그램 완성 및 시연',
+            'tc-backward': '최종 산출물: 동작하는 채팅 프로그램'
+          }
+        }
+      ],
+      myDiaries: [
+        {
+          id: Date.now(),
+          date: new Date().toLocaleDateString('ko-KR'),
+          subject: '[샘플] AI 데이터 분석 수업',
+          q1: '학생들이 AI 도구로 직접 데이터를 분석하는 과정을 경험했다.',
+          q2: '데이터 해석 단계에서 학생들이 어려움을 겪었다.',
+          q3: '다음에는 데이터 해석 가이드 워크시트를 미리 제공해야겠다.',
+          q4: '학생들의 발표 자신감이 눈에 띄게 향상되었다.',
+          content: '오늘 수업은 전반적으로 성공적이었다. 특히 AI 도구 활용에 대한 학생 반응이 긍정적이었다.',
+          xp: 50
+        }
+      ],
+      ideas: [
+        { id: Date.now()+1, title: '[샘플] AI 윤리 토론 수업', content: 'AI의 편향성 문제를 주제로 학생 토론 수업 기획', createdAt: new Date().toLocaleDateString('ko-KR') }
+      ]
+    };
+    // 기존 state와 병합
+    const merged = Object.assign({}, existing, {
+      lessons: sampleState.lessons,
+      myDiaries: sampleState.myDiaries,
+      ideas: sampleState.ideas
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+  }
+}
+// 페이지 로드 시 실행
+(function() { try { initDefaultAccount(); } catch(e) { console.warn('initDefaultAccount error:', e); } })();
+
 // ===== 회원 로그인/가입 시스템 =====
 const AUTH_KEY = 'aiPlatformUsers';
 const SESSION_KEY = 'aiPlatformSession';
