@@ -3604,7 +3604,7 @@ function initDefaultAccount() {
   // 기본 교사 계정이 없으면 생성
   if (!users.find(u => u.id === 't001')) {
     const teacher = {
-      id: 't001', pw: 't00111', name: '교사01',
+      id: 't001', pw: 't001', name: '교사01',
       role: 'teacher', roleLabel: '교사', avatar: '🧑‍🏫',
       joinedAt: new Date().toLocaleDateString('ko-KR')
     };
@@ -3732,7 +3732,7 @@ function doSignup() {
   const errEl = document.getElementById('signup-error');
   if (!name || !id || !pw) { errEl.style.display='block'; errEl.textContent='모든 항목을 입력해주세요.'; return; }
   if (id.length < 4) { errEl.style.display='block'; errEl.textContent='아이디는 4자 이상이어야 합니다.'; return; }
-  if (pw.length < 6) { errEl.style.display='block'; errEl.textContent='비밀번호는 6자 이상이어야 합니다.'; return; }
+  if (pw.length < 4) { errEl.style.display='block'; errEl.textContent='비밀번호는 4자 이상이어야 합니다.'; return; }
   const users = getUsers();
   if (users.find(u => u.id === id)) { errEl.style.display='block'; errEl.textContent='이미 사용 중인 아이디입니다.'; return; }
   const roleMap = { teacher: '교사', student: '학생', admin: '관리자' };
