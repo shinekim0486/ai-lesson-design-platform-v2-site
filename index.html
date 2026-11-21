@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>v2 티쳐스 캠버스</title>
+<title>AI 수업설계 플랫폼 v2</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -257,23 +257,12 @@ table th { background: #e0f4ff; font-weight: 600; }
 }
 .stat-card .stat-value { font-size: 28px; font-weight: 700; color: #4682B4; }
 .stat-card .stat-label { font-size: 12px; color: #888; margin-top: 2px; }
-
-.teacher-guide-preview {
-  max-height: 28rem;
-  overflow: auto;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-  padding: 1rem;
-  background: #f0f8ff;
-  border-radius: 8px;
-  font: inherit;
-}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1>v2 티쳐스 캠버스</h1>
+  <h1>AI 수업설계 플랫폼 v2</h1>
   <div class="xp-display">
     <span>👤 선생님</span>
     <span id="header-level">🌱 새싹</span>
@@ -362,11 +351,8 @@ table th { background: #e0f4ff; font-weight: 600; }
   <div class="card">
     <h3>🤖 AI 소크라테스 대화</h3>
     <div style="margin-bottom:10px;">
-      <div style="font-size:12px;color:#888;margin-bottom:6px;">💡 참고할 프롬프트 카드 (클릭하면 대화 입력란에 추가)</div>
+      <div style="font-size:12px;color:#888;margin-bottom:6px;">💡 참고할 프롬프트 카드 (클릭하면 채팅창 위에 표시)</div>
       <div style="display:flex;gap:6px;flex-wrap:wrap;">
-        <button class="prompt-card-btn" data-prompt="정렬된 목록에서 순차 탐색과 이진 탐색을 비교하려고 해. 두 방법에서 비교 횟수를 같은 기준으로 기록하려면 무엇을 세야 할까?" style="font-size:10px;padding:4px 8px;border:1px solid #87CEEB;border-radius:4px;background:#f0f8ff;cursor:pointer;color:#4682B4;">조건을 넣어 질문</button>
-        <button class="prompt-card-btn" data-prompt="목표값을 바꿨더니 순차 탐색이 더 적은 횟수로 끝났어. 각 방법이 확인한 위치를 어떻게 비교하면 좋을까?" style="font-size:10px;padding:4px 8px;border:1px solid #87CEEB;border-radius:4px;background:#f0f8ff;cursor:pointer;color:#4682B4;">측정 결과 검토</button>
-        <button class="prompt-card-btn" data-prompt="자료가 정렬되지 않은 경우도 시험하려고 해. 이진 탐색에서 어떤 전제가 깨지는지 확인할 사례를 제안해 줘." style="font-size:10px;padding:4px 8px;border:1px solid #87CEEB;border-radius:4px;background:#f0f8ff;cursor:pointer;color:#4682B4;">수정안 비교</button>
         <button class="prompt-card-btn" data-prompt="분수를 왜 배워야 하나요? 실생활 예시를 들어주세요." style="font-size:10px;padding:4px 8px;border:1px solid #87CEEB;border-radius:4px;background:#f0f8ff;cursor:pointer;color:#4682B4;">분수 실생활 예시</button>
         <button class="prompt-card-btn" data-prompt="소수와 분수는 어떻게 서로 변환할 수 있나요?" style="font-size:10px;padding:4px 8px;border:1px solid #87CEEB;border-radius:4px;background:#f0f8ff;cursor:pointer;color:#4682B4;">소수↔분수 변환</button>
         <button class="prompt-card-btn" data-prompt="이 개념이 실생활에서 어떻게 활용되나요?" style="font-size:10px;padding:4px 8px;border:1px solid #87CEEB;border-radius:4px;background:#f0f8ff;cursor:pointer;color:#4682B4;">실생활 활용</button>
@@ -403,19 +389,6 @@ table th { background: #e0f4ff; font-weight: 600; }
 
 <!-- ========== 수업설계 모드 ========== -->
 <div class="mode-section" id="mode-lesson">
-  <div class="card">
-    <h3>교사용 가이드 생성</h3>
-    <p>작성 중인 수업안으로 가이드를 만듭니다. 새 수업안이 비어 있으면 최근 저장한 수업안을 사용합니다.</p>
-    <div class="btn-row">
-      <button type="button" class="btn btn-primary" id="teacher-guide-generate">교사용 가이드 생성</button>
-      <a href="teacher-guide.html">정보 교과 예시 가이드</a>
-    </div>
-    <p id="teacher-guide-status" role="status"></p>
-    <div id="teacher-guide-output" hidden>
-      <pre id="teacher-guide-preview" class="teacher-guide-preview" tabindex="0" aria-label="생성된 교사용 가이드"></pre>
-      <a id="teacher-guide-download" download="교사용-가이드.txt">생성한 가이드 내려받기</a>
-    </div>
-  </div>
   <div class="step-indicator">
     <div class="step-dot active" data-step="1">1</div>
     <div class="step-dot" data-step="2">2</div>
@@ -551,12 +524,12 @@ const BADGES_DEF = [
 ];
 
 const DEFAULT_STUDENTS = [
-  { id: 's1', name: '예시 학생 1', xp: 0, diaries: [], chatCount: 0, relations: {} },
-  { id: 's2', name: '예시 학생 2', xp: 0, diaries: [], chatCount: 0, relations: {} },
-  { id: 's3', name: '예시 학생 3', xp: 0, diaries: [], chatCount: 0, relations: {} },
-  { id: 's4', name: '예시 학생 4', xp: 0, diaries: [], chatCount: 0, relations: {} },
-  { id: 's5', name: '예시 학생 5', xp: 0, diaries: [], chatCount: 0, relations: {} },
-  { id: 's6', name: '예시 학생 6', xp: 0, diaries: [], chatCount: 0, relations: {} }
+  { id: 's1', name: '김민수', xp: 0, diaries: [], chatCount: 0, relations: {} },
+  { id: 's2', name: '이지영', xp: 0, diaries: [], chatCount: 0, relations: {} },
+  { id: 's3', name: '박준호', xp: 0, diaries: [], chatCount: 0, relations: {} },
+  { id: 's4', name: '최서연', xp: 0, diaries: [], chatCount: 0, relations: {} },
+  { id: 's5', name: '정우석', xp: 0, diaries: [], chatCount: 0, relations: {} },
+  { id: 's6', name: '한소율', xp: 0, diaries: [], chatCount: 0, relations: {} }
 ];
 
 const BLOOM_LEVELS = [
@@ -815,7 +788,7 @@ function renderLesson(step) {
   if (step === 1) {
     html = `<h3>STEP 1. 학습 목표</h3>
       <label for="l-title">차시 제목</label>
-      <input type="text" id="l-title" placeholder="예: 순차 탐색과 이진 탐색 비교" value="${escapeHtml(form.step1.title)}" maxlength="100">
+      <input type="text" id="l-title" placeholder="예: 자율주행 센서의 종류와 원리" value="${escapeHtml(form.step1.title)}" maxlength="100">
       <label for="l-goal">학습 목표</label>
       <textarea id="l-goal" placeholder="이 차시를 통해 학생이 무엇을 할 수 있게 될지 작성" maxlength="500">${escapeHtml(form.step1.goal)}</textarea>
       <label for="l-bloom">블룸 택소노미 레벨</label>
@@ -1126,7 +1099,7 @@ function showStudentModal(studentId) {
 // ==================== 목업 AI 함수 ====================
 function genDraftMock() {
   const title = state.lessonForm.step1.title || '수업';
-  const draft = `[AI 초안] "${title}" 수업 내용\n\n` +
+  const draft = `[AI 초안] "${escapeHtml(title)}" 수업 내용\n\n` +
     `1. 도입 (10분): 일상 속 예시로 흥미 유발\n` +
     `2. 전개 (25분): 핵심 개념 설명 및 예시\n` +
     `3. 정리 (15분): 주요 내용 요약 및 성찰 질문\n\n` +
@@ -1145,7 +1118,7 @@ function genRubricMock() {
     //   { criteria: '적용 능력', excellent: '실제 상황에 능숙히 적용', proficient: '부분적 적용 가능', basic: '제한적 적용', incomplete: '적용 불가' },
     //   { criteria: '분석력', excellent: '장단점을 비교·분석한다', proficient: '비교적 분석 가능', basic: '표면적 분석', incomplete: '분석 미흡' },
     // ];
-
+    
     // 루브릭을 테이블로 렌더링
     let rubricHtml = '<div style="margin-top:8px;"><h4 style="font-size:13px;color:#357abd;margin-bottom:6px;">📊 평가 루브릭 (목업)</h4><table style="width:100%;border-collapse:collapse;font-size:11px;">';
     // 100점 루브릭 구조 (사이트 참고)
@@ -1155,16 +1128,16 @@ function genRubricMock() {
       { criteria: '3. 오류 검증·디버깅', points: '25점', excellent: '단일 변인 통제 실험, 실측 수치(mm, ms, %)로 AI 답 검증', proficient: '실험·측정했으나 여러 조건 동시 변경으로 원인 추론 부족', basic: '표면적 분석', incomplete: '실측 대조 없이 AI 설명 그대로 믿음' },
       { criteria: '4. 결과물 완성도 및 발표', points: '20점', excellent: '재현 가능한 인계 명세서 작성, 논리적 설명', proficient: '완성됐으나 인계 명세서의 검증 수치 일부 누락', basic: '일부만 설명', incomplete: '산출물 누락, 수정 근거 설명 못함' },
     ];
-
+    
     rubricHtml += '<tr style="background:#f5f5f5;"><th style="padding:4px 6px;border:1px solid #ddd;">평가 요소 (배점)</th><th style="padding:4px 6px;border:1px solid #ddd;">상 수준 (80~100%)</th><th style="padding:4px 6px;border:1px solid #ddd;">중 수준 (60~79%)</th><th style="padding:4px 6px;border:1px solid #ddd;">하 수준 (0~59%)</th><th style="padding:4px 6px;border:1px solid #ddd;">기본점수 기준</th></tr>';
     rubricData.forEach(row => {
       rubricHtml += `<tr style="background:#fafafa;"><td style="padding:4px 6px;border:1px solid #ddd;font-weight:500;">${row.criteria}</td><td style="padding:4px 6px;border:1px solid #ddd;">${row.excellent}</td><td style="padding:4px 6px;border:1px solid #ddd;">${row.proficient}</td><td style="padding:4px 6px;border:1px solid #ddd;">${row.basic}</td><td style="padding:4px 6px;border:1px solid #ddd;">${row.incomplete}</td></tr>`;
     });
     rubricHtml += '</table>';
     rubricHtml += '<div style="margin-top:6px;font-size:11px;color:#888;">※ 이 루브릭은 목업입니다. 실제 Solar API 연동 시 목표·블룸 레벨 기반 루브릭을 생성합니다.</div>';
-
+    
     document.getElementById('l-rubric-output').innerHTML = rubricHtml;
-
+    
     // 3단계 질문·검토 중심 수업 모델 참고 (사이트 교사용 가이드 참고)
     setTimeout(() => {
       const rubricBox = document.getElementById('l-rubric-output');
@@ -1188,13 +1161,7 @@ function genRubricMock() {
       }
     }, 100);
 
-  state.lessonForm.step4.rubric = rubric;
-  const outputEl = document.getElementById('l-rubric-output');
-  if (outputEl) {
-    outputEl.innerHTML = '<div class="card" style="background:#f0f7ff;border:1px solid #b8d4f0;">' +
-      escapeHtml(rubric).replace(/\n/g, '<br>') +
-      '</div>';
-  }
+  state.lessonForm.step4.rubric = rubricHtml;
 }
 
 let chatTurn = 0;
@@ -1211,7 +1178,7 @@ function sendChatMock(text) {
   const delay = 600 + Math.random() * 800;
   setTimeout(() => {
     const qIndex = chatTurn % SOCRATIC_Q.length;
-
+    
     // 4단계 피드백 구조로 응답 구성 (사이트 AI 피드백 대시보드 참고)
     const feedback4Step = [
       `🌟 1. 강점 및 성취 인정: "${SOCRATIC_Q[qIndex]}" — 좋은 질문이에요. 이 방향의 사고는 학습 이해에 도움이 됩니다.`,
@@ -1262,66 +1229,6 @@ function init() {
     });
   });
 
-  document.getElementById('teacher-guide-generate').addEventListener('click', () => {
-    const { step1, step2, step3, step4 } = state.lessonForm;
-    const draft = {
-      title: step1.title,
-      goal: step1.goal,
-      content: step2.content,
-      method: step3.method,
-      time: step3.time,
-      reflect: step3.reflectQuestion,
-      eval: step4.evalCriteria,
-      rubric: step4.rubric
-    };
-    const hasDraft = [draft.title, draft.goal, draft.content, draft.time, draft.reflect, draft.eval, draft.rubric]
-      .some(value => value?.trim());
-    const lesson = hasDraft ? draft : state.lessons.at(-1);
-    const status = document.getElementById('teacher-guide-status');
-    const output = document.getElementById('teacher-guide-output');
-
-    if (!lesson?.title?.trim()) {
-      output.hidden = true;
-      status.textContent = '학습 목표 단계에서 차시 제목을 입력한 뒤 다시 눌러 주세요.';
-      return;
-    }
-
-    const fill = (value, fallback) => value?.trim() || fallback;
-    const guide = [
-      '교사용 가이드',
-      lesson.title.trim(),
-      '',
-      '1. 학습 목표',
-      fill(lesson.goal, '학생이 수업 후 할 수 있어야 하는 행동을 적으세요.'),
-      '',
-      '2. 수업 준비',
-      '활동 유형 ' + fill(lesson.method, '수업에 맞게 선택'),
-      '수업 시간 ' + (lesson.time ? lesson.time + '분' : '수업에 맞게 배정'),
-      '학생 활동에 필요한 자료와 도구를 준비하고 진행 순서를 확인합니다.',
-      '',
-      '3. 수업 진행',
-      '도입 — 학습 목표를 공유하고 학생에게 결과를 예상하게 합니다.',
-      '전개 — 아래 활동을 안내하고 학생이 과정을 기록하도록 합니다.',
-      fill(lesson.content, '학습 내용과 학생 활동을 적으세요.'),
-      '정리 — 결과를 비교하고 성찰 질문에 답하게 합니다.',
-      fill(lesson.reflect, '예상과 결과가 달랐나요? 그렇게 판단한 근거는 무엇인가요?'),
-      '',
-      '4. 평가와 피드백',
-      fill(lesson.eval, '학습 목표에 맞는 평가 기준을 적으세요.'),
-      ...(lesson.rubric?.trim() ? ['', '루브릭', lesson.rubric.trim()] : [])
-    ].join('\n');
-
-    document.getElementById('teacher-guide-preview').textContent = guide;
-    document.getElementById('teacher-guide-download').href =
-      'data:text/plain;charset=utf-8,' + encodeURIComponent(guide);
-    output.hidden = false;
-    status.textContent = (hasDraft ? '작성 중인 수업안' : '최근 저장한 수업안') + '으로 가이드를 만들었습니다.';
-  });
-
-  if (location.hash === '#lesson') {
-    document.querySelector('[data-mode="lesson"]').click();
-  }
-
   document.getElementById('t-subject')?.addEventListener('input', () => {
     const subject = document.getElementById('t-subject').value.trim();
     document.getElementById('t-save').disabled = subject.length === 0;
@@ -1347,16 +1254,13 @@ function init() {
       return;
     }
 
-    const isStatic = location.protocol === 'file:' || location.hostname.endsWith('.github.io');
-    const result = isStatic
-      ? Promise.resolve({ ok: true, topic: subject, idea })
-      : fetch('/api/idea', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ topic: subject, idea })
-      }).then(response => response.json());
-
-    result.then(data => {
+    fetch('/api/idea', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ topic: subject, idea: idea })
+    })
+    .then(response => response.json())
+    .then(data => {
       if (data.ok) {
         state.ideas.push({
           id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
@@ -1386,7 +1290,7 @@ function init() {
       showFeedback('t-feedback', '먼저 주제를 입력해 주세요.', 'info');
       return;
     }
-    const draft = `[AI 초안] "${subject}" 관련 수업 아이디어\n\n` +
+    const draft = `[AI 초안] "${escapeHtml(subject)}" 관련 수업 아이디어\n\n` +
       `1. 도입: 일상 속 사례로 관심 끌기\n` +
       `2. 전개: 개념 설명 + 학생 활동\n` +
       `3. 정리: 성찰 질문으로 마무리\n\n` +
