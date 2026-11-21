@@ -1384,6 +1384,11 @@ table tr:hover td { background: var(--primary-bg); }
 
   <div class="card">
     <h3>📄 내 성찰 일지 목록</h3>
+    <div style="display:flex;gap:8px;margin-bottom:10px;align-items:center;">
+      <input type="text" id="diary-search" placeholder="🔍 키워드 검색..." style="flex:1;padding:7px 12px;border:1px solid var(--gray-300);border-radius:var(--radius);font-size:13px;" oninput="renderDiaryList()">
+      <button class="btn btn-secondary" style="font-size:12px;padding:6px 12px;" onclick="document.getElementById('diary-search').value='';renderDiaryList()">초기화</button>
+    </div>
+    <div id="diary-search-count" style="font-size:12px;color:var(--gray-500);margin-bottom:6px;"></div>
     <div id="s-diary-list"></div>
     <div class="pagination" id="diary-pagination"></div>
   </div>
@@ -1426,8 +1431,10 @@ table tr:hover td { background: var(--primary-bg); }
         </div>
         <span class="tc-badge" style="background:#e3f2fd;color:#1565c0;">목표</span>
       </div>
-      <input type="text" id="tc-title" maxlength="100" placeholder="예: 자율주행 센서 RTT 측정 및 패킷 분석 (1차시)">
-      <textarea id="tc-goal" maxlength="500" placeholder="이 차시를 마치면 학생이 무엇을 할 수 있는지 작성해주세요.&#10;예) 분수와 소수의 상호 변환 원리를 이해하고 일상 생활의 크기 비교에 적용한다." rows="3"></textarea>
+      <input type="text" id="tc-title" maxlength="100" placeholder="예: 자율주행 센서 RTT 측정 및 패킷 분석 (1차시)" oninput="updateCharCount(this,100,'tc-title-count')">
+      <div style="text-align:right;font-size:11px;color:var(--gray-500);margin-top:2px;"><span id="tc-title-count">0</span>/100자</div>
+      <textarea id="tc-goal" maxlength="500" placeholder="이 차시를 마치면 학생이 무엇을 할 수 있는지 작성해주세요.&#10;예) 분수와 소수의 상호 변환 원리를 이해하고 일상 생활의 크기 비교에 적용한다." rows="3" oninput="updateCharCount(this,500,'tc-goal-count')"></textarea>
+      <div style="text-align:right;font-size:11px;color:var(--gray-500);margin-top:2px;"><span id="tc-goal-count">0</span>/500자</div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px;">
         <label style="font-size:12px;color:var(--gray-700);white-space:nowrap;">블룸 택소노미:</label>
         <select id="tc-bloom" style="flex:1;min-width:140px;">
@@ -1447,7 +1454,8 @@ table tr:hover td { background: var(--primary-bg); }
         </div>
         <span class="tc-badge" style="background:#f3e5f5;color:#6a1b9a;">발문</span>
       </div>
-      <textarea id="tc-question" maxlength="500" placeholder="예: 크기가 다른 피자 조각을 그냥 더하면 전체 및 조각인지 바로 알 수 있을까요? 기준 단위는 왜 필요할까요?" rows="3"></textarea>
+      <textarea id="tc-question" maxlength="500" placeholder="예: 크기가 다른 피자 조각을 그냥 더하면 전체 및 조각인지 바로 알 수 있을까요? 기준 단위는 왜 필요할까요?" rows="3" oninput="updateCharCount(this,500,'tc-question-count')"></textarea>
+      <div style="text-align:right;font-size:11px;color:var(--gray-500);margin-top:2px;"><span id="tc-question-count">0</span>/500자</div>
     </div>
 
     <!-- 3. AI 협업 프롬프트 규칙 -->
@@ -1460,7 +1468,8 @@ table tr:hover td { background: var(--primary-bg); }
         </div>
         <span class="tc-badge" style="background:#e8f5e9;color:#2e7d32;">프롬프트</span>
       </div>
-      <textarea id="tc-prompt" maxlength="1000" placeholder="예: '초등 5학년 눈높이에서 분수를 소수로 바꿀 때 나눗셈을 이용하는 원리를 실생활 예시 2가지와 함께 설명해 줘. 단, 공식만 제시하지 말 것'" rows="3"></textarea>
+      <textarea id="tc-prompt" maxlength="1000" placeholder="예: '초등 5학년 눈높이에서 분수를 소수로 바꿀 때 나눗셈을 이용하는 원리를 실생활 예시 2가지와 함께 설명해 줘. 단, 공식만 제시하지 말 것'" rows="3" oninput="updateCharCount(this,1000,'tc-prompt-count')"></textarea>
+      <div style="text-align:right;font-size:11px;color:var(--gray-500);margin-top:2px;"><span id="tc-prompt-count">0</span>/1000자</div>
     </div>
 
     <!-- 4. 역공학 분석 타깃 -->
@@ -2658,13 +2667,24 @@ function collectTCForm() {
 
 function saveTCLesson() {
   const tc = collectTCForm();
-  // 공백만 있는 경우도 거부 (trim 적용)
   if (!tc['tc-title'].trim()) { showFeedback('lesson-list', '차시 제목(1번 항목)을 먼저 입력해주세요.', 'error'); return; }
   if (!tc['tc-goal'].trim()) { showFeedback('lesson-list', '학습 목표(2번 항목)를 입력해주세요.', 'error'); return; }
-  // trim된 값으로 저장
   Object.keys(tc).forEach(k => { if (typeof tc[k] === 'string') tc[k] = tc[k].trim(); });
-  state.lessonForm.tc = tc;
+
+  // 중복 제목 확인
   if (!state.lessons) state.lessons = [];
+  const dupIdx = state.lessons.findIndex(l => l.title === tc['tc-title']);
+  if (dupIdx !== -1) {
+    if (!confirm(`"${tc['tc-title']}" 제목으로 저장된 수업이 이미 있습니다.\n덮어쓸까요? (취소 시 새 항목으로 추가)`)) {
+      // 덮어쓰기: 기존 항목 교체
+      state.lessons[dupIdx] = { title: tc['tc-title'], method: tc['tc-method'], time: tc['tc-time'], savedAt: new Date().toLocaleDateString('ko-KR'), tc };
+      state.lessonForm.tc = tc;
+      showFeedback('lesson-list', '♻️ 기존 수업설계를 업데이트했습니다.', 'info');
+      saveState(); renderLessonList(); return;
+    }
+  }
+
+  state.lessonForm.tc = tc;
   state.lessons.unshift({
     title: tc['tc-title'], method: tc['tc-method'], time: tc['tc-time'],
     savedAt: new Date().toLocaleDateString('ko-KR'),
@@ -2912,7 +2932,7 @@ function init() {
       btn.classList.add('active');
       const mode = btn.dataset.mode;
       document.getElementById('mode-' + mode).classList.add('active');
-      if (mode === 'lesson') { renderLesson(); renderSubjectExamples(); }
+      if (mode === 'lesson') { renderLesson(); renderSubjectExamples(); setTimeout(syncCharCounts, 50); }
       if (mode === 'relation') { renderRelations(); renderSociogram(); }
       if (mode === 'dashboard') renderRoleDashboard();
       if (mode === 'student') renderStudent();
@@ -3062,14 +3082,54 @@ function init() {
   });
 
   document.getElementById('relation-group-btn')?.addEventListener('click', () => {
-    const count = Object.keys(state.relations).length;
-    if (count < 3) { showFeedback('relation-feedback', '관계를 3개 이상 설정해야 그룹을 추천할 수 있어요.', 'info'); return; }
-    const shuffled = [...state.students].sort(() => Math.random() - 0.5);
-    const groups = [];
-    for (let i = 0; i < shuffled.length; i += 3) groups.push(shuffled.slice(i, i + 3));
+    const relCount = Object.keys(state.relations).length;
+    if (relCount < 3) { showFeedback('relation-feedback', '관계를 3개 이상 설정해야 그룹을 추천할 수 있어요.', 'info'); return; }
+
+    // 관계 밀도 기반 그룹 추천 (실제 로직)
+    // 1. 각 학생별 관계 연결 수(연결도) 계산
+    const degree = {};
+    state.students.forEach(s => { degree[s.id] = 0; });
+    Object.keys(state.relations).forEach(key => {
+      const [a, b] = key.split('-');
+      if (degree[a] !== undefined) degree[a]++;
+      if (degree[b] !== undefined) degree[b]++;
+    });
+
+    // 2. 학생을 연결도 순으로 정렬 (높음→낮음)
+    const sorted = [...state.students].sort((x, y) => (degree[y.id] || 0) - (degree[x.id] || 0));
+
+    // 3. 그룹 편성: 연결도 높은 학생을 각 그룹에 분산 (균형 배치)
+    const groupSize = 3;
+    const groupCount = Math.ceil(sorted.length / groupSize);
+    const groups = Array.from({ length: groupCount }, () => []);
+    sorted.forEach((s, i) => { groups[i % groupCount].push(s); });
+
+    // 4. 그룹 내 관계 강도 계산
+    function getGroupScore(g) {
+      let score = 0;
+      for (let i = 0; i < g.length; i++)
+        for (let j = i + 1; j < g.length; j++) {
+          const key1 = `${g[i].id}-${g[j].id}`;
+          const key2 = `${g[j].id}-${g[i].id}`;
+          if (state.relations[key1] || state.relations[key2]) score++;
+        }
+      return score;
+    }
+
     const html = '<div style="margin-top:12px;">' +
-      groups.map((g, i) => `<div class="list-item"><strong>그룹 ${i + 1}</strong>: ${g.map(s => escapeHtml(s.name)).join(', ')}</div>`).join('') +
-      '<div style="margin-top:8px;font-size:12px;color:#888;">※ 목업입니다. Solar API 연동 시 관계 밀도 기반 그룹 추천 예정.</div></div>';
+      groups.map((g, i) => {
+        const score = getGroupScore(g);
+        const scoreTag = score > 0
+          ? `<span style="font-size:11px;color:#27ae60;margin-left:6px;">관계 ${score}개 연결</span>`
+          : `<span style="font-size:11px;color:#e67e22;margin-left:6px;">새 관계 형성 필요</span>`;
+        return `<div class="list-item" style="margin-bottom:6px;">
+          <strong>그룹 ${i + 1}</strong>${scoreTag}<br>
+          <span style="font-size:13px;">
+            ${g.map(s => `${escapeHtml(s.name)} <small style="color:#888;">(연결 ${degree[s.id] || 0}개)</small>`).join(' · ')}
+          </span>
+        </div>`;
+      }).join('') +
+      '<div style="margin-top:8px;font-size:12px;color:#888;">💡 연결도 높은 학생을 각 그룹에 분산해 균형 모둠을 구성했습니다.</div></div>';
     document.getElementById('relation-group-recommend').innerHTML = html;
   });
 
@@ -3267,7 +3327,15 @@ function renderDiaryList() {
   const el = document.getElementById('s-diary-list');
   const pagEl = document.getElementById('diary-pagination');
   if (!el) return;
-  const diaries = [...state.myDiaries].reverse();
+  // 검색 키워드 필터
+  const keyword = (document.getElementById('diary-search')?.value || '').trim().toLowerCase();
+  const allDiaries = [...state.myDiaries].reverse();
+  const diaries = keyword
+    ? allDiaries.filter(d => {
+        const text = [d.q1, d.q2, d.q3, d.q4, d.content, d.subject].join(' ').toLowerCase();
+        return text.includes(keyword);
+      })
+    : allDiaries;
   const totalPages = Math.max(1, Math.ceil(diaries.length / DIARY_PER_PAGE));
   if (state.diaryPage >= totalPages) state.diaryPage = totalPages - 1;
   const page = state.diaryPage;
@@ -3504,6 +3572,27 @@ function renderTourStep() {
 
   // 액션 실행
   if (step.action) setTimeout(step.action, 500);
+}
+
+// ===== 글자 수 카운터 =====
+function updateCharCount(el, max, countId) {
+  const len = el.value.length;
+  const countEl = document.getElementById(countId);
+  if (!countEl) return;
+  countEl.textContent = len;
+  countEl.style.color = len >= max ? '#e74c3c' : len >= max * 0.9 ? '#e67e22' : 'var(--gray-500)';
+}
+
+// 수업설계 탭 열릴 때 카운터 초기화
+function syncCharCounts() {
+  const pairs = [
+    ['tc-title', 100, 'tc-title-count'], ['tc-goal', 500, 'tc-goal-count'],
+    ['tc-question', 500, 'tc-question-count'], ['tc-prompt', 1000, 'tc-prompt-count']
+  ];
+  pairs.forEach(([id, max, cid]) => {
+    const el = document.getElementById(id);
+    if (el) updateCharCount(el, max, cid);
+  });
 }
 
 // ===== 회원 로그인/가입 시스템 =====

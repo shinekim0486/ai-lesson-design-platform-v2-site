@@ -50,12 +50,25 @@ https://shinekim0486.github.io/ai-lesson-design-platform-v2-site
 ## 폴더 구조
 ```
 ai-lesson-design-platform-v2-site/
-├── index.html          ← 메인 플랫폼 (전체 기능 포함)
-├── flowchart_platform.html  ← 플랫폼 구조 흐름도
-├── teacher-guide.html  ← 선생님 가이드 페이지
-├── PRD.md              ← 요구사항 정의서
-├── PLAN.md             ← 개발 계획
-├── CHECKS.md           ← 테스트 체크리스트
-├── REVIEW.md           ← AI 개발 검토 결과
-└── README.md           ← 이 파일
+├── index.html                        ← 메인 플랫폼 (전체 기능 포함)
+├── flowchart_platform.html           ← 플랫폼 구조 흐름도
+├── teacher-guide.html                ← 선생님 가이드 페이지
+├── PRD.md                            ← 요구사항 정의서
+├── PLAN.md                           ← 개발 계획
+├── CHECKS.md                         ← 테스트 체크리스트
+├── REVIEW.md                         ← AI 개발 검토 결과
+├── CURRICULUM_GUIDE_별책10.md        ← 국가 교육과정 지침서 (실과/정보과)
+├── CURRICULUM_GUIDE_별책35.md        ← 국가 교육과정 지침서 (정보·통신 전문교과)
+└── README.md                         ← 이 파일
 ```
+
+## 국가 교육과정 참조 지침서
+
+수업설계 시 국가 교육과정 기준을 반영하기 위한 참조 문서입니다.
+
+| 파일 | 고시 | 대상 |
+|------|------|------|
+| `CURRICULUM_GUIDE_별책10.md` | 교육부 고시 제2022-33호 [별책 10] | 실과(기술·가정)/정보과 (일반고·중학교) |
+| `CURRICULUM_GUIDE_별책35.md` | 교육부 고시 제2022-33호 [별책 35] | 정보·통신 전문 교과 (직업계고) |
+
+> 별책 35는 인공지능소프트웨어과, 네트워크프로그래밍 교과에 직접 적용 가능합니다.
