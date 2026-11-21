@@ -258,6 +258,16 @@ table th { background: #e0f4ff; font-weight: 600; }
 .stat-card .stat-value { font-size: 28px; font-weight: 700; color: #4682B4; }
 .stat-card .stat-label { font-size: 12px; color: #888; margin-top: 2px; }
 
+.teacher-guide-preview {
+  max-height: 28rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 1rem;
+  background: #f0f8ff;
+  border-radius: 8px;
+  font: inherit;
+}
 </style>
 </head>
 <body>
@@ -394,11 +404,16 @@ table th { background: #e0f4ff; font-weight: 600; }
 <!-- ========== 수업설계 모드 ========== -->
 <div class="mode-section" id="mode-lesson">
   <div class="card">
-    <h3>정보 교과 교사용 가이드</h3>
-    <p>수업설계 입력 순서와 순차·이진 탐색 50분 수업 예시를 확인할 수 있습니다.</p>
+    <h3>교사용 가이드 생성</h3>
+    <p>작성 중인 수업안으로 가이드를 만듭니다. 새 수업안이 비어 있으면 최근 저장한 수업안을 사용합니다.</p>
     <div class="btn-row">
-      <a href="teacher-guide.html">가이드 열기</a>
-      <a href="teacher-guide.html" download="정보교과-교사용-가이드.html">가이드 내려받기</a>
+      <button type="button" class="btn btn-primary" id="teacher-guide-generate">교사용 가이드 생성</button>
+      <a href="teacher-guide.html">정보 교과 예시 가이드</a>
+    </div>
+    <p id="teacher-guide-status" role="status"></p>
+    <div id="teacher-guide-output" hidden>
+      <pre id="teacher-guide-preview" class="teacher-guide-preview" tabindex="0" aria-label="생성된 교사용 가이드"></pre>
+      <a id="teacher-guide-download" download="교사용-가이드.txt">생성한 가이드 내려받기</a>
     </div>
   </div>
   <div class="step-indicator">
@@ -1245,6 +1260,62 @@ function init() {
       if (mode === 'student') renderStudent();
       if (mode === 'teacher') renderResearchLog();
     });
+  });
+
+  document.getElementById('teacher-guide-generate').addEventListener('click', () => {
+    const { step1, step2, step3, step4 } = state.lessonForm;
+    const draft = {
+      title: step1.title,
+      goal: step1.goal,
+      content: step2.content,
+      method: step3.method,
+      time: step3.time,
+      reflect: step3.reflectQuestion,
+      eval: step4.evalCriteria,
+      rubric: step4.rubric
+    };
+    const hasDraft = [draft.title, draft.goal, draft.content, draft.time, draft.reflect, draft.eval, draft.rubric]
+      .some(value => value?.trim());
+    const lesson = hasDraft ? draft : state.lessons.at(-1);
+    const status = document.getElementById('teacher-guide-status');
+    const output = document.getElementById('teacher-guide-output');
+
+    if (!lesson?.title?.trim()) {
+      output.hidden = true;
+      status.textContent = '학습 목표 단계에서 차시 제목을 입력한 뒤 다시 눌러 주세요.';
+      return;
+    }
+
+    const fill = (value, fallback) => value?.trim() || fallback;
+    const guide = [
+      '교사용 가이드',
+      lesson.title.trim(),
+      '',
+      '1. 학습 목표',
+      fill(lesson.goal, '학생이 수업 후 할 수 있어야 하는 행동을 적으세요.'),
+      '',
+      '2. 수업 준비',
+      '활동 유형 ' + fill(lesson.method, '수업에 맞게 선택'),
+      '수업 시간 ' + (lesson.time ? lesson.time + '분' : '수업에 맞게 배정'),
+      '학생 활동에 필요한 자료와 도구를 준비하고 진행 순서를 확인합니다.',
+      '',
+      '3. 수업 진행',
+      '도입 — 학습 목표를 공유하고 학생에게 결과를 예상하게 합니다.',
+      '전개 — 아래 활동을 안내하고 학생이 과정을 기록하도록 합니다.',
+      fill(lesson.content, '학습 내용과 학생 활동을 적으세요.'),
+      '정리 — 결과를 비교하고 성찰 질문에 답하게 합니다.',
+      fill(lesson.reflect, '예상과 결과가 달랐나요? 그렇게 판단한 근거는 무엇인가요?'),
+      '',
+      '4. 평가와 피드백',
+      fill(lesson.eval, '학습 목표에 맞는 평가 기준을 적으세요.'),
+      ...(lesson.rubric?.trim() ? ['', '루브릭', lesson.rubric.trim()] : [])
+    ].join('\n');
+
+    document.getElementById('teacher-guide-preview').textContent = guide;
+    document.getElementById('teacher-guide-download').href =
+      'data:text/plain;charset=utf-8,' + encodeURIComponent(guide);
+    output.hidden = false;
+    status.textContent = (hasDraft ? '작성 중인 수업안' : '최근 저장한 수업안') + '으로 가이드를 만들었습니다.';
   });
 
   if (location.hash === '#lesson') {
