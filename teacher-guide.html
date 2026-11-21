@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정보 교과 교사용 가이드</title>
+<style>
+  :root { color-scheme: light; font: 17px/1.7 system-ui, sans-serif; color: #183247; background: #edf5fa; }
+  body { margin: 0; }
+  main { box-sizing: border-box; max-width: 860px; margin: 24px auto; padding: clamp(18px, 5vw, 44px); background: white; }
+  h1, h2 { line-height: 1.25; }
+  h2 { margin-top: 1.8em; }
+  a { color: #0c5b87; }
+  nav { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 8px 10px; text-align: left; border: 1px solid #bfd3e0; }
+  th { background: #e7f3fa; }
+  code { overflow-wrap: anywhere; }
+  @media print { :root { background: white; } main { margin: 0; padding: 0; } nav { display: none; } tr { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<main>
+<nav aria-label="가이드 메뉴">
+  <a href="./#lesson">플랫폼 수업설계로 돌아가기</a>
+  <a href="teacher-guide.html" download="정보교과-교사용-가이드.html">가이드 내려받기</a>
+</nav>
+<h1>정보 교과 교사용 가이드</h1>
+<p>AI 수업설계 플랫폼에서 정보 교과 수업안을 만드는 방법입니다. 순차 탐색과 이진 탐색을 비교하는 50분 수업을 예로 들었습니다.</p>
+
+<h2>플랫폼에서 수업안 만들기</h2>
+<ol>
+  <li><strong>학습 목표</strong>에 차시 제목과 목표를 입력합니다. 예시 목표는 “같은 자료에서 순차 탐색과 이진 탐색의 비교 횟수를 기록하고, 이진 탐색에 정렬이 필요한 이유를 설명한다”입니다.</li>
+  <li><strong>학습 내용</strong>에 자료 목록, 탐색할 값, 학생이 기록할 항목을 적습니다. 아래 예시를 사용하거나 학급 수준에 맞게 목록을 바꿉니다.</li>
+  <li><strong>교수학습 방법</strong>에서 실습을 선택하고 시간에 50분을 입력합니다. 성찰 질문에는 “자료가 정렬되지 않았다면 어떤 탐색을 쓸 수 있나요?”를 넣습니다.</li>
+  <li><strong>평가 방법</strong>에 아래 평가 기준을 붙여 넣고 마지막 단계의 진행 버튼을 누릅니다. 대시보드에서 저장한 수업설계 건수를 확인합니다.</li>
+</ol>
+<p>플랫폼의 AI 초안과 루브릭 생성은 예시 기능입니다. 제안된 문구와 평가 기준은 교사가 수업에 맞게 편집합니다.</p>
+
+<h2>50분 수업 예시</h2>
+<p>준비물은 숫자 카드 8장 또는 종이 활동지입니다. 왼쪽부터 <code>3, 7, 12, 18, 25, 31, 42, 56</code>을 놓고 목표값 <strong>31</strong>을 찾습니다.</p>
+<table>
+  <thead><tr><th scope="col">시간</th><th scope="col">교사와 학생 활동</th></tr></thead>
+  <tbody>
+    <tr><td>5분</td><td>두 방법 중 목표값을 더 적은 비교로 찾을 방법을 예상합니다.</td></tr>
+    <tr><td>15분</td><td>맨 앞부터 한 칸씩 비교합니다. 확인한 값과 비교 횟수를 기록합니다.</td></tr>
+    <tr><td>15분</td><td>정렬된 목록의 가운데를 비교하고 후보 범위를 절반씩 좁힙니다. 가운데 후보가 둘일 때는 왼쪽 값을 선택합니다.</td></tr>
+    <tr><td>10분</td><td>목표값을 3으로 바꿔 다시 비교합니다. 처음 실험의 결과가 모든 경우에도 적용되는지 토론합니다.</td></tr>
+    <tr><td>5분</td><td>학생 메뉴의 성찰 일지에 예상, 비교 횟수, 결과를 설명하는 근거를 적습니다.</td></tr>
+  </tbody>
+</table>
+<p><strong>교사용 확인값</strong> 목표값 31은 순차 탐색에서 6회, 이진 탐색에서 2회 비교합니다. 목표값 3은 각각 1회와 3회 비교합니다.</p>
+
+<h2>평가 기준 예시</h2>
+<ul>
+  <li><strong>우수</strong> 두 알고리즘의 확인 순서와 비교 횟수를 정확히 기록하고, 정렬 조건과 목표값에 따른 결과 차이를 설명합니다.</li>
+  <li><strong>보통</strong> 두 알고리즘의 비교 횟수를 기록하고 이진 탐색의 정렬 조건을 설명합니다.</li>
+  <li><strong>기초</strong> 한 알고리즘으로 목표값을 찾고 비교 순서를 기록합니다.</li>
+  <li><strong>추가 지도</strong> 비교할 위치나 다음 후보 범위를 정하는 데 안내가 필요합니다.</li>
+</ul>
+
+<h2>다른 정보 교과 주제에 적용하기</h2>
+<ul>
+  <li><strong>데이터</strong> 같은 표에서 평균과 중앙값을 비교하고, 극단값 하나를 넣었을 때 결과가 어떻게 바뀌는지 설명합니다.</li>
+  <li><strong>프로그래밍</strong> 점수에 따라 결과를 분류하는 조건문을 작성하고, 기준값 바로 아래와 위를 포함해 경계값을 시험합니다.</li>
+  <li><strong>인공지능</strong> 같은 질문에 조건을 추가하기 전과 후의 응답을 비교하고, 근거 자료로 확인한 내용과 확인이 필요한 내용을 기록합니다.</li>
+</ul>
+</main>
+</body>
+</html>

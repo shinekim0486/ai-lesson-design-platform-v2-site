@@ -354,9 +354,9 @@ table th { background: #e0f4ff; font-weight: 600; }
     <div style="margin-bottom:10px;">
       <div style="font-size:12px;color:#888;margin-bottom:6px;">💡 참고할 프롬프트 카드 (클릭하면 대화 입력란에 추가)</div>
       <div style="display:flex;gap:6px;flex-wrap:wrap;">
-        <button class="prompt-card-btn" data-prompt="네트워크 지연이 증가하면 RTT와 재전송 횟수가 어떻게 달라질까? 한 번에 조건 하나만 바꿔 내 예상을 검증할 방법을 질문으로 안내해 줘." style="font-size:10px;padding:4px 8px;border:1px solid #87CEEB;border-radius:4px;background:#f0f8ff;cursor:pointer;color:#4682B4;">조건을 넣어 질문</button>
-        <button class="prompt-card-btn" data-prompt="지연 조건을 바꾸고 전후 RTT와 재전송 횟수를 측정했어. 예상과 실제가 다를 때 어떤 조건이나 기록부터 확인하면 좋을까?" style="font-size:10px;padding:4px 8px;border:1px solid #87CEEB;border-radius:4px;background:#f0f8ff;cursor:pointer;color:#4682B4;">측정 결과 검토</button>
-        <button class="prompt-card-btn" data-prompt="RTT와 재전송 측정값을 바탕으로 재전송 대기 시간을 조정하려고 해. 설정 전후를 같은 조건에서 비교하려면 무엇을 기록해야 할까?" style="font-size:10px;padding:4px 8px;border:1px solid #87CEEB;border-radius:4px;background:#f0f8ff;cursor:pointer;color:#4682B4;">수정안 비교</button>
+        <button class="prompt-card-btn" data-prompt="정렬된 목록에서 순차 탐색과 이진 탐색을 비교하려고 해. 두 방법에서 비교 횟수를 같은 기준으로 기록하려면 무엇을 세야 할까?" style="font-size:10px;padding:4px 8px;border:1px solid #87CEEB;border-radius:4px;background:#f0f8ff;cursor:pointer;color:#4682B4;">조건을 넣어 질문</button>
+        <button class="prompt-card-btn" data-prompt="목표값을 바꿨더니 순차 탐색이 더 적은 횟수로 끝났어. 각 방법이 확인한 위치를 어떻게 비교하면 좋을까?" style="font-size:10px;padding:4px 8px;border:1px solid #87CEEB;border-radius:4px;background:#f0f8ff;cursor:pointer;color:#4682B4;">측정 결과 검토</button>
+        <button class="prompt-card-btn" data-prompt="자료가 정렬되지 않은 경우도 시험하려고 해. 이진 탐색에서 어떤 전제가 깨지는지 확인할 사례를 제안해 줘." style="font-size:10px;padding:4px 8px;border:1px solid #87CEEB;border-radius:4px;background:#f0f8ff;cursor:pointer;color:#4682B4;">수정안 비교</button>
         <button class="prompt-card-btn" data-prompt="분수를 왜 배워야 하나요? 실생활 예시를 들어주세요." style="font-size:10px;padding:4px 8px;border:1px solid #87CEEB;border-radius:4px;background:#f0f8ff;cursor:pointer;color:#4682B4;">분수 실생활 예시</button>
         <button class="prompt-card-btn" data-prompt="소수와 분수는 어떻게 서로 변환할 수 있나요?" style="font-size:10px;padding:4px 8px;border:1px solid #87CEEB;border-radius:4px;background:#f0f8ff;cursor:pointer;color:#4682B4;">소수↔분수 변환</button>
         <button class="prompt-card-btn" data-prompt="이 개념이 실생활에서 어떻게 활용되나요?" style="font-size:10px;padding:4px 8px;border:1px solid #87CEEB;border-radius:4px;background:#f0f8ff;cursor:pointer;color:#4682B4;">실생활 활용</button>
@@ -393,6 +393,14 @@ table th { background: #e0f4ff; font-weight: 600; }
 
 <!-- ========== 수업설계 모드 ========== -->
 <div class="mode-section" id="mode-lesson">
+  <div class="card">
+    <h3>정보 교과 교사용 가이드</h3>
+    <p>수업설계 입력 순서와 순차·이진 탐색 50분 수업 예시를 확인할 수 있습니다.</p>
+    <div class="btn-row">
+      <a href="teacher-guide.html">가이드 열기</a>
+      <a href="teacher-guide.html" download="정보교과-교사용-가이드.html">가이드 내려받기</a>
+    </div>
+  </div>
   <div class="step-indicator">
     <div class="step-dot active" data-step="1">1</div>
     <div class="step-dot" data-step="2">2</div>
@@ -792,7 +800,7 @@ function renderLesson(step) {
   if (step === 1) {
     html = `<h3>STEP 1. 학습 목표</h3>
       <label for="l-title">차시 제목</label>
-      <input type="text" id="l-title" placeholder="예: 자율주행 센서의 종류와 원리" value="${escapeHtml(form.step1.title)}" maxlength="100">
+      <input type="text" id="l-title" placeholder="예: 순차 탐색과 이진 탐색 비교" value="${escapeHtml(form.step1.title)}" maxlength="100">
       <label for="l-goal">학습 목표</label>
       <textarea id="l-goal" placeholder="이 차시를 통해 학생이 무엇을 할 수 있게 될지 작성" maxlength="500">${escapeHtml(form.step1.goal)}</textarea>
       <label for="l-bloom">블룸 택소노미 레벨</label>
@@ -1238,6 +1246,10 @@ function init() {
       if (mode === 'teacher') renderResearchLog();
     });
   });
+
+  if (location.hash === '#lesson') {
+    document.querySelector('[data-mode="lesson"]').click();
+  }
 
   document.getElementById('t-subject')?.addEventListener('input', () => {
     const subject = document.getElementById('t-subject').value.trim();
